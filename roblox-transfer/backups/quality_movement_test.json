@@ -1,0 +1,61 @@
+{
+  "routes": [
+    {
+      "court": 1,
+      "reached": true,
+      "time": 4.4501094,
+      "position": [
+        116.1251068,
+        36.0863647,
+        -0.00000679
+      ],
+      "health": 100
+    },
+    {
+      "court": 2,
+      "reached": true,
+      "time": 4.4659223,
+      "position": [
+        0.00165146,
+        36.0863647,
+        116.3923721
+      ],
+      "health": 100
+    },
+    {
+      "court": 3,
+      "reached": true,
+      "time": 4.4499175,
+      "position": [
+        -116.1244354,
+        36.0863647,
+        0.00190501
+      ],
+      "health": 100
+    },
+    {
+      "court": 4,
+      "reached": true,
+      "time": 4.4160892,
+      "position": [
+        -0.00243443,
+        36.0863647,
+        -115.5918732
+      ],
+      "health": 100
+    }
+  ],
+  "jump": {
+    "base": 36.08636474609375,
+    "maximum": 43.386714935302734,
+    "height": 7.300350189208984,
+    "landedY": 36.08636474609375,
+    "health": 100,
+    "input": "Space"
+  },
+  "prompts": {
+    "E": "Light_01",
+    "F": "Parry"
+  },
+  "outputErrors": []
+}

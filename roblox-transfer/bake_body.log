@@ -1,0 +1,19 @@
+00:01.984  blend            | Read blend: "D:\project\blender666\AshenColiseum\Weapons\AshenGreatsword\AshenOath_R15.blend"
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Standard R15 skeleton and original display mannequin Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Standard R15 skeleton and original display mannequin Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Standard R15 skeleton and original display mannequin Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Standard R15 skeleton and original display mannequin Metalness
+D:\project\blender666\roblox-transfer\bake_map_fbx.py:66: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  atlas=bpy.data.materials.new(f'District_{group_idx:02d}_PBR');atlas.use_nodes=True
+DISTRICT_COMPLETE 02 / Standard R15 skeleton and original display mannequin
+
+FBX export starting... 'D:\\project\\blender666\\roblox-transfer\\export\\AshenOath_Mannequin_Studio.fbx'
+export finished in 0.0263 sec.
+MAP_PBR_FBX_COMPLETE 15
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

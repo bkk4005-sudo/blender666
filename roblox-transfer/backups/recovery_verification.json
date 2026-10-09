@@ -1,0 +1,256 @@
+{
+  "file": "Place2-recovery-before-map.rbxl",
+  "classCounts": {
+    "AssetService": 1,
+    "Atmosphere": 1,
+    "Attachment": 12,
+    "AvatarSettings": 1,
+    "BloomEffect": 1,
+    "BubbleChatConfiguration": 1,
+    "CSGDictionaryService": 1,
+    "Camera": 5,
+    "ChannelTabsConfiguration": 1,
+    "Chat": 1,
+    "ChatInputBarConfiguration": 1,
+    "ChatWindowConfiguration": 1,
+    "CollectionService": 1,
+    "ContextActionService": 1,
+    "CookiesService": 1,
+    "DataStoreService": 1,
+    "Debris": 1,
+    "Decal": 1,
+    "DepthOfFieldEffect": 1,
+    "Folder": 15,
+    "GamePassService": 1,
+    "GuidRegistryService": 1,
+    "HttpService": 1,
+    "ImageLabel": 1,
+    "InsertService": 1,
+    "Instance": 4,
+    "Keyframe": 1374,
+    "KeyframeMarker": 85,
+    "KeyframeSequence": 34,
+    "Lighting": 1,
+    "LocalizationService": 1,
+    "LodDataService": 1,
+    "LuaWebService": 1,
+    "MaterialService": 1,
+    "MeshPart": 1,
+    "Model": 2,
+    "ModuleScript": 1,
+    "NonReplicatedCSGDictionaryService": 1,
+    "Packages": 1,
+    "Part": 52,
+    "PermissionsService": 1,
+    "PhysicsService": 1,
+    "PlayerEmulatorService": 1,
+    "Players": 1,
+    "PointLight": 39,
+    "Pose": 21120,
+    "ProcessInstancePhysicsService": 1,
+    "ProximityPromptService": 1,
+    "ReplicatedFirst": 1,
+    "ReplicatedStorage": 1,
+    "ScriptService": 1,
+    "Selection": 1,
+    "SerializationService": 1,
+    "ServerScriptService": 1,
+    "ServerStorage": 1,
+    "ServiceVisibilityService": 1,
+    "Sky": 1,
+    "SoundService": 1,
+    "SpawnLocation": 1,
+    "StarterCharacterScripts": 1,
+    "StarterGui": 1,
+    "StarterPack": 1,
+    "StarterPlayer": 1,
+    "StarterPlayerScripts": 1,
+    "StringValue": 60,
+    "StudioData": 1,
+    "SunRaysEffect": 1,
+    "SurfaceAppearance": 1,
+    "Teams": 1,
+    "TeleportService": 1,
+    "Terrain": 1,
+    "TestService": 1,
+    "TextChatService": 1,
+    "Texture": 1,
+    "TimerService": 1,
+    "TouchInputService": 1,
+    "TweenService": 1,
+    "UGCAvatarService": 1,
+    "UICorner": 1,
+    "UIGradient": 1,
+    "UIPadding": 1,
+    "VRService": 1,
+    "VideoCaptureService": 1,
+    "VideoService": 1,
+    "VirtualInputManager": 1,
+    "VoiceChatService": 1,
+    "Workspace": 1
+  },
+  "animations": [
+    "Idle",
+    "WalkForward",
+    "WalkBackward",
+    "StrafeLeft",
+    "StrafeRight",
+    "RunForward",
+    "Equip",
+    "Unequip",
+    "Light_01",
+    "Light_02",
+    "Light_03",
+    "Heavy_Charge",
+    "Heavy_Hold",
+    "Heavy_Release",
+    "Running_Attack",
+    "Thrust",
+    "Guard_Enter",
+    "Guard_Loop",
+    "Guard_Exit",
+    "Guard_Impact",
+    "Guard_Break",
+    "Parry",
+    "Riposte",
+    "Hit_Front",
+    "Hit_Back",
+    "Hit_Left",
+    "Hit_Right",
+    "Dodge_Forward",
+    "Dodge_Backward",
+    "Dodge_Left",
+    "Dodge_Right",
+    "Jump",
+    "Fall",
+    "Land"
+  ],
+  "meshIds": [
+    "rbxassetid://139047510233988"
+  ],
+  "originalObjects": [
+    {
+      "name": "Baseplate",
+      "present": true
+    },
+    {
+      "name": "SpawnLocation",
+      "present": true
+    },
+    {
+      "name": "Terrain",
+      "present": true
+    },
+    {
+      "name": "Sky",
+      "present": true
+    },
+    {
+      "name": "SunRays",
+      "present": true
+    },
+    {
+      "name": "Atmosphere",
+      "present": true
+    },
+    {
+      "name": "Bloom",
+      "present": true
+    },
+    {
+      "name": "DepthOfField",
+      "present": true
+    }
+  ],
+  "textSources": [
+    {
+      "path": "AshenColiseum/build_report.json",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/build_scene.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/check_layout.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Get-BlenderExecutable.ps1",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/layout_check.json",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Open-Blender.ps1",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/README_RU.md",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/render_views.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/animation_manifest.json",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/bake_materials.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/build_weapon.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/CombatTimings.luau",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/export_checks.json",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/motions.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/Open-Blender.ps1",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/package_previews.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/README_RU.md",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/render_motion.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/select_clip.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/validation.json",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/verify_exports.py",
+      "exactContentFound": true
+    },
+    {
+      "path": "AshenColiseum/Weapons/AshenGreatsword/previews/shots.json",
+      "exactContentFound": true
+    }
+  ],
+  "combatSourceExact": true
+}

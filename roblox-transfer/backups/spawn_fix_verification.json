@@ -1,0 +1,20 @@
+{
+  "position": [
+    0,
+    32.70499801635742,
+    -12
+  ],
+  "floorY": 32.154998779296875,
+  "automaticSpawnTest": {
+    "characterPosition": [
+      -2.10498046875,
+      36.0513916015625,
+      -12.1353759765625
+    ],
+    "health": 100,
+    "verticalVelocity": 0.00048828125,
+    "surface": "ceremonial floor • gold",
+    "outputErrors": 0
+  },
+  "saved": true
+}

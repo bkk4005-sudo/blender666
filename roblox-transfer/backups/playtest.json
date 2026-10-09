@@ -1,0 +1,368 @@
+{
+  "clips": [
+    {
+      "passed": true,
+      "name": "Idle",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 3.200000047683716,
+      "sampleTime": 1.5666666666666667,
+      "maxMotorError": 0.00016292752632141028,
+      "expectedLength": 3.2
+    },
+    {
+      "passed": true,
+      "name": "WalkForward",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.2000000476837158,
+      "sampleTime": 0.5666666666666667,
+      "maxMotorError": 0.00013256194152833078,
+      "expectedLength": 1.2
+    },
+    {
+      "passed": true,
+      "name": "WalkBackward",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.3333333730697632,
+      "sampleTime": 0.6333333333333333,
+      "maxMotorError": 0.00008551756450653203,
+      "expectedLength": 1.3333333333333333
+    },
+    {
+      "passed": true,
+      "name": "StrafeLeft",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.2666666507720947,
+      "sampleTime": 0.6,
+      "maxMotorError": 0.00008626682846069045,
+      "expectedLength": 1.2666666666666666
+    },
+    {
+      "passed": true,
+      "name": "StrafeRight",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.2666666507720947,
+      "sampleTime": 0.6,
+      "maxMotorError": 0.00008626682846069045,
+      "expectedLength": 1.2666666666666666
+    },
+    {
+      "passed": true,
+      "name": "RunForward",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.8666666746139526,
+      "sampleTime": 0.4,
+      "maxMotorError": 0.00008442565231325805,
+      "expectedLength": 0.8666666666666667
+    },
+    {
+      "passed": true,
+      "name": "Equip",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.7999999523162842,
+      "sampleTime": 0.8666666666666667,
+      "maxMotorError": 0.00008092727287292711,
+      "expectedLength": 1.8
+    },
+    {
+      "passed": true,
+      "name": "Unequip",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.600000023841858,
+      "sampleTime": 0.7666666666666667,
+      "maxMotorError": 0.00007462527191159918,
+      "expectedLength": 1.6
+    },
+    {
+      "passed": true,
+      "name": "Light_01",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.399999976158142,
+      "sampleTime": 0.6666666666666666,
+      "maxMotorError": 0.00006777469329832808,
+      "expectedLength": 1.4
+    },
+    {
+      "passed": true,
+      "name": "Light_02",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.4800000190734863,
+      "sampleTime": 0.7,
+      "maxMotorError": 0.0000817193844986075,
+      "expectedLength": 1.48
+    },
+    {
+      "passed": true,
+      "name": "Light_03",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.8799999952316284,
+      "sampleTime": 0.9,
+      "maxMotorError": 0.0000791216312408527,
+      "expectedLength": 1.88
+    },
+    {
+      "passed": true,
+      "name": "Heavy_Charge",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.100000023841858,
+      "sampleTime": 0.5333333333333333,
+      "maxMotorError": 0.00017294110702514853,
+      "expectedLength": 1.1
+    },
+    {
+      "passed": true,
+      "name": "Heavy_Hold",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.399999976158142,
+      "sampleTime": 0.6666666666666666,
+      "maxMotorError": 0.00014869740127562703,
+      "expectedLength": 1.4
+    },
+    {
+      "passed": true,
+      "name": "Heavy_Release",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.5333333015441895,
+      "sampleTime": 0.7333333333333333,
+      "maxMotorError": 0.00007442096031190504,
+      "expectedLength": 1.5333333333333334
+    },
+    {
+      "passed": true,
+      "name": "Running_Attack",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.6666666269302368,
+      "sampleTime": 0.8,
+      "maxMotorError": 0.00009179189476013483,
+      "expectedLength": 1.6666666666666667
+    },
+    {
+      "passed": true,
+      "name": "Thrust",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.600000023841858,
+      "sampleTime": 0.7666666666666667,
+      "maxMotorError": 0.0000747484796905784,
+      "expectedLength": 1.6
+    },
+    {
+      "passed": true,
+      "name": "Guard_Enter",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.4000000059604645,
+      "sampleTime": 0.16666666666666666,
+      "maxMotorError": 0.00008059005172733613,
+      "expectedLength": 0.4
+    },
+    {
+      "passed": true,
+      "name": "Guard_Loop",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 2,
+      "sampleTime": 0.9666666666666667,
+      "maxMotorError": 0.00013297537124634662,
+      "expectedLength": 2
+    },
+    {
+      "passed": true,
+      "name": "Guard_Exit",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.46666666865348816,
+      "sampleTime": 0.2,
+      "maxMotorError": 0.00010923622825623203,
+      "expectedLength": 0.4666666666666667
+    },
+    {
+      "passed": true,
+      "name": "Guard_Impact",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.6666666865348816,
+      "sampleTime": 0.3,
+      "maxMotorError": 0.000052063500595112,
+      "expectedLength": 0.6666666666666666
+    },
+    {
+      "passed": true,
+      "name": "Guard_Break",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.899999976158142,
+      "sampleTime": 0.9333333333333333,
+      "maxMotorError": 0.00007423742538453793,
+      "expectedLength": 1.9
+    },
+    {
+      "passed": true,
+      "name": "Parry",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1.0666667222976685,
+      "sampleTime": 0.5,
+      "maxMotorError": 0.0000760862251281691,
+      "expectedLength": 1.0666666666666667
+    },
+    {
+      "passed": true,
+      "name": "Riposte",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 2.299999952316284,
+      "sampleTime": 1.1333333333333333,
+      "maxMotorError": 0.00007352149040223965,
+      "expectedLength": 2.3
+    },
+    {
+      "passed": true,
+      "name": "Hit_Front",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.800000011920929,
+      "sampleTime": 0.36666666666666664,
+      "maxMotorError": 0.00014716415832516372,
+      "expectedLength": 0.8
+    },
+    {
+      "passed": true,
+      "name": "Hit_Back",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.800000011920929,
+      "sampleTime": 0.36666666666666664,
+      "maxMotorError": 0.00015672918922426948,
+      "expectedLength": 0.8
+    },
+    {
+      "passed": true,
+      "name": "Hit_Left",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.800000011920929,
+      "sampleTime": 0.36666666666666664,
+      "maxMotorError": 0.00013166413970944202,
+      "expectedLength": 0.8
+    },
+    {
+      "passed": true,
+      "name": "Hit_Right",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.800000011920929,
+      "sampleTime": 0.36666666666666664,
+      "maxMotorError": 0.00014215537628170516,
+      "expectedLength": 0.8
+    },
+    {
+      "passed": true,
+      "name": "Dodge_Forward",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.9333333373069763,
+      "sampleTime": 0.43333333333333335,
+      "maxMotorError": 0.00005262790626525682,
+      "expectedLength": 0.9333333333333333
+    },
+    {
+      "passed": true,
+      "name": "Dodge_Backward",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.9333333373069763,
+      "sampleTime": 0.43333333333333335,
+      "maxMotorError": 0.0000671168663025079,
+      "expectedLength": 0.9333333333333333
+    },
+    {
+      "passed": true,
+      "name": "Dodge_Left",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.9333333373069763,
+      "sampleTime": 0.43333333333333335,
+      "maxMotorError": 0.00007210625320434871,
+      "expectedLength": 0.9333333333333333
+    },
+    {
+      "passed": true,
+      "name": "Dodge_Right",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.9333333373069763,
+      "sampleTime": 0.43333333333333335,
+      "maxMotorError": 0.00010824894287109199,
+      "expectedLength": 0.9333333333333333
+    },
+    {
+      "passed": true,
+      "name": "Jump",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.7333333492279053,
+      "sampleTime": 0.3333333333333333,
+      "maxMotorError": 0.00009488625438690279,
+      "expectedLength": 0.7333333333333333
+    },
+    {
+      "passed": true,
+      "name": "Fall",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 1,
+      "sampleTime": 0.4666666666666667,
+      "maxMotorError": 0.0001389995973205549,
+      "expectedLength": 1
+    },
+    {
+      "passed": true,
+      "name": "Land",
+      "weight": 1,
+      "isPlaying": true,
+      "length": 0.8333333134651184,
+      "sampleTime": 0.4,
+      "maxMotorError": 0.0000918164183044412,
+      "expectedLength": 0.8333333333333334
+    }
+  ],
+  "issues": [],
+  "markerTest": {
+    "received": {
+      "Swing": true,
+      "ComboOpen": true,
+      "ActiveEnd": true,
+      "Windup": true,
+      "RecoveryEnd": true,
+      "ActiveStart": true
+    },
+    "clip": "Light_01",
+    "missed": []
+  },
+  "mode": "Studio Server Play Test",
+  "lengthNote": "Light_02/Light_03 retain original RecoveryEnd events after last 30fps sampled body frame; Studio length is last event time. Both lengths retested in Server Play.",
+  "consoleErrors": [],
+  "playerOnArena": {
+    "health": 100,
+    "position": [
+      0,
+      36.0643310546875,
+      -8
+    ]
+  }
+}

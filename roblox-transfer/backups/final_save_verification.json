@@ -1,0 +1,39 @@
+{
+  "file": "blender666_Studio.rbxl",
+  "bytes": 5574330,
+  "sha256": "2a9941abe6bd00eaa752dda725f99b98a164cfe5e23bf868784a215aa7341502",
+  "instanceCount": 23375,
+  "classes": {
+    "AnimationController": 2,
+    "Animator": 2,
+    "KeyframeSequence": 34,
+    "MeshPart": 216,
+    "ModuleScript": 1,
+    "Motor6D": 30,
+    "SurfaceAppearance": 216
+  },
+  "meshIdsPermanent": true,
+  "pbrAllPermanent": true,
+  "combatSourceExact": true,
+  "allTextSourcesExact": true,
+  "spawnFix": {
+    "position": [
+      0,
+      32.70499801635742,
+      -12
+    ],
+    "floorY": 32.154998779296875,
+    "automaticSpawnTest": {
+      "characterPosition": [
+        -2.10498046875,
+        36.0513916015625,
+        -12.1353759765625
+      ],
+      "health": 100,
+      "verticalVelocity": 0.00048828125,
+      "surface": "ceremonial floor • gold",
+      "outputErrors": 0
+    },
+    "saved": true
+  }
+}

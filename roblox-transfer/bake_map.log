@@ -1,0 +1,145 @@
+00:02.015  blend            | Read blend: "D:\project\blender666\AshenColiseum\AshenColiseum.blend"
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 00 / Foundation Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 00 / Foundation Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 00 / Foundation Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 00 / Foundation Metalness
+D:\project\blender666\roblox-transfer\bake_map_fbx.py:63: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  atlas=bpy.data.materials.new(f'District_{group_idx:02d}_PBR');atlas.use_nodes=True
+DISTRICT_COMPLETE 00 / Foundation
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 01 / Coliseum / ceremonial floor Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 01 / Coliseum / ceremonial floor Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 01 / Coliseum / ceremonial floor Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 01 / Coliseum / ceremonial floor Metalness
+DISTRICT_COMPLETE 01 / Coliseum / ceremonial floor
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Coliseum / seating galleries Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Coliseum / seating galleries Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Coliseum / seating galleries Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 02 / Coliseum / seating galleries Metalness
+DISTRICT_COMPLETE 02 / Coliseum / seating galleries
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 03 / Coliseum / double arcade Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 03 / Coliseum / double arcade Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 03 / Coliseum / double arcade Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 03 / Coliseum / double arcade Metalness
+DISTRICT_COMPLETE 03 / Coliseum / double arcade
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 04 / Coliseum / axial gatehouses Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 04 / Coliseum / axial gatehouses Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 04 / Coliseum / axial gatehouses Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 04 / Coliseum / axial gatehouses Metalness
+DISTRICT_COMPLETE 04 / Coliseum / axial gatehouses
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 05 / Court I / Ember forge Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 05 / Court I / Ember forge Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 05 / Court I / Ember forge Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 05 / Court I / Ember forge Metalness
+DISTRICT_COMPLETE 05 / Court I / Ember forge
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 1 Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 1 Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 1 Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 1 Metalness
+DISTRICT_COMPLETE 09 / Bridges / 1
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 06 / Court II / Moon sanctuary Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 06 / Court II / Moon sanctuary Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 06 / Court II / Moon sanctuary Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 06 / Court II / Moon sanctuary Metalness
+DISTRICT_COMPLETE 06 / Court II / Moon sanctuary
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 2 Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 2 Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 2 Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 2 Metalness
+DISTRICT_COMPLETE 09 / Bridges / 2
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 07 / Court III / Thorn garden Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 07 / Court III / Thorn garden Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 07 / Court III / Thorn garden Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 07 / Court III / Thorn garden Metalness
+DISTRICT_COMPLETE 07 / Court III / Thorn garden
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 3 Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 3 Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 3 Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 3 Metalness
+DISTRICT_COMPLETE 09 / Bridges / 3
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 08 / Court IV / Fallen kings Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 08 / Court IV / Fallen kings Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 08 / Court IV / Fallen kings Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 08 / Court IV / Fallen kings Metalness
+DISTRICT_COMPLETE 08 / Court IV / Fallen kings
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 4 Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 4 Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 4 Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 09 / Bridges / 4 Metalness
+DISTRICT_COMPLETE 09 / Bridges / 4
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 10 / Dressing / inner lighting Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 10 / Dressing / inner lighting Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 10 / Dressing / inner lighting Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 10 / Dressing / inner lighting Metalness
+DISTRICT_COMPLETE 10 / Dressing / inner lighting
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 11 / Landscape / distant slate Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 11 / Landscape / distant slate Normal
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 11 / Landscape / distant slate Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED 11 / Landscape / distant slate Metalness
+DISTRICT_COMPLETE 11 / Landscape / distant slate
+
+FBX export starting... 'D:\\project\\blender666\\roblox-transfer\\export\\AshenColiseum_PBR_Studio.fbx'
+export finished in 1.1332 sec.
+MAP_PBR_FBX_COMPLETE 183
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit
