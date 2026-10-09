@@ -1,0 +1,42 @@
+[
+  {
+    "clip": "Idle",
+    "start": 0,
+    "end": 29
+  },
+  {
+    "clip": "Light_01",
+    "start": 30,
+    "end": 72
+  },
+  {
+    "clip": "Light_02",
+    "start": 73,
+    "end": 117
+  },
+  {
+    "clip": "Light_03",
+    "start": 118,
+    "end": 174
+  },
+  {
+    "clip": "Heavy_Charge",
+    "start": 175,
+    "end": 208
+  },
+  {
+    "clip": "Heavy_Hold",
+    "start": 209,
+    "end": 229
+  },
+  {
+    "clip": "Heavy_Release",
+    "start": 230,
+    "end": 276
+  },
+  {
+    "clip": "Idle",
+    "start": 277,
+    "end": 306
+  }
+]

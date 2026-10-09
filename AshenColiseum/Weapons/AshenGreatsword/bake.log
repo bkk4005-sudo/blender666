@@ -1,0 +1,18 @@
+00:00.969  blend            | Read blend: "C:\Users\bkk40\OneDrive\Документы\ChatGPT\roblox\outputs\AshenColiseum\Weapons\AshenGreatsword\AshenOath_R15.blend"
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED_MAP Color
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED_MAP Metalness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED_MAP Roughness
+Info: Baking map saved to internal image, save it externally or pack it
+BAKED_MAP Normal
+00:21.391  render           | Saved: 'C:\Users\bkk40\OneDrive\Документы\ChatGPT\roblox\outputs\AshenColiseum\Weapons\AshenGreatsword\previews\01_ready_stance.png'
+00:24.375  render           | Saved: 'C:\Users\bkk40\OneDrive\Документы\ChatGPT\roblox\outputs\AshenColiseum\Weapons\AshenGreatsword\previews\02_sword_detail.png'
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\AshenOath_Greatsword.fbx'
+export finished in 0.0425 sec.
+Info: Saved as "AshenOath_R15.blend"
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

@@ -1,0 +1,80 @@
+{
+  "routes_at_character_torso_height": [
+    {
+      "court": 1,
+      "lateral_offset": -1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 1,
+      "lateral_offset": 0,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 1,
+      "lateral_offset": 1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 2,
+      "lateral_offset": -1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 2,
+      "lateral_offset": 0,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 2,
+      "lateral_offset": 1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 3,
+      "lateral_offset": -1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 3,
+      "lateral_offset": 0,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 3,
+      "lateral_offset": 1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 4,
+      "lateral_offset": -1.4,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 4,
+      "lateral_offset": 0,
+      "clear": true,
+      "obstacle": null
+    },
+    {
+      "court": 4,
+      "lateral_offset": 1.4,
+      "clear": true,
+      "obstacle": null
+    }
+  ],
+  "all_routes_clear": true,
+  "mesh_count": 158,
+  "empty_spawn_guides": 8,
+  "studio_playtest": false
+}

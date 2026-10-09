@@ -1,0 +1,693 @@
+C:\Users\bkk40\OneDrive\Документы\ChatGPT\roblox\outputs\AshenColiseum\Weapons\AshenGreatsword\build_weapon.py:13: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name); m.diffuse_color=(*col,1); m.use_nodes=True
+BAKED Idle 97
+BAKED WalkForward 37
+BAKED WalkBackward 41
+BAKED StrafeLeft 39
+BAKED StrafeRight 39
+BAKED RunForward 27
+BAKED Equip 55
+BAKED Unequip 49
+BAKED Light_01 43
+BAKED Light_02 45
+BAKED Light_03 57
+BAKED Heavy_Charge 34
+BAKED Heavy_Hold 43
+BAKED Heavy_Release 47
+BAKED Running_Attack 51
+BAKED Thrust 49
+BAKED Guard_Enter 13
+BAKED Guard_Loop 61
+BAKED Guard_Exit 15
+BAKED Guard_Impact 21
+BAKED Guard_Break 58
+BAKED Parry 33
+BAKED Riposte 70
+BAKED Hit_Front 25
+BAKED Hit_Back 25
+BAKED Hit_Left 25
+BAKED Hit_Right 25
+BAKED Dodge_Forward 29
+BAKED Dodge_Backward 29
+BAKED Dodge_Left 29
+BAKED Dodge_Right 29
+BAKED Jump 23
+BAKED Fall 31
+BAKED Land 26
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Idle.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.4865 sec.
+EXPORTED Idle
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\WalkForward.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3092 sec.
+EXPORTED WalkForward
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\WalkBackward.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3357 sec.
+EXPORTED WalkBackward
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\StrafeLeft.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3163 sec.
+EXPORTED StrafeLeft
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\StrafeRight.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3529 sec.
+EXPORTED StrafeRight
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\RunForward.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2854 sec.
+EXPORTED RunForward
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Equip.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3908 sec.
+EXPORTED Equip
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Unequip.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.4811 sec.
+EXPORTED Unequip
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Light_01.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3483 sec.
+EXPORTED Light_01
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Light_02.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3413 sec.
+EXPORTED Light_02
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Light_03.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3789 sec.
+EXPORTED Light_03
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Heavy_Charge.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3330 sec.
+EXPORTED Heavy_Charge
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Heavy_Hold.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3639 sec.
+EXPORTED Heavy_Hold
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Heavy_Release.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3594 sec.
+EXPORTED Heavy_Release
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Running_Attack.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3971 sec.
+EXPORTED Running_Attack
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Thrust.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3965 sec.
+EXPORTED Thrust
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Guard_Enter.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2557 sec.
+EXPORTED Guard_Enter
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Guard_Loop.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.4266 sec.
+EXPORTED Guard_Loop
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Guard_Exit.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2809 sec.
+EXPORTED Guard_Exit
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Guard_Impact.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2950 sec.
+EXPORTED Guard_Impact
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Guard_Break.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.4544 sec.
+EXPORTED Guard_Break
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Parry.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3636 sec.
+EXPORTED Parry
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Riposte.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.4611 sec.
+EXPORTED Riposte
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Hit_Front.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2770 sec.
+EXPORTED Hit_Front
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Hit_Back.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2827 sec.
+EXPORTED Hit_Back
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Hit_Left.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3041 sec.
+EXPORTED Hit_Left
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Hit_Right.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2806 sec.
+EXPORTED Hit_Right
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Dodge_Forward.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2973 sec.
+EXPORTED Dodge_Forward
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Dodge_Backward.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2872 sec.
+EXPORTED Dodge_Backward
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Dodge_Left.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3045 sec.
+EXPORTED Dodge_Left
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Dodge_Right.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2866 sec.
+EXPORTED Dodge_Right
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Jump.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2658 sec.
+EXPORTED Jump
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Fall.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.2885 sec.
+EXPORTED Fall
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\animations\\Land.fbx'
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+(bpy.data.armatures['Armature'], 'POSE')
+export finished in 0.3284 sec.
+EXPORTED Land
+C:\Users\bkk40\OneDrive\Документы\ChatGPT\roblox\outputs\AshenColiseum\Weapons\AshenGreatsword\build_weapon.py:291: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world=bpy.data.worlds.new('Neutral studio'); world.use_nodes=True; S.world=world; world.node_tree.nodes['Background'].inputs[0].default_value=(.12,.16,.22,1); world.node_tree.nodes['Background'].inputs[1].default_value=.35
+
+FBX export starting... 'C:\\Users\\bkk40\\OneDrive\\Документы\\ChatGPT\\roblox\\outputs\\AshenColiseum\\Weapons\\AshenGreatsword\\exports\\AshenOath_Greatsword.fbx'
+export finished in 0.0178 sec.
+Info: Saved as "AshenOath_R15.blend"
+WEAPON_COMPLETE {'clips': 34, 'fps': 30, 'weapon_vertices': 4464, 'weapon_triangles': 8056, 'rig_bones': ['Root', 'HumanoidRootNode', 'LowerTorso', 'UpperTorso', 'Head', 'LeftUpperArm', 'LeftLowerArm', 'LeftHand', 'RightUpperArm', 'RightLowerArm', 'RightHand', 'LeftUpperLeg', 'LeftLowerLeg', 'LeftFoot', 'RightUpperLeg', 'RightLowerLeg', 'RightFoot'], 'max_hand_grip_error': 0.005285602428472961, 'max_shared_grip_reach_correction': 0, 'max_leg_overextension': 0, 'minimum_blade_tip_z': 0.2826075553894043, 'studio_import_verified': False, 'root_motion': 'In-place', 'showcase': [{'name': 'Equip', 'start': 1, 'end': 55}, {'name': 'Idle', 'start': 56, 'end': 152}, {'name': 'WalkForward', 'start': 153, 'end': 189}, {'name': 'RunForward', 'start': 190, 'end': 216}, {'name': 'Light_01', 'start': 217, 'end': 259}, {'name': 'Light_02', 'start': 260, 'end': 304}, {'name': 'Light_03', 'start': 305, 'end': 361}, {'name': 'Heavy_Charge', 'start': 362, 'end': 395}, {'name': 'Heavy_Hold', 'start': 396, 'end': 438}, {'name': 'Heavy_Release', 'start': 439, 'end': 485}, {'name': 'Guard_Enter', 'start': 486, 'end': 498}, {'name': 'Guard_Impact', 'start': 499, 'end': 519}, {'name': 'Parry', 'start': 520, 'end': 552}, {'name': 'Riposte', 'start': 553, 'end': 622}, {'name': 'Dodge_Backward', 'start': 623, 'end': 651}, {'name': 'Land', 'start': 652, 'end': 677}, {'name': 'Idle', 'start': 678, 'end': 774}]}
+00:22.328  render           | Saved: 'C:\Users\bkk40\OneDrive\Документы\ChatGPT\roblox\outputs\AshenColiseum\Weapons\AshenGreatsword\previews\01_ready_stance.png'
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

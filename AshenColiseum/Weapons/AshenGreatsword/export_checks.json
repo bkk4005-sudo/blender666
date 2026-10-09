@@ -1,0 +1,274 @@
+{
+  "fbx_roundtrip": [
+    {
+      "clip": "Idle",
+      "max_joint_position_error": 1.6896234744821484e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "WalkForward",
+      "max_joint_position_error": 2.5344242603146195e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "WalkBackward",
+      "max_joint_position_error": 2.351930100554092e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "StrafeLeft",
+      "max_joint_position_error": 4.912345827548955e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "StrafeRight",
+      "max_joint_position_error": 5.237159323408022e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "RunForward",
+      "max_joint_position_error": 3.128676135926357e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Equip",
+      "max_joint_position_error": 1.639940320515347e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Unequip",
+      "max_joint_position_error": 1.6289532037493757e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Light_01",
+      "max_joint_position_error": 1.742671530024994e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Light_02",
+      "max_joint_position_error": 1.7882014303554775e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Light_03",
+      "max_joint_position_error": 2.756352336352316e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Heavy_Charge",
+      "max_joint_position_error": 2.2468658477033096e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Heavy_Hold",
+      "max_joint_position_error": 2.958030630812841e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Heavy_Release",
+      "max_joint_position_error": 1.8759490780553776e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Running_Attack",
+      "max_joint_position_error": 2.6489302671523676e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Thrust",
+      "max_joint_position_error": 2.7159384705124563e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Guard_Enter",
+      "max_joint_position_error": 2.2596764668544963e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Guard_Loop",
+      "max_joint_position_error": 2.1376805115257856e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Guard_Exit",
+      "max_joint_position_error": 1.768410646813726e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Guard_Impact",
+      "max_joint_position_error": 1.7477607473431985e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Guard_Break",
+      "max_joint_position_error": 1.6513418159437221e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Parry",
+      "max_joint_position_error": 1.7921085808721671e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Riposte",
+      "max_joint_position_error": 2.6449036425100842e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Hit_Front",
+      "max_joint_position_error": 2.176121241078428e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Hit_Back",
+      "max_joint_position_error": 1.9337665814524907e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Hit_Left",
+      "max_joint_position_error": 3.7504775206353235e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Hit_Right",
+      "max_joint_position_error": 1.6289532037493757e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Dodge_Forward",
+      "max_joint_position_error": 1.6357545660941492e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Dodge_Backward",
+      "max_joint_position_error": 2.5309173757507975e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Dodge_Left",
+      "max_joint_position_error": 2.0951371780298643e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Dodge_Right",
+      "max_joint_position_error": 2.947418043489407e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Jump",
+      "max_joint_position_error": 2.053131825053624e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Fall",
+      "max_joint_position_error": 1.681203703175527e-06,
+      "bones": 17,
+      "has_animation": true
+    },
+    {
+      "clip": "Land",
+      "max_joint_position_error": 2.4454069827046434e-06,
+      "bones": 17,
+      "has_animation": true
+    }
+  ],
+  "max_actual_right_grip_error": 2.4401987972856976e-06,
+  "loop_seams": [
+    {
+      "clip": "Idle",
+      "max_matrix_delta": 0.0
+    },
+    {
+      "clip": "WalkForward",
+      "max_matrix_delta": 1.102182101152202e-17
+    },
+    {
+      "clip": "WalkBackward",
+      "max_matrix_delta": 2.894620615444794e-17
+    },
+    {
+      "clip": "StrafeLeft",
+      "max_matrix_delta": 1.102182101152202e-17
+    },
+    {
+      "clip": "StrafeRight",
+      "max_matrix_delta": 1.102182101152202e-17
+    },
+    {
+      "clip": "RunForward",
+      "max_matrix_delta": 1.102182101152202e-17
+    },
+    {
+      "clip": "Heavy_Hold",
+      "max_matrix_delta": 0.0
+    },
+    {
+      "clip": "Guard_Loop",
+      "max_matrix_delta": 0.0
+    },
+    {
+      "clip": "Fall",
+      "max_matrix_delta": 0.0
+    }
+  ],
+  "planted_attack_feet": [
+    {
+      "clip": "Light_01",
+      "max_drift": 1.2051530030724853e-06
+    },
+    {
+      "clip": "Light_02",
+      "max_drift": 1.4975481660844222e-06
+    },
+    {
+      "clip": "Light_03",
+      "max_drift": 1.519699291249835e-06
+    },
+    {
+      "clip": "Heavy_Charge",
+      "max_drift": 1.1710454645388424e-06
+    },
+    {
+      "clip": "Heavy_Hold",
+      "max_drift": 0.0
+    },
+    {
+      "clip": "Heavy_Release",
+      "max_drift": 1.5037626995495395e-06
+    }
+  ],
+  "studio_import_verified": false
+}

@@ -1,0 +1,525 @@
+[
+  {
+    "name": "Idle",
+    "duration": 3.2,
+    "loop": true,
+    "events": {},
+    "kind": "idle",
+    "description": "Low guard, slow breathing; blade inertia lags chest.",
+    "travel_studs": 0,
+    "frames": 97,
+    "duration_exported": 3.2,
+    "fbx": "exports/animations/Idle.fbx"
+  },
+  {
+    "name": "WalkForward",
+    "duration": 1.2,
+    "loop": true,
+    "events": {
+      "FootL": 0,
+      "FootR": 0.6
+    },
+    "kind": "walk_f",
+    "description": "In-place locomotion. Drive gameplay root separately.",
+    "travel_studs": 0,
+    "frames": 37,
+    "duration_exported": 1.2,
+    "fbx": "exports/animations/WalkForward.fbx"
+  },
+  {
+    "name": "WalkBackward",
+    "duration": 1.32,
+    "loop": true,
+    "events": {
+      "FootL": 0,
+      "FootR": 0.66
+    },
+    "kind": "walk_b",
+    "description": "In-place locomotion. Drive gameplay root separately.",
+    "travel_studs": 0,
+    "frames": 41,
+    "duration_exported": 1.3333333333333333,
+    "fbx": "exports/animations/WalkBackward.fbx"
+  },
+  {
+    "name": "StrafeLeft",
+    "duration": 1.28,
+    "loop": true,
+    "events": {
+      "FootL": 0,
+      "FootR": 0.64
+    },
+    "kind": "walk_l",
+    "description": "In-place locomotion. Drive gameplay root separately.",
+    "travel_studs": 0,
+    "frames": 39,
+    "duration_exported": 1.2666666666666666,
+    "fbx": "exports/animations/StrafeLeft.fbx"
+  },
+  {
+    "name": "StrafeRight",
+    "duration": 1.28,
+    "loop": true,
+    "events": {
+      "FootL": 0,
+      "FootR": 0.64
+    },
+    "kind": "walk_r",
+    "description": "In-place locomotion. Drive gameplay root separately.",
+    "travel_studs": 0,
+    "frames": 39,
+    "duration_exported": 1.2666666666666666,
+    "fbx": "exports/animations/StrafeRight.fbx"
+  },
+  {
+    "name": "RunForward",
+    "duration": 0.86,
+    "loop": true,
+    "events": {
+      "FootL": 0,
+      "FootR": 0.43
+    },
+    "kind": "run",
+    "description": "In-place locomotion. Drive gameplay root separately.",
+    "travel_studs": 0,
+    "frames": 27,
+    "duration_exported": 0.8666666666666667,
+    "fbx": "exports/animations/RunForward.fbx"
+  },
+  {
+    "name": "Equip",
+    "duration": 1.8,
+    "loop": false,
+    "events": {
+      "WeaponVisible": 0,
+      "LeftGrip": 1.0,
+      "Ready": 1.65
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 55,
+    "duration_exported": 1.8,
+    "fbx": "exports/animations/Equip.fbx"
+  },
+  {
+    "name": "Unequip",
+    "duration": 1.6,
+    "loop": false,
+    "events": {
+      "LeftRelease": 0.55,
+      "WeaponHidden": 1.5
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 49,
+    "duration_exported": 1.6,
+    "fbx": "exports/animations/Unequip.fbx"
+  },
+  {
+    "name": "Light_01",
+    "duration": 1.4,
+    "loop": false,
+    "events": {
+      "Windup": 0,
+      "Swing": 0.46,
+      "ActiveStart": 0.52,
+      "ActiveEnd": 0.75,
+      "ComboOpen": 0.9,
+      "RecoveryEnd": 1.4
+    },
+    "kind": "action",
+    "description": "Right shoulder lead, diagonal cut, heavy left follow-through.",
+    "travel_studs": 0.6,
+    "frames": 43,
+    "duration_exported": 1.4,
+    "fbx": "exports/animations/Light_01.fbx"
+  },
+  {
+    "name": "Light_02",
+    "duration": 1.48,
+    "loop": false,
+    "events": {
+      "Windup": 0,
+      "Swing": 0.51,
+      "ActiveStart": 0.58,
+      "ActiveEnd": 0.81,
+      "ComboOpen": 0.95,
+      "RecoveryEnd": 1.48
+    },
+    "kind": "action",
+    "description": "Backhand return with opposite hip drive.",
+    "travel_studs": 0.6,
+    "frames": 45,
+    "duration_exported": 1.4666666666666666,
+    "fbx": "exports/animations/Light_02.fbx"
+  },
+  {
+    "name": "Light_03",
+    "duration": 1.88,
+    "loop": false,
+    "events": {
+      "Windup": 0,
+      "Swing": 0.67,
+      "ActiveStart": 0.78,
+      "ActiveEnd": 1.02,
+      "RecoveryEnd": 1.88
+    },
+    "kind": "action",
+    "description": "Overhead finisher with braced front leg and long recovery.",
+    "travel_studs": 0.9,
+    "frames": 57,
+    "duration_exported": 1.8666666666666667,
+    "fbx": "exports/animations/Light_03.fbx"
+  },
+  {
+    "name": "Heavy_Charge",
+    "duration": 1.1,
+    "loop": false,
+    "events": {
+      "ChargeStart": 0,
+      "ChargeReady": 1.1
+    },
+    "kind": "action",
+    "description": "Deliberate lift; knees load before the overhead strike.",
+    "travel_studs": 0,
+    "frames": 34,
+    "duration_exported": 1.1,
+    "fbx": "exports/animations/Heavy_Charge.fbx"
+  },
+  {
+    "name": "Heavy_Hold",
+    "duration": 1.4,
+    "loop": true,
+    "events": {},
+    "kind": "hold",
+    "description": "Tension, restrained tremor and loaded legs.",
+    "travel_studs": 0,
+    "frames": 43,
+    "duration_exported": 1.4,
+    "fbx": "exports/animations/Heavy_Hold.fbx"
+  },
+  {
+    "name": "Heavy_Release",
+    "duration": 1.52,
+    "loop": false,
+    "events": {
+      "Swing": 0.14,
+      "ActiveStart": 0.28,
+      "Impact": 0.41,
+      "ActiveEnd": 0.51,
+      "RecoveryEnd": 1.52
+    },
+    "kind": "action",
+    "description": "Fast release, decisive arrest, slow lifting recovery.",
+    "travel_studs": 1.1,
+    "frames": 47,
+    "duration_exported": 1.5333333333333334,
+    "fbx": "exports/animations/Heavy_Release.fbx"
+  },
+  {
+    "name": "Running_Attack",
+    "duration": 1.65,
+    "loop": false,
+    "events": {
+      "Swing": 0.34,
+      "ActiveStart": 0.43,
+      "ActiveEnd": 0.66,
+      "RecoveryEnd": 1.65
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 2,
+    "frames": 51,
+    "duration_exported": 1.6666666666666667,
+    "fbx": "exports/animations/Running_Attack.fbx"
+  },
+  {
+    "name": "Thrust",
+    "duration": 1.6,
+    "loop": false,
+    "events": {
+      "Swing": 0.4,
+      "ActiveStart": 0.51,
+      "ActiveEnd": 0.79,
+      "RecoveryEnd": 1.6
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 1.1,
+    "frames": 49,
+    "duration_exported": 1.6,
+    "fbx": "exports/animations/Thrust.fbx"
+  },
+  {
+    "name": "Guard_Enter",
+    "duration": 0.4,
+    "loop": false,
+    "events": {
+      "GuardOn": 0.26
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 13,
+    "duration_exported": 0.4,
+    "fbx": "exports/animations/Guard_Enter.fbx"
+  },
+  {
+    "name": "Guard_Loop",
+    "duration": 2.0,
+    "loop": true,
+    "events": {},
+    "kind": "guard",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 61,
+    "duration_exported": 2.0,
+    "fbx": "exports/animations/Guard_Loop.fbx"
+  },
+  {
+    "name": "Guard_Exit",
+    "duration": 0.48,
+    "loop": false,
+    "events": {
+      "GuardOff": 0
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 15,
+    "duration_exported": 0.4666666666666667,
+    "fbx": "exports/animations/Guard_Exit.fbx"
+  },
+  {
+    "name": "Guard_Impact",
+    "duration": 0.66,
+    "loop": false,
+    "events": {
+      "Impact": 0.05,
+      "RecoveryEnd": 0.66
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 21,
+    "duration_exported": 0.6666666666666666,
+    "fbx": "exports/animations/Guard_Impact.fbx"
+  },
+  {
+    "name": "Guard_Break",
+    "duration": 1.9,
+    "loop": false,
+    "events": {
+      "GuardOff": 0,
+      "StaggerStart": 0.12,
+      "RecoveryEnd": 1.9
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 58,
+    "duration_exported": 1.9,
+    "fbx": "exports/animations/Guard_Break.fbx"
+  },
+  {
+    "name": "Parry",
+    "duration": 1.05,
+    "loop": false,
+    "events": {
+      "ParryStart": 0.22,
+      "ParryEnd": 0.39,
+      "RecoveryEnd": 1.05
+    },
+    "kind": "action",
+    "description": "Short committed deflection; narrow timing window.",
+    "travel_studs": 0,
+    "frames": 33,
+    "duration_exported": 1.0666666666666667,
+    "fbx": "exports/animations/Parry.fbx"
+  },
+  {
+    "name": "Riposte",
+    "duration": 2.3,
+    "loop": false,
+    "events": {
+      "Swing": 0.69,
+      "ActiveStart": 0.8,
+      "Impact": 0.96,
+      "ActiveEnd": 1.08,
+      "RecoveryEnd": 2.3
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0.7,
+    "frames": 70,
+    "duration_exported": 2.3,
+    "fbx": "exports/animations/Riposte.fbx"
+  },
+  {
+    "name": "Hit_Front",
+    "duration": 0.8,
+    "loop": false,
+    "events": {
+      "Impact": 0,
+      "RecoveryEnd": 0.8
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 25,
+    "duration_exported": 0.8,
+    "fbx": "exports/animations/Hit_Front.fbx"
+  },
+  {
+    "name": "Hit_Back",
+    "duration": 0.8,
+    "loop": false,
+    "events": {
+      "Impact": 0,
+      "RecoveryEnd": 0.8
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 25,
+    "duration_exported": 0.8,
+    "fbx": "exports/animations/Hit_Back.fbx"
+  },
+  {
+    "name": "Hit_Left",
+    "duration": 0.8,
+    "loop": false,
+    "events": {
+      "Impact": 0,
+      "RecoveryEnd": 0.8
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 25,
+    "duration_exported": 0.8,
+    "fbx": "exports/animations/Hit_Left.fbx"
+  },
+  {
+    "name": "Hit_Right",
+    "duration": 0.8,
+    "loop": false,
+    "events": {
+      "Impact": 0,
+      "RecoveryEnd": 0.8
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 25,
+    "duration_exported": 0.8,
+    "fbx": "exports/animations/Hit_Right.fbx"
+  },
+  {
+    "name": "Dodge_Forward",
+    "duration": 0.92,
+    "loop": false,
+    "events": {
+      "DodgeStart": 0.13,
+      "DodgeEnd": 0.53,
+      "RecoveryEnd": 0.92
+    },
+    "kind": "action",
+    "description": "Directional low step; gameplay translation is external.",
+    "travel_studs": 3.8,
+    "frames": 29,
+    "duration_exported": 0.9333333333333333,
+    "fbx": "exports/animations/Dodge_Forward.fbx"
+  },
+  {
+    "name": "Dodge_Backward",
+    "duration": 0.92,
+    "loop": false,
+    "events": {
+      "DodgeStart": 0.13,
+      "DodgeEnd": 0.53,
+      "RecoveryEnd": 0.92
+    },
+    "kind": "action",
+    "description": "Directional low step; gameplay translation is external.",
+    "travel_studs": 3.8,
+    "frames": 29,
+    "duration_exported": 0.9333333333333333,
+    "fbx": "exports/animations/Dodge_Backward.fbx"
+  },
+  {
+    "name": "Dodge_Left",
+    "duration": 0.92,
+    "loop": false,
+    "events": {
+      "DodgeStart": 0.13,
+      "DodgeEnd": 0.53,
+      "RecoveryEnd": 0.92
+    },
+    "kind": "action",
+    "description": "Directional low step; gameplay translation is external.",
+    "travel_studs": 3.8,
+    "frames": 29,
+    "duration_exported": 0.9333333333333333,
+    "fbx": "exports/animations/Dodge_Left.fbx"
+  },
+  {
+    "name": "Dodge_Right",
+    "duration": 0.92,
+    "loop": false,
+    "events": {
+      "DodgeStart": 0.13,
+      "DodgeEnd": 0.53,
+      "RecoveryEnd": 0.92
+    },
+    "kind": "action",
+    "description": "Directional low step; gameplay translation is external.",
+    "travel_studs": 3.8,
+    "frames": 29,
+    "duration_exported": 0.9333333333333333,
+    "fbx": "exports/animations/Dodge_Right.fbx"
+  },
+  {
+    "name": "Jump",
+    "duration": 0.72,
+    "loop": false,
+    "events": {
+      "Takeoff": 0.25
+    },
+    "kind": "action",
+    "description": "Pose-only jump; root height comes from game physics.",
+    "travel_studs": 0,
+    "frames": 23,
+    "duration_exported": 0.7333333333333333,
+    "fbx": "exports/animations/Jump.fbx"
+  },
+  {
+    "name": "Fall",
+    "duration": 1.0,
+    "loop": true,
+    "events": {},
+    "kind": "hold",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 31,
+    "duration_exported": 1.0,
+    "fbx": "exports/animations/Fall.fbx"
+  },
+  {
+    "name": "Land",
+    "duration": 0.83,
+    "loop": false,
+    "events": {
+      "FootPlant": 0.06,
+      "RecoveryEnd": 0.83
+    },
+    "kind": "action",
+    "description": "",
+    "travel_studs": 0,
+    "frames": 26,
+    "duration_exported": 0.8333333333333334,
+    "fbx": "exports/animations/Land.fbx"
+  }
+]

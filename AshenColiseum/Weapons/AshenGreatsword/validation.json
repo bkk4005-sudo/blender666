@@ -1,0 +1,118 @@
+{
+  "clips": 34,
+  "fps": 30,
+  "weapon_vertices": 4464,
+  "weapon_triangles": 8056,
+  "rig_bones": [
+    "Root",
+    "HumanoidRootNode",
+    "LowerTorso",
+    "UpperTorso",
+    "Head",
+    "LeftUpperArm",
+    "LeftLowerArm",
+    "LeftHand",
+    "RightUpperArm",
+    "RightLowerArm",
+    "RightHand",
+    "LeftUpperLeg",
+    "LeftLowerLeg",
+    "LeftFoot",
+    "RightUpperLeg",
+    "RightLowerLeg",
+    "RightFoot"
+  ],
+  "max_hand_grip_error": 0.005285602428472961,
+  "max_shared_grip_reach_correction": 0,
+  "max_leg_overextension": 0,
+  "minimum_blade_tip_z": 0.2826075553894043,
+  "studio_import_verified": false,
+  "root_motion": "In-place",
+  "showcase": [
+    {
+      "name": "Equip",
+      "start": 1,
+      "end": 55
+    },
+    {
+      "name": "Idle",
+      "start": 56,
+      "end": 152
+    },
+    {
+      "name": "WalkForward",
+      "start": 153,
+      "end": 189
+    },
+    {
+      "name": "RunForward",
+      "start": 190,
+      "end": 216
+    },
+    {
+      "name": "Light_01",
+      "start": 217,
+      "end": 259
+    },
+    {
+      "name": "Light_02",
+      "start": 260,
+      "end": 304
+    },
+    {
+      "name": "Light_03",
+      "start": 305,
+      "end": 361
+    },
+    {
+      "name": "Heavy_Charge",
+      "start": 362,
+      "end": 395
+    },
+    {
+      "name": "Heavy_Hold",
+      "start": 396,
+      "end": 438
+    },
+    {
+      "name": "Heavy_Release",
+      "start": 439,
+      "end": 485
+    },
+    {
+      "name": "Guard_Enter",
+      "start": 486,
+      "end": 498
+    },
+    {
+      "name": "Guard_Impact",
+      "start": 499,
+      "end": 519
+    },
+    {
+      "name": "Parry",
+      "start": 520,
+      "end": 552
+    },
+    {
+      "name": "Riposte",
+      "start": 553,
+      "end": 622
+    },
+    {
+      "name": "Dodge_Backward",
+      "start": 623,
+      "end": 651
+    },
+    {
+      "name": "Land",
+      "start": 652,
+      "end": 677
+    },
+    {
+      "name": "Idle",
+      "start": 678,
+      "end": 774
+    }
+  ]
+}
