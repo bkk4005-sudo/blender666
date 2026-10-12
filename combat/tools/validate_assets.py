@@ -31,7 +31,8 @@ def sequence_data(node):
 for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
     data = json.loads(path.read_text())
     name = data["name"]
-    xml_path = combat / "assets/animations/r15" / ("combat_idle" if name == "CombatIdle" else "straight_sword") / f"{name}.rbxmx"
+    folder = "combat_idle" if name == "CombatIdle" else "dodge" if name.startswith("Roll") else "straight_sword"
+    xml_path = combat / "assets/animations/r15" / folder / f"{name}.rbxmx"
     root = ET.parse(xml_path).getroot()
     nodes = [node for node in root.findall("Item") if node.attrib.get("class") == "KeyframeSequence"]
     assert len(nodes) == 1 and name in packaged, f"missing sequence {name}"
@@ -46,5 +47,5 @@ for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
         assert token == ("0" if data["priority"] == "Idle" else "2"), f"priority mismatch {name}"
     print(f"PASS {name}: {len(data['frames'])} frames, {len(data['markers'])} markers")
 
-assert len(packaged) == 4, "unexpected package clip count"
+assert len(packaged) == 8, "unexpected package clip count"
 print("PASS portable package structure")

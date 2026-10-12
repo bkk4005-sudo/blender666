@@ -23,6 +23,10 @@ checks = {
     "SwordR1_1": [1, 6, 12, 22, 29],
     "SwordR1_2": [1, 6, 12, 24, 30],
     "SwordR2": [1, 15, 22, 33, 44],
+    "RollForward": [1, 5, 10, 13, 16, 19, 22, 26],
+    "RollBackward": [1, 5, 10, 13, 16, 19, 22, 26],
+    "RollLeft": [1, 5, 10, 13, 16, 19, 22, 26],
+    "RollRight": [1, 5, 10, 13, 16, 19, 22, 26],
 }
 for camera_name in ["Camera / front", "Camera / choreography"]:
     scene.camera = bpy.data.objects[camera_name]

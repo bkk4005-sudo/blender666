@@ -48,13 +48,14 @@ ORDER = [b.name for b in rig.data.bones]
 LOCAL = {n: REST[PARENT[n]].inverted() @ REST[n] if PARENT[n] else REST[n] for n in ORDER}
 for pb in rig.pose.bones:
     pb.rotation_mode = "QUATERNION"
+rig.rotation_mode = "QUATERNION"
 prop.rotation_mode = "QUATERNION"
 
 BASE = {
     "p": (-0.10, -0.82, 4.08), "angles": (23, -18, 8),
     "body": (6, 0, -8), "pelvis": (0, 0, 0), "root": (0, 0, -0.19),
     "lf": (0.64, -0.28, 0), "rf": (-0.65, 0.38, 0),
-    "footyaw": (-8, 6), "head": (-4, 0, 5), "left_grip": 0.0,
+    "footyaw": (-8, 6), "head": (-4, 0, 5), "left_hand": (0.40, -0.18, -1.15),
 }
 
 
@@ -82,6 +83,37 @@ R2_CONTACT = pose(p=(0.02, -1.20, 4.10), angles=(100, 8, 3),
 R2_END = pose(p=(0.20, -1.03, 3.54), angles=(150, 12, 2),
               body=(27, 0, 17), pelvis=(6, 0, 13), root=(0.05, -0.21, -0.43),
               lf=(0.64, -0.70, 0))
+
+# Original R15 medium-roll reconstruction. The inspected DS3 footage did not
+# expose reliable source frames for a roll, so these are authored project poses.
+ROLL_CROUCH = pose(root=(0, 0, -0.62), body=(37, 0, -10), pelvis=(18, 0, -6),
+                   lf=(0.54, 0.00, 0), rf=(-0.54, 0.00, 0),
+                   p=(-0.16, -0.60, 3.56), angles=(90, 90, 0),
+                   left_hand=(0.18, -0.45, -0.48), head=(16, 0, 0))
+ROLL_TUCK = pose(root=(0, 0, -0.73), body=(67, 0, -12), pelvis=(34, 0, -8),
+                 lf=(0.35, 0.08, 1.48), rf=(-0.35, 0.08, 1.48),
+                 p=(-0.05, -0.46, 3.30), angles=(90, 90, 0),
+                 left_hand=(0.10, -0.48, -0.28), head=(28, 0, 0))
+
+
+def roll_clip(name, axis):
+    # Keep the blade approximately parallel to the roll axis while inverted.
+    blade_yaw = math.degrees(math.atan2(axis[0], -axis[1]))
+    def at(t, posture, angle):
+        value = posture.copy()
+        if 0 < t < 25:
+            value["angles"] = (90, blade_yaw, 0)
+        value["tumble"] = angle
+        return (t / 30, value)
+    return dict(name=name, duration=25 / 30, loop=False, priority="Action",
+                axis=axis, markers={"IFrameStart": 5 / 30,
+                                    "IFrameEnd": 16 / 30,
+                                    "RecoveryEnd": 25 / 30},
+                keys=[at(0, NEUTRAL, 0), at(2, ROLL_CROUCH, 0),
+                      at(4, ROLL_CROUCH, 18), at(6, ROLL_TUCK, 58),
+                      at(9, ROLL_TUCK, 112), at(12, ROLL_TUCK, 177),
+                      at(15, ROLL_TUCK, 242), at(18, ROLL_CROUCH, 302),
+                      at(21, ROLL_CROUCH, 348), at(25, NEUTRAL, 360)])
 
 CLIPS = [
     dict(name="CombatIdle", duration=2.0, loop=True, priority="Idle", markers={},
@@ -122,6 +154,10 @@ CLIPS = [
                (0.69, R2_CONTACT), (0.82, R2_END), (1.06, R2_END),
                (1.25, pose(p=(0.07, -0.89, 3.88), angles=(110, 8, 2),
                            body=(11, 0, 5), root=(0, -0.06, -0.29))), (43/30, NEUTRAL)]),
+    roll_clip("RollForward", (0.87, -0.49, 0)),
+    roll_clip("RollBackward", (-0.87, 0.49, 0)),
+    roll_clip("RollLeft", (0.57, -0.82, 0)),
+    roll_clip("RollRight", (0.57, 0.82, 0)),
 ]
 
 
@@ -183,7 +219,7 @@ def pose_at(p):
     for side, sign in (("Right", -1), ("Left", 1)):
         wrist = grip+sword_basis @ Vector((0, 0.20, 0 if side == "Right" else -0.53))
         if side == "Left":
-            wrist = shoulders[side]+Vector((0.40, -0.18, -1.15))
+            wrist = shoulders[side]+Vector(p["left_hand"])
         a = shoulders[side]
         upper, lower, hand = side+"UpperArm", side+"LowerArm", side+"Hand"
         elbow, _ = two_bone_joint(a, wrist, (TAIL[upper]-HEAD[upper]).length,
@@ -257,6 +293,21 @@ rests = {joint["name"]: matrix_of(joint["rest"]) for joint in joints}
 rests["HumanoidRootPart"] = matrix_of(rig_data["rootRest"])
 bones = {joint["name"]: converted(rig.matrix_world @ rig.data.bones[joint["name"]].matrix_local)
          for joint in joints}
+body_parts = [bpy.data.objects[name] for name in rig_data["bodyNames"]]
+
+
+def body_floor():
+    bpy.context.view_layer.update()
+    graph = bpy.context.evaluated_depsgraph_get()
+    floor = math.inf
+    for original in body_parts:
+        evaluated = original.evaluated_get(graph)
+        mesh = evaluated.to_mesh()
+        matrix = evaluated.matrix_world
+        for vertex in mesh.vertices:
+            floor = min(floor, (matrix @ vertex.co).z)
+        evaluated.to_mesh_clear()
+    return floor
 
 
 for clip in CLIPS:
@@ -270,10 +321,36 @@ for clip in CLIPS:
     prop_action.use_fake_user = True
     prop.animation_data.action = prop_action
     prev_rotation = {}
+    prev_object_rotation = None
+    prev_prop_rotation = None
     for time, authored_pose in clip["keys"]:
         frame = 1+round(time*30)
         scene.frame_set(frame)
+        rig.matrix_world = Matrix.Identity(4)
         pose_at(authored_pose)
+        if "tumble" in authored_pose:
+            angle = authored_pose["tumble"]
+            axis = Vector(clip["axis"]).normalized()
+            turn = Quaternion(axis, math.radians(angle))
+            pivot = Vector((0, 0, 2.53))
+            rotation = turn.to_matrix().to_4x4()
+            group = Matrix.Translation(pivot) @ rotation @ Matrix.Translation(-pivot)
+            unturned_prop = prop.matrix_world.copy()
+            rig.matrix_world = group
+            rig.rotation_quaternion = turn
+            prop.matrix_world = group @ unturned_prop
+            if 0 < angle < 360:
+                adjustment = 0.06 - body_floor()
+                rig.location.z += adjustment
+                prop.location.z += adjustment
+            if prev_object_rotation and rig.rotation_quaternion.dot(prev_object_rotation) < 0:
+                rig.rotation_quaternion.negate()
+            prev_object_rotation = rig.rotation_quaternion.copy()
+            rig.keyframe_insert("location", frame=frame, group="Roll root")
+            rig.keyframe_insert("rotation_quaternion", frame=frame, group="Roll root")
+        if prev_prop_rotation and prop.rotation_quaternion.dot(prev_prop_rotation) < 0:
+            prop.rotation_quaternion.negate()
+        prev_prop_rotation = prop.rotation_quaternion.copy()
         for pb in rig.pose.bones:
             if pb.name in prev_rotation and pb.rotation_quaternion.dot(prev_rotation[pb.name]) < 0:
                 pb.rotation_quaternion.negate()

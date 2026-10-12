@@ -88,7 +88,7 @@ local ok, outcome = pcall(function()
     for _, name in {"CombatConfig", "ActionTimeline", "AnimationRegistry"} do
         scriptOf("ModuleScript", name, "src/shared/" .. name .. ".luau", shared)
     end
-    for _, name in {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2"} do
+    for _, name in {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2", "RollForward", "RollBackward", "RollLeft", "RollRight"} do
         animationOf(name, animations)
     end
     local remote = Instance.new("RemoteEvent")

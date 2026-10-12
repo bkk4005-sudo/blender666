@@ -58,7 +58,7 @@ function CombatService:bindPlayer(player)
         player = player, character = nil, action = nil, started = 0,
         stamina = Config.MaxStamina, lastSpend = 0, lastSequence = 0,
         rateWindow = 0, rateCount = 0, hit = {}, comboQueued = false,
-        sweepTime = nil, rollVelocity = nil, rollAttachment = nil,
+        sweepTime = nil, rollVelocity = nil, rollAttachment = nil, rollDirection = nil,
         alive = false, blocking = false, sprinting = false,
         characterConnections = {},
     }
@@ -78,7 +78,6 @@ function CombatService:bindCharacter(profile, character)
     profile.alive = humanoid.Health > 0
     profile.stamina = Config.MaxStamina
     profile.lastSpend = 0
-    profile.lastSequence = 0
     profile.blocking = false
     profile.sprinting = false
     profile.action = nil
@@ -127,6 +126,7 @@ end
 function CombatService:finish(profile)
     if profile.rollVelocity then profile.rollVelocity:Destroy(); profile.rollVelocity = nil end
     if profile.rollAttachment then profile.rollAttachment:Destroy(); profile.rollAttachment = nil end
+    profile.rollDirection = nil
     profile.action = nil
     profile.comboQueued = false
     profile.sweepTime = nil
@@ -167,10 +167,11 @@ function CombatService:start(profile, actionName, now)
         velocity.Name = "CombatRollVelocity"
         velocity.Attachment0 = attachment
         velocity.MaxForce = 35000
-        velocity.VectorVelocity = direction.Unit * (action.distance / action.duration)
+        velocity.VectorVelocity = Vector3.zero
         velocity.RelativeTo = Enum.ActuatorRelativeTo.World
         velocity.Parent = root
         profile.rollAttachment, profile.rollVelocity = attachment, velocity
+        profile.rollDirection = direction.Unit
     end
     self.remote:FireAllClients("Started", profile.player, actionName, now)
     return true
@@ -223,12 +224,12 @@ end
 
 function CombatService:damage(attacker, targetHumanoid, actionName, now)
     local character = targetHumanoid.Parent
-    if character == attacker.character or targetHumanoid.Health <= 0 then return end
+    if character == attacker.character or targetHumanoid.Health <= 0 then return false end
     local targetPlayer = Players:GetPlayerFromCharacter(character)
     local defender = targetPlayer and self.profiles[targetPlayer]
     if defender and defender.alive then
         local elapsed = now - defender.started
-        if defender.action and Timeline.inWindow(defender.action, "iframes", elapsed) then return end
+        if defender.action and Timeline.inWindow(defender.action, "iframes", elapsed) then return false end
         local attackerRoot = attacker.character:FindFirstChild("HumanoidRootPart")
         local targetRoot = character:FindFirstChild("HumanoidRootPart")
         local facing = false
@@ -244,7 +245,7 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             if staggerHumanoid then staggerHumanoid.WalkSpeed = 0 end
             self:setState(attacker, "Staggered")
             self.remote:FireAllClients("Started", attacker.player, "Stagger", now)
-            return
+            return true
         end
         if defender.blocking and facing then
             local action = Config.Actions[actionName]
@@ -252,7 +253,7 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             local paid = self:spend(defender, drain, now)
             if paid then
                 targetHumanoid:TakeDamage(action.damage * (1 - Config.Block.absorb))
-                return
+                return true
             end
             defender.blocking = false
             self:finish(defender)
@@ -273,6 +274,7 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             end
         end)
     end
+    return true
 end
 
 function CombatService:sweep(profile, actionName, elapsed, now)
@@ -304,8 +306,15 @@ function CombatService:sweep(profile, actionName, elapsed, now)
             if target and not profile.hit[target] then
                 local targetRoot = model:FindFirstChild("HumanoidRootPart")
                 if targetRoot and (targetRoot.Position - root.Position).Magnitude <= action.reach + 2 then
-                    profile.hit[target] = true
-                    self:damage(profile, target, actionName, now)
+                    local rayParams = RaycastParams.new()
+                    rayParams.FilterType = Enum.RaycastFilterType.Exclude
+                    rayParams.FilterDescendantsInstances = {profile.character}
+                    local displacement = targetRoot.Position - root.Position
+                    local obstruction = workspace:Raycast(root.Position, displacement, rayParams)
+                    if (not obstruction or obstruction.Instance:IsDescendantOf(model))
+                        and self:damage(profile, target, actionName, now) then
+                        profile.hit[target] = true
+                    end
                 end
             end
         end
@@ -335,6 +344,12 @@ function CombatService:update(dt)
             local actionName = profile.action
             local action = Config.Actions[actionName]
             local elapsed = now - profile.started
+            if ROLL_DIRECTIONS[actionName] and profile.rollVelocity and profile.rollDirection then
+                local progress = math.clamp(elapsed / action.duration, 0, 1)
+                local ramp = math.min(progress / 0.15, 1, (1 - progress) / 0.25)
+                local peakSpeed = action.distance / action.duration / 0.80
+                profile.rollVelocity.VectorVelocity = profile.rollDirection * peakSpeed * math.max(0, ramp)
+            end
             if actionName == "SwordR1_1" and profile.comboQueued and elapsed >= action.chainAt then
                 self:finish(profile)
                 self:start(profile, "SwordR1_2", now)

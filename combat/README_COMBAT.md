@@ -4,14 +4,14 @@ Status: **prototype for an R15 playtest, not release ready**. The existing Colis
 
 ## Implemented in this pass
 
-- Four original R15 clips: `CombatIdle`, `SwordR1_1`, `SwordR1_2`, `SwordR2`. They were authored in Blender 5.2 as editable Actions and converted to KeyframeSequences. The sword motions are a first visual pass.
+- Eight original R15 clips: `CombatIdle`, `SwordR1_1`, `SwordR1_2`, `SwordR2`, and four directional rolls. They were authored in Blender 5.2 as editable Actions and converted to KeyframeSequences. All are first visual passes.
 - Server-authoritative R1, buffered second R1, R2, stamina, four directional roll motions with timed invulnerability, block/parry state handling and a sampled sword arc hit query. The client cannot name a hit target or set damage.
 - Local animation preview in Studio through `KeyframeSequenceProvider`, with marker signals for visual effects. Published AnimationIds are intentionally absent.
 - Target-facing lock-on camera and movement prototype. Keyboard and mouse only.
 
 ## Current limits
 
-The roll, block, parry and stagger animations have **not** been authored. Roll gameplay therefore has no matching body motion. The straight-sword prop was exported as FBX but is not equipped in the game. The combat arc is an approximate server query, not a verified sweep of a visible blade. No two-player network-delay test, second-map integration test or published-asset test has been run. The existing R15's default locomotion still needs a dedicated combat locomotion set. See [TEST_REPORT.md](TEST_REPORT.md) and [ANIMATION_ASSET_MANIFEST.md](ANIMATION_ASSET_MANIFEST.md).
+The directional rolls are an original reconstruction because the inspected footage did not expose clean medium-roll source frames. They still need animation polish. Block, parry and stagger animations have **not** been authored. The straight-sword prop was exported as FBX but is not equipped in the game. The combat arc is an approximate server query, not a verified sweep of a visible blade. No two-player network-delay test, second-map integration test or published-asset test has been run. The existing R15's default locomotion still needs a dedicated combat locomotion set. See [TEST_REPORT.md](TEST_REPORT.md) and [ANIMATION_ASSET_MANIFEST.md](ANIMATION_ASSET_MANIFEST.md).
 
 ## Build
 

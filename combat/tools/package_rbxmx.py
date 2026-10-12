@@ -96,6 +96,8 @@ for path in sorted(BAKED.glob("*.json")):
     sequence_node(data, standalone)
     if data["name"] == "CombatIdle":
         output = COMBAT / "assets/animations/r15/combat_idle" / (data["name"] + ".rbxmx")
+    elif data["name"].startswith("Roll"):
+        output = COMBAT / "assets/animations/r15/dodge" / (data["name"] + ".rbxmx")
     else:
         output = COMBAT / "assets/animations/r15/straight_sword" / (data["name"] + ".rbxmx")
     save_xml(standalone, output)
