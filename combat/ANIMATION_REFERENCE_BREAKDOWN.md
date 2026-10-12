@@ -62,17 +62,18 @@ All numbers below are frames of **our** 30 FPS Blender Action. The forward clip 
 | Own frame | Semantic pose | Body / centre of mass | Legs / support | Arms and sword |
 | --- | --- | --- | --- | --- |
 | 0 | Standing preparation | Upright combat stance, mass centered | Both feet support | Sword at guard |
-| 2 | Centre-of-mass lowering | Hips descend and trunk folds forward | Both knees bend; feet planted | Left arm draws in; blade turns across body |
+| 2 | Centre-of-mass lowering | Hips descend into an intermediate preparation pose | Both knees bend; feet planted | Left arm draws in; blade begins to turn across body |
 | 4 | Roll initiation | Body leans into travel and begins diagonal pitch | Rear foot pushes; support transfers forward | Forearms guard head; blade aligns to roll axis |
-| 6 | Initial body rotation | Trunk and hips rotate as one mass | Feet leave planted stance and tuck | Sword stays close to torso |
+| 6 | Initial body rotation | Trunk and hips pass through an intermediate fold | Feet leave planted stance and start to tuck | Sword stays close to torso |
 | 9 | Mid-roll entry | Shoulder approaches floor; mass low | Knees fold toward torso | Head turns into chest; blade remains lateral |
 | 12 | Mid-roll / back passage | Body inverted around diagonal shoulder axis | Legs above the trunk, compact | Arms protect head; sword passes beside body |
 | 15 | Shoulder/back ground passage | Torso crosses low contact | Legs begin to release from tuck | Sword kept laterally clear of floor in Blender review |
-| 18 | Recovery contact | Body rises out of rotation | Feet seek the floor | Arms prepare to regain guard |
+| 18 | Recovery contact | Body passes through an intermediate fold out of rotation | Feet seek the floor | Arms prepare to regain guard |
 | 21 | Rising | Trunk nearly upright, mass shifts over feet | Knees absorb landing | Sword returns across body |
+| 23 | Standing recovery preparation | Body is nearly level again | Feet re-establish broad support | Blade rotates back toward the low guard |
 | 25 | Standing recovery | Returns to combat stance | Both feet support | Guard restored |
 
-Forward axis: diagonal forward-left shoulder; backward: reverse diagonal; left/right: steeper lateral diagonals. These pose sheets need clean DS3 reference footage and further visual polish. They must not be cited as original game measurements.
+Forward axis: diagonal forward-left shoulder; backward: reverse diagonal; left/right: steeper lateral diagonals. A sampled floor-clearance pass was applied in Blender after these semantic poses. These pose sheets need clean DS3 reference footage and further visual polish. They must not be cited as original game measurements.
 
 ## Authored straight-sword pose sheets — ESTIMATED, not DS3 source frames
 

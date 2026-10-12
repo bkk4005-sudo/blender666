@@ -3,7 +3,7 @@
 Run: blender -b --python combat/tools/author_blender.py
 The existing official-template R15 mannequin is a rig donor; its file is read-only.
 Outputs a separate editable .blend and baked joint samples for Roblox conversion.
-This is a first animation pass, not a claim of final visual polish.
+The authored Actions remain subject to Studio and player-rig visual review.
 """
 import bpy
 import json
@@ -29,7 +29,7 @@ sword.name = "StraightSword_Prototype"
 sword.scale.x = 0.62
 sword.scale.y = 0.86
 sword.scale.z = 0.68
-sword["status"] = "Original straight-sword training prop; visual refinement pending."
+sword["status"] = "Original training sword; paired Actions reviewed in Blender."
 rig.name = "R15_Combat_Rig"
 
 for ob in [rig, prop]:
@@ -52,7 +52,7 @@ rig.rotation_mode = "QUATERNION"
 prop.rotation_mode = "QUATERNION"
 
 BASE = {
-    "p": (-0.10, -0.82, 4.08), "angles": (23, -18, 8),
+    "p": (-0.35, -0.65, 3.68), "angles": (105, -35, 8),
     "body": (6, 0, -8), "pelvis": (0, 0, 0), "root": (0, 0, -0.19),
     "lf": (0.64, -0.28, 0), "rf": (-0.65, 0.38, 0),
     "footyaw": (-8, 6), "head": (-4, 0, 5), "left_hand": (0.40, -0.18, -1.15),
@@ -67,22 +67,23 @@ def pose(**changes):
 
 NEUTRAL = pose()
 R1_WIND = pose(p=(-0.65, -0.30, 4.43), angles=(66, -91, -12),
-               body=(-2, 0, -22), pelvis=(0, 0, -11), root=(-0.05, 0.09, -0.29))
+               body=(-2, 0, -27), pelvis=(0, 0, -15), root=(-0.05, 0.09, -0.29),
+               lf=(0.64, -0.18, 0), rf=(-0.65, 0.55, 0))
 R1_CONTACT = pose(p=(0.42, -1.13, 4.08), angles=(93, 55, 8),
-                  body=(14, 0, 15), pelvis=(1, 0, 9), root=(0.04, -0.16, -0.30),
-                  lf=(0.64, -0.55, 0))
+                  body=(15, 0, 23), pelvis=(1, 0, 12), root=(0.04, -0.16, -0.30),
+                  lf=(0.64, -0.85, 0), rf=(-0.65, 0.98, 0))
 R1_END = pose(p=(0.53, -0.63, 3.95), angles=(113, 91, 22),
-              body=(12, 0, 27), pelvis=(0, 0, 13), root=(0.07, -0.12, -0.27),
-              lf=(0.64, -0.55, 0))
+              body=(12, 0, 29), pelvis=(0, 0, 15), root=(0.07, -0.12, -0.27),
+              lf=(0.64, -0.85, 0), rf=(-0.65, 0.88, 0))
 R2_WIND = pose(p=(-0.28, -0.22, 5.08), angles=(-44, -29, -4),
                body=(-12, 0, -24), pelvis=(-3, 0, -14), root=(-0.07, 0.11, -0.40),
-               rf=(-0.65, 0.45, 0))
+               lf=(0.64, -0.18, 0), rf=(-0.65, 0.65, 0))
 R2_CONTACT = pose(p=(0.02, -1.20, 4.10), angles=(100, 8, 3),
                   body=(22, 0, 14), pelvis=(5, 0, 11), root=(0.03, -0.27, -0.44),
-                  lf=(0.64, -0.70, 0))
+                  lf=(0.64, -0.90, 0), rf=(-0.65, 1.08, 0))
 R2_END = pose(p=(0.20, -1.03, 3.54), angles=(150, 12, 2),
               body=(27, 0, 17), pelvis=(6, 0, 13), root=(0.05, -0.21, -0.43),
-              lf=(0.64, -0.70, 0))
+              lf=(0.64, -0.90, 0), rf=(-0.65, 1.08, 0))
 
 # Original R15 medium-roll reconstruction. The inspected DS3 footage did not
 # expose reliable source frames for a roll, so these are authored project poses.
@@ -90,70 +91,108 @@ ROLL_CROUCH = pose(root=(0, 0, -0.62), body=(37, 0, -10), pelvis=(18, 0, -6),
                    lf=(0.54, 0.00, 0), rf=(-0.54, 0.00, 0),
                    p=(-0.16, -0.60, 3.56), angles=(90, 90, 0),
                    left_hand=(0.18, -0.45, -0.48), head=(16, 0, 0))
+ROLL_PREP = pose(root=(0, 0, -0.40), body=(22, 0, -9), pelvis=(10, 0, -4),
+                 lf=(0.59, -0.12, 0), rf=(-0.59, 0.15, 0),
+                 p=(-0.13, -0.68, 3.83), left_hand=(0.30, -0.33, -0.80),
+                 head=(5, 0, 3))
 ROLL_TUCK = pose(root=(0, 0, -0.73), body=(67, 0, -12), pelvis=(34, 0, -8),
                  lf=(0.35, 0.08, 1.48), rf=(-0.35, 0.08, 1.48),
-                 p=(-0.05, -0.46, 3.30), angles=(90, 90, 0),
+                 p=(-0.05, -0.35, 3.00), angles=(90, 90, 0),
                  left_hand=(0.10, -0.48, -0.28), head=(28, 0, 0))
+ROLL_MID = pose(root=(0, 0, -0.69), body=(53, 0, -11), pelvis=(27, 0, -7),
+                lf=(0.44, 0.04, 0.70), rf=(-0.44, 0.04, 0.70),
+                p=(-0.10, -0.47, 3.28), left_hand=(0.13, -0.46, -0.38),
+                head=(23, 0, 0))
 
 
 def roll_clip(name, axis):
-    # Keep the blade approximately parallel to the roll axis while inverted.
-    blade_yaw = math.degrees(math.atan2(axis[0], -axis[1]))
+    # Turn the blade toward the roll path without twisting the wrist through
+    # more than its usable range during the short takeoff and landing.
+    raw_yaw = math.degrees(math.atan2(axis[0], -axis[1]))
+    neutral_yaw = NEUTRAL["angles"][1]
+    blade_yaw = (raw_yaw if name == "RollRight" else
+                 neutral_yaw + max(-75, min(75, raw_yaw - neutral_yaw)))
     def at(t, posture, angle):
         value = posture.copy()
         if 0 < t < 25:
-            value["angles"] = (90, blade_yaw, 0)
+            if t <= 6:
+                blend = min(1.0, t / 6)
+            elif t >= 18:
+                blend = max(0.0, (25 - t) / 7)
+            else:
+                blend = 1.0
+            neutral_yaw = NEUTRAL["angles"][1]
+            value["angles"] = (NEUTRAL["angles"][0] + (90 - NEUTRAL["angles"][0]) * blend,
+                               neutral_yaw + (blade_yaw - neutral_yaw) * blend,
+                               8 * (1 - blend))
         value["tumble"] = angle
         return (t / 30, value)
     return dict(name=name, duration=25 / 30, loop=False, priority="Action",
                 axis=axis, markers={"IFrameStart": 5 / 30,
                                     "IFrameEnd": 16 / 30,
                                     "RecoveryEnd": 25 / 30},
-                keys=[at(0, NEUTRAL, 0), at(2, ROLL_CROUCH, 0),
-                      at(4, ROLL_CROUCH, 18), at(6, ROLL_TUCK, 58),
+                keys=[at(0, NEUTRAL, 0), at(2, ROLL_PREP, 0),
+                      at(4, ROLL_CROUCH, 18), at(6, ROLL_MID, 58),
                       at(9, ROLL_TUCK, 112), at(12, ROLL_TUCK, 177),
-                      at(15, ROLL_TUCK, 242), at(18, ROLL_CROUCH, 302),
-                      at(21, ROLL_CROUCH, 348), at(25, NEUTRAL, 360)])
+                      at(15, ROLL_TUCK, 242), at(18, ROLL_MID, 302),
+                      at(21, ROLL_CROUCH, 348), at(23, ROLL_PREP, 358),
+                      at(25, NEUTRAL, 360)])
 
 CLIPS = [
     dict(name="CombatIdle", duration=2.0, loop=True, priority="Idle", markers={},
-         keys=[(0, NEUTRAL), (0.5, pose(body=(7, 0, -8), p=(-0.10, -0.82, 4.10))),
-               (1, pose(body=(6, 0, -8), p=(-0.10, -0.82, 4.08))),
-               (1.5, pose(body=(5, 0, -8), p=(-0.10, -0.82, 4.06))), (2, NEUTRAL)]),
+         keys=[(0, NEUTRAL), (0.5, pose(body=(7, 0, -8), p=(-0.35, -0.65, 3.70))),
+               (1, pose(body=(6, 0, -8), p=(-0.35, -0.65, 3.68))),
+               (1.5, pose(body=(5, 0, -8), p=(-0.35, -0.65, 3.66))), (2, NEUTRAL)]),
     dict(name="SwordR1_1", duration=28/30, loop=False, priority="Action",
          markers={"AttackStart": 0, "HitStart": 9/30, "HitEnd": 14/30,
                   "ComboOpen": 16/30, "ComboClose": 22/30, "RecoveryEnd": 28/30},
          keys=[(0, NEUTRAL), (0.08, pose(body=(4, 0, -12))),
                (0.16, R1_WIND), (0.23, R1_WIND),
                (0.30, pose(p=(-0.40, -0.86, 4.28), angles=(83, -48, -6),
-                           body=(6, 0, -6), pelvis=(0, 0, -3), root=(0, -0.05, -0.32))),
+                           body=(6, 0, -6), pelvis=(0, 0, -3), root=(0, -0.05, -0.32),
+                           lf=(0.64, -0.45, 0.18), rf=(-0.65, 0.95, 0))),
                (0.38, R1_CONTACT), (0.46, R1_END), (0.70, R1_END),
+               (0.82, pose(p=(0.27, -0.72, 4.01), angles=(82, 56, 12),
+                           body=(7, 0, 13), pelvis=(0, 0, 7),
+                           lf=(0.64, -0.72, 0), rf=(-0.65, 0.78, 0.22))),
                (28/30, NEUTRAL)]),
     dict(name="SwordR1_2", duration=29/30, loop=False, priority="Action",
          markers={"AttackStart": 0, "HitStart": 8/30, "HitEnd": 14/30,
                   "ComboOpen": 16/30, "ComboClose": 23/30, "RecoveryEnd": 29/30},
          keys=[(0, R1_END), (0.09, pose(p=(0.68, -0.41, 4.12), angles=(72, 115, 25),
-                                      body=(2, 0, 31), pelvis=(0, 0, 13))),
+                                      body=(2, 0, 31), pelvis=(0, 0, 13),
+                                      lf=(0.64, -0.72, 0), rf=(-0.65, 0.90, 0))),
                (0.18, pose(p=(0.67, -0.32, 4.31), angles=(70, 124, 28),
-                           body=(0, 0, 37), pelvis=(0, 0, 17), root=(0.08, 0.02, -0.29))),
+                           body=(0, 0, 37), pelvis=(0, 0, 17), root=(0.08, 0.02, -0.29),
+                           lf=(0.64, -0.20, 0), rf=(-0.65, 0.72, 0.20))),
                (0.27, pose(p=(0.31, -0.93, 4.15), angles=(87, 55, 12),
-                           body=(9, 0, 13), pelvis=(0, 0, 5), root=(0, -0.07, -0.31))),
+                           body=(9, 0, 13), pelvis=(0, 0, 5), root=(0, -0.07, -0.31),
+                           lf=(0.64, 0.25, 0), rf=(-0.65, 0.02, 0.28))),
                (0.36, pose(p=(-0.30, -1.05, 3.97), angles=(98, -40, -11),
-                           body=(13, 0, -20), pelvis=(0, 0, -8), root=(-0.05, -0.16, -0.31))),
+                           body=(13, 0, -20), pelvis=(0, 0, -8), root=(-0.05, -0.16, -0.31),
+                           lf=(0.64, 0.65, 0), rf=(-0.65, -0.60, 0))),
                (0.45, pose(p=(-0.62, -0.46, 3.98), angles=(109, -108, -20),
-                           body=(9, 0, -30), pelvis=(0, 0, -15), root=(-0.07, -0.11, -0.27))),
+                           body=(9, 0, -30), pelvis=(0, 0, -15), root=(-0.07, -0.11, -0.27),
+                           lf=(0.64, 0.75, 0), rf=(-0.65, -0.65, 0))),
                (0.62, pose(p=(-0.60, -0.48, 4.00), angles=(104, -101, -16),
-                           body=(8, 0, -22))), (29/30, NEUTRAL)]),
+                           body=(8, 0, -22), lf=(0.64, 0.75, 0),
+                           rf=(-0.65, -0.65, 0))),
+               (0.78, pose(p=(-0.34, -0.64, 4.02), angles=(74, -52, -8),
+                           body=(5, 0, -10), lf=(0.64, 0.20, 0.20),
+                           rf=(-0.65, -0.42, 0))), (29/30, NEUTRAL)]),
     dict(name="SwordR2", duration=43/30, loop=False, priority="Action",
          markers={"AttackStart": 0, "HitStart": 17/30, "HitEnd": 25/30,
                   "RecoveryEnd": 43/30},
          keys=[(0, NEUTRAL), (0.14, pose(root=(0, 0, -0.34), body=(0, 0, -13))),
                (0.32, R2_WIND), (0.47, R2_WIND),
                (0.58, pose(p=(-0.18, -0.63, 5.02), angles=(15, -8, 0),
-                           body=(3, 0, -8), pelvis=(0, 0, -4), root=(0, -0.09, -0.41))),
+                           body=(3, 0, -8), pelvis=(0, 0, -4), root=(0, -0.09, -0.41),
+                           lf=(0.64, -0.50, 0.18), rf=(-0.65, 1.05, 0))),
                (0.69, R2_CONTACT), (0.82, R2_END), (1.06, R2_END),
                (1.25, pose(p=(0.07, -0.89, 3.88), angles=(110, 8, 2),
-                           body=(11, 0, 5), root=(0, -0.06, -0.29))), (43/30, NEUTRAL)]),
+                           body=(11, 0, 5), root=(0, -0.06, -0.29),
+                           lf=(0.64, -0.55, 0), rf=(-0.65, 0.75, 0.22))),
+               (43/30, NEUTRAL)]),
     roll_clip("RollForward", (0.87, -0.49, 0)),
     roll_clip("RollBackward", (-0.87, 0.49, 0)),
     roll_clip("RollLeft", (0.57, -0.82, 0)),
@@ -191,6 +230,7 @@ def two_bone_joint(a, target, length1, length2, pole):
 
 max_leg_extension = 0
 max_grip_error = 0
+current_pose_label = ""
 
 
 def pose_at(p):
@@ -240,6 +280,8 @@ def pose_at(p):
         knee, over = two_bone_joint(hip, ankle, (TAIL[upper]-HEAD[upper]).length,
                            (TAIL[lower]-HEAD[lower]).length, (0, -1, 0.04))
         max_leg_extension = max(max_leg_extension, over)
+        if over > 0.04:
+            print("LEG_OVER", current_pose_label, side, round(over, 4), flush=True)
         desired[upper] = orient_bone(upper, hip, knee)
         desired[lower] = orient_bone(lower, knee, ankle)
         foot_rotation = Quaternion((0, 0, 1), math.radians(p["footyaw"][index])) @ REST[foot_name].to_quaternion()
@@ -310,12 +352,70 @@ def body_floor():
     return floor
 
 
+def sword_floor():
+    graph = bpy.context.evaluated_depsgraph_get()
+    evaluated = sword.evaluated_get(graph)
+    mesh = evaluated.to_mesh()
+    floor = min((evaluated.matrix_world @ vertex.co).z for vertex in mesh.vertices)
+    evaluated.to_mesh_clear()
+    return floor
+
+
+def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, grounded_roll=False):
+    # Semantic poses clear the floor, but joint/rig interpolation can dip
+    # between them. Bake a smoothed correction at the export sampling rate.
+    sampled = []
+    for index in range(frame_count):
+        scene.frame_set(index + 1)
+        bpy.context.view_layer.update()
+        body_minimum = body_floor()
+        sword_minimum = sword_floor() if include_sword else math.inf
+        minimum = min(body_minimum, sword_minimum)
+        needed = max(0.0, target_floor - minimum)
+        sampled.append((rig.location.z, prop.location.z, needed, body_minimum, sword_minimum))
+    correction = []
+    for index in range(frame_count):
+        correction.append(max(sampled[neighbor][2] * max(0.0, 1.0 - abs(index - neighbor) / spread_frames)
+                              for neighbor in range(max(0, index - spread_frames + 1),
+                                                    min(frame_count, index + spread_frames))))
+    correction[0] = 0.0
+    correction[-1] = 0.0
+    for index, lift in enumerate(correction):
+        if grounded_roll and 7 <= index <= 19:
+            # The inverted body must pass close to the ground. The sword can
+            # limit the downward adjustment so its edge never cuts the floor.
+            body_clearance = sampled[index][3] + lift
+            sword_clearance = sampled[index][4] + lift
+            sink = min(max(0.0, body_clearance - 0.06),
+                       max(0.0, sword_clearance - target_floor))
+            lift -= sink
+        scene.frame_set(index + 1)
+        rig.location.z = sampled[index][0] + lift
+        prop.location.z = sampled[index][1] + lift
+        rig.keyframe_insert("location", frame=index + 1, group="Floor clearance")
+        prop.keyframe_insert("location", frame=index + 1, group="Floor clearance")
+    print("FLOOR_CORRECTION", round(max(correction), 4), flush=True)
+
+
+def clamp_location_curves(animated_action):
+    # Foot targets and floor correction must not overshoot their keyed contacts.
+    for layer in animated_action.layers:
+        for strip in layer.strips:
+            for channelbag in strip.channelbags:
+                for curve in channelbag.fcurves:
+                    if curve.data_path == "location" or curve.data_path.endswith(".location"):
+                        for key in curve.keyframe_points:
+                            key.handle_left_type = "AUTO_CLAMPED"
+                            key.handle_right_type = "AUTO_CLAMPED"
+                        curve.update()
+
+
 for clip in CLIPS:
     name = clip["name"]
     action = bpy.data.actions.new(name)
     action.use_fake_user = True
     action["loop"] = clip["loop"]
-    action["status"] = "FIRST_PASS_REQUIRES_VISUAL_QA"
+    action["status"] = "ITERATED_REQUIRES_STUDIO_QA"
     rig.animation_data.action = action
     prop_action = bpy.data.actions.new("PROP__"+name)
     prop_action.use_fake_user = True
@@ -324,6 +424,7 @@ for clip in CLIPS:
     prev_object_rotation = None
     prev_prop_rotation = None
     for time, authored_pose in clip["keys"]:
+        current_pose_label = f"{name}:{time:.3f}"
         frame = 1+round(time*30)
         scene.frame_set(frame)
         rig.matrix_world = Matrix.Identity(4)
@@ -346,8 +447,8 @@ for clip in CLIPS:
             if prev_object_rotation and rig.rotation_quaternion.dot(prev_object_rotation) < 0:
                 rig.rotation_quaternion.negate()
             prev_object_rotation = rig.rotation_quaternion.copy()
-            rig.keyframe_insert("location", frame=frame, group="Roll root")
-            rig.keyframe_insert("rotation_quaternion", frame=frame, group="Roll root")
+        rig.keyframe_insert("location", frame=frame, group="Root placement")
+        rig.keyframe_insert("rotation_quaternion", frame=frame, group="Root placement")
         if prev_prop_rotation and prop.rotation_quaternion.dot(prev_prop_rotation) < 0:
             prop.rotation_quaternion.negate()
         prev_prop_rotation = prop.rotation_quaternion.copy()
@@ -361,6 +462,12 @@ for clip in CLIPS:
         prop.keyframe_insert("rotation_quaternion", frame=frame)
     for marker_name, time in clip["markers"].items():
         action.pose_markers.new(marker_name).frame = 1+round(time*30)
+    if name.startswith("Roll"):
+        stabilize_floor(round(clip["duration"] * 30) + 1, 0.015, 4, True, True)
+    elif name.startswith("Sword"):
+        stabilize_floor(round(clip["duration"] * 30) + 1, 0.003, 2, False)
+    clamp_location_curves(action)
+    clamp_location_curves(prop_action)
     # Bake from the editable Blender Action, not from the authoring pose table.
     frames = []
     for index in range(round(clip["duration"]*30)+1):
@@ -380,14 +487,14 @@ for clip in CLIPS:
               "loop": clip["loop"], "priority": clip["priority"],
               "markers": clip["markers"], "frames": frames,
               "sourceBlend": OUT_BLEND.relative_to(ROOT).as_posix(),
-              "status": "FIRST_PASS_REQUIRES_VISUAL_QA"}
+              "status": "ITERATED_REQUIRES_STUDIO_QA"}
     (OUT_DATA / (name+".json")).write_text(json.dumps(output, separators=(",", ":")))
     print("AUTHORED", name, len(frames), flush=True)
 
 rig.animation_data.action = bpy.data.actions["CombatIdle"]
 prop.animation_data.action = bpy.data.actions["PROP__CombatIdle"]
 scene.frame_set(1)
-scene["source_status"] = "Straight sword first pass; gameplay balance and visual polish pending."
+scene["source_status"] = "Straight sword iteration; live R15, transition and gameplay QA pending."
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT_BLEND))
 print("OUTPUT", str(OUT_BLEND), "max_leg_extension", max_leg_extension,
       "max_grip_error", max_grip_error, flush=True)

@@ -1,0 +1,77 @@
+-- Test-only visual attachment for the existing AshenOath sword mesh.
+-- Place in ServerScriptService. The template can be copied to
+-- ServerStorage/CombatTestSwordTemplate for a map-independent test scene.
+if not game:GetService("RunService"):IsStudio() then return end
+local Players = game:GetService("Players")
+local ServerStorage = game:GetService("ServerStorage")
+
+local SCALE = Vector3.new(0.62, 0.86, 0.68)
+-- A visible test grip for a standard player R15 hand. The Blender prop uses
+-- its own paired Action, so this weld is only for in-game silhouette review.
+local HAND_TO_HILT = CFrame.new(0, 0, 0.2) * CFrame.Angles(0, 0, math.rad(45))
+
+local function getTemplate(): Model?
+    local direct = ServerStorage:FindFirstChild("CombatTestSwordTemplate")
+    if direct and direct:IsA("Model") then return direct end
+    local archive = ServerStorage:FindFirstChild("blender666")
+    local assets = archive and archive:FindFirstChild("Assets")
+    local archived = assets and assets:FindFirstChild("AshenOath_Greatsword")
+    return if archived and archived:IsA("Model") then archived else nil
+end
+
+local function attach(character: Model)
+    local hand = character:WaitForChild("RightHand", 8)
+    local template = getTemplate()
+    if not hand or not hand:IsA("BasePart") or not template then
+        warn("CombatTestSword: R15 RightHand or sword template unavailable")
+        return
+    end
+    local existing = character:FindFirstChild("CombatTestSword")
+    if existing then existing:Destroy() end
+
+    local swordModel = template:Clone()
+    swordModel.Name = "CombatTestSword"
+    local blade = swordModel:FindFirstChildWhichIsA("MeshPart", true)
+    if not blade then
+        swordModel:Destroy()
+        warn("CombatTestSword: sword template has no MeshPart")
+        return
+    end
+    local originalGrip = blade:FindFirstChild("RightGrip")
+    if not originalGrip or not originalGrip:IsA("Attachment") then
+        -- The standalone source mesh has no attachments; its R15 donor copy
+        -- records the handle at this point relative to the mesh centre.
+        originalGrip = Instance.new("Attachment")
+        originalGrip.Name = "RightGrip"
+        originalGrip.CFrame = CFrame.new(0, -1.195, 0)
+        originalGrip.Parent = blade
+    end
+    blade.Size = blade.Size * SCALE
+    for _, child in blade:GetChildren() do
+        if child:IsA("Attachment") then
+            child.Position = child.Position * SCALE
+        end
+    end
+    blade.Anchored = false
+    blade.CanCollide = false
+    blade.CanTouch = false
+    blade.CanQuery = false
+    blade.Massless = true
+    local grip = Instance.new("Motor6D")
+    grip.Name = "CombatTestSwordGrip"
+    grip.Part0 = hand
+    grip.Part1 = blade
+    grip.C0 = HAND_TO_HILT * originalGrip.CFrame:Inverse()
+    grip.C1 = CFrame.new()
+    blade.CFrame = hand.CFrame * grip.C0
+    grip.Parent = hand
+    swordModel.Parent = character
+end
+
+local function onPlayer(player: Player)
+    player.CharacterAdded:Connect(attach)
+    if player.Character then task.defer(attach, player.Character) end
+end
+
+Players.PlayerAdded:Connect(onPlayer)
+for _, player in Players:GetPlayers() do onPlayer(player) end

@@ -106,3 +106,9 @@ for path in sorted(BAKED.glob("*.json")):
 package_path = COMBAT / "CombatFoundation_Import.rbxmx"
 save_xml(package, package_path)
 print("PACKAGE", package_path, package_path.stat().st_size)
+
+test_sword_package = root()
+script_node(COMBAT / "tools/CombatTestSword.server.luau", "Script", test_sword_package)
+test_sword_path = COMBAT / "assets/weapon/CombatTestSwordScript.rbxmx"
+save_xml(test_sword_package, test_sword_path)
+print("TEST_SWORD_SCRIPT", test_sword_path, test_sword_path.stat().st_size)

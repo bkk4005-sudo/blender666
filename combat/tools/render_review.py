@@ -2,6 +2,7 @@
 import bpy
 import os
 from pathlib import Path
+from mathutils import Vector
 
 root = Path(__file__).resolve().parents[2]
 blend = root / "combat/assets/blender/animations/StraightSword_R15.blend"
@@ -32,9 +33,28 @@ checks = {
 only_clip = os.environ.get("COMBAT_REVIEW_CLIP")
 if only_clip:
     checks = {only_clip: checks[only_clip]}
-for camera_name in ["Camera / front", "Camera / choreography"]:
-    scene.camera = bpy.data.objects[camera_name]
-    camera_slug = "front" if camera_name.endswith("front") else "side"
+specific_frames = os.environ.get("COMBAT_REVIEW_FRAMES")
+if specific_frames:
+    frames = [int(value) for value in specific_frames.split(",")]
+    checks = {clip: frames for clip in checks}
+
+camera_options = {
+    "front": bpy.data.objects["Camera / front"],
+    "side": bpy.data.objects["Camera / choreography"],
+}
+for slug, position in {"back": (0, 18, 5), "gameplay": (2, 10, 5.5)}.items():
+    camera_data = bpy.data.cameras.new("Review " + slug)
+    camera = bpy.data.objects.new("Review " + slug, camera_data)
+    scene.collection.objects.link(camera)
+    camera.location = position
+    camera.rotation_euler = (Vector((0, 0, 3.35)) - camera.location).to_track_quat("-Z", "Y").to_euler()
+    camera_data.type = "ORTHO" if slug == "back" else "PERSP"
+    if slug == "back": camera_data.ortho_scale = 8
+    else: camera_data.lens = 42
+    camera_options[slug] = camera
+selected_cameras = os.environ.get("COMBAT_REVIEW_CAMERAS", "front,side,back,gameplay").split(",")
+for camera_slug in selected_cameras:
+    scene.camera = camera_options[camera_slug]
     for clip, frames in checks.items():
         rig.animation_data.action = bpy.data.actions[clip]
         prop.animation_data.action = bpy.data.actions["PROP__" + clip]

@@ -4,7 +4,7 @@ Scope: local Blender 5.2 and one connected Roblox Studio instance using the old 
 
 | Check | Result | Evidence / limit |
 | --- | --- | --- |
-| Blender source generation | PASS | Eight editable Actions saved in `StraightSword_R15.blend`; roll clips each bake 26 samples, and the script reported max leg extension 0 and near-zero grip solver error. These numeric checks do not prove visual quality. |
+| Blender source generation | PASS | Eight editable Actions saved in `StraightSword_R15.blend`; roll clips each bake 26 samples. The latest authoring run reported maximum leg overreach about 0.024 stud and grip solver error below 0.000001 stud. These numeric checks do not prove visual quality. |
 | Individual KFS generation | PASS offline | `tools/validate_assets.py` parsed eight `.rbxmx` files and the bundle, confirming R15 pose names, frame times, marker sets and the Studio-verified priority tokens. Independent Studio reimport of these XML files is NOT TESTED. |
 | Studio import from JSON | PASS | In Edit mode the importer created three shared modules, two server scripts and eight KeyframeSequences. The previous prototype installation was confirmed unchanged before replacing it. |
 | R15 animation playback | PASS basic | During Play Solo `SwordR1_1` loaded on the standard R15 Animator and played with Action priority and a reported length of 0.9333 s. Joint mapping at runtime is plausible; movement polish is NOT VERIFIED. |
@@ -23,7 +23,18 @@ Scope: local Blender 5.2 and one connected Roblox Studio instance using the old 
 | Block/parry/guard break | NOT TESTED | Server logic exists, visual clips missing. |
 | Two players, latency, replay abuse | NOT TESTED | Play Solo only; the sequence test above does not substitute for hostile remote replay or network emulation. |
 | Lock-on acquisition and camera | PASS basic | In Play Solo Q acquired a temporary R15 dummy 15 studs ahead. Holding A for 0.6 s moved about 6.1 studs laterally; character facing stayed aligned with the dummy (dot product about 1.0), and the camera followed. Removing the dummy restored the Custom camera and AutoRotate. A temporary blocking wall caused lock loss after the authored 0.75 s grace period. Test objects were removed. Camera feel and attack turning against a moving opponent remain NOT TESTED. |
-| Second-map integration | NOT TESTED | New Coliseum place is not present in this checkout. |
 | Published AnimationIds | NOT TESTED | No assets were published, and no IDs were invented. |
 
-Visual review of front/side Blender renders found readable wind-up silhouettes. A revised first R1 contact extends the blade across the front silhouette, but its side silhouette and leg/weight shifts still feel stiff. The first roll pass put the sword into the floor; a revised blade orientation removed the obvious penetration in inspected key poses. The R15 tumble still needs hand polish and clean comparison footage. Locomotion and defensive Actions remain missing before a credible PvP quality gate. The old `.rbxl` on disk was left unchanged.
+## Visual polish and sword test — 2026-10-13
+
+| Check | Result | Evidence / limit |
+| --- | --- | --- |
+| Blender four-view pose review | PASS for inspection | Front, side, back and approximate third-person renders were generated for all eight Actions. The guard was lowered, R1/R2 support steps were added, and roll takeoff/landing gained intermediate poses. The R1_2 and R2 blades are foreshortened from behind near contact; this is not a signoff for natural motion. |
+| Floor clearance at baked 30 FPS | PASS on Blender donor | Evaluated body and sword mesh minima were sampled on every frame. No sampled pose crossed the floor; the roll floor target was 0.015 stud. Motion between samples and Studio avatar collision remain untested. |
+| Action transitions | PASS numeric | R1_1 frame 21 to R1_2 frame 0 differs by at most about 0.00021 stud in sampled joint translation. All action end poses match CombatIdle frame 0 within 0.000002 stud in the compared joints. Visual blending in live movement remains unverified. |
+| Updated Studio preview sequences | PASS in current old place | Eight sequences were rebuilt from the latest JSON. Existing versions were moved to `ReplicatedStorage.CombatFoundation.AnimationBackup_*` before replacement. This is an in-memory Studio Edit change, not a saved map file. |
+| Existing sword mesh on player R15 | PASS basic | In Play Solo the script cloned the existing MeshPart `rbxassetid://139047510233988`, scaled it to roughly `0.938 × 4.051 × 0.257` studs, and created a noncolliding `Motor6D` on `RightHand`. CombatIdle and R1 were visually inspected with the blade visible; respawn attachment and two-player replication were not exercised. This ID belongs to a mesh, not an animation. |
+| Sword/clip alignment | NEEDS WORK | The fixed test grip keeps the handle with the hand. Some roll views hide the blade behind the player body, and the standard avatar differs from the Blender donor. The visible sword path has not been validated against the server hit sweep. |
+| Packaged test sword script | PASS offline | `CombatTestSwordScript.rbxmx` parses and contains the same Source as `CombatTestSword.server.luau`. Independent XML import is not tested. |
+
+The Blender renders still show stiff leg mechanics and abrupt arm changes in parts of the R1_2 preparation and some roll variants. The sword test made these limitations easier to see on a standard player avatar. Locomotion and defensive Actions remain missing before a credible PvP quality gate. The old `.rbxl` on disk was left unchanged.

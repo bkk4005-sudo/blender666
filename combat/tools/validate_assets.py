@@ -49,3 +49,10 @@ for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
 
 assert len(packaged) == 8, "unexpected package clip count"
 print("PASS portable package structure")
+
+test_sword = ET.parse(combat / "assets/weapon/CombatTestSwordScript.rbxmx").getroot()
+script_nodes = [node for node in test_sword.findall("Item") if node.attrib.get("class") == "Script"]
+assert len(script_nodes) == 1, "test sword script missing"
+embedded_source = script_nodes[0].find("./Properties/ProtectedString[@name='Source']").text
+assert embedded_source == (combat / "tools/CombatTestSword.server.luau").read_text(encoding="utf-8")
+print("PASS test sword script package")
