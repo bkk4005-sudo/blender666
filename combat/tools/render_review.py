@@ -1,5 +1,6 @@
 """Render fixed camera checks from the editable Blender Action file."""
 import bpy
+import os
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[2]
@@ -28,6 +29,9 @@ checks = {
     "RollLeft": [1, 5, 10, 13, 16, 19, 22, 26],
     "RollRight": [1, 5, 10, 13, 16, 19, 22, 26],
 }
+only_clip = os.environ.get("COMBAT_REVIEW_CLIP")
+if only_clip:
+    checks = {only_clip: checks[only_clip]}
 for camera_name in ["Camera / front", "Camera / choreography"]:
     scene.camera = bpy.data.objects[camera_name]
     camera_slug = "front" if camera_name.endswith("front") else "side"

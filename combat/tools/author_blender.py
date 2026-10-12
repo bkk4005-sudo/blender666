@@ -68,7 +68,7 @@ def pose(**changes):
 NEUTRAL = pose()
 R1_WIND = pose(p=(-0.65, -0.30, 4.43), angles=(66, -91, -12),
                body=(-2, 0, -22), pelvis=(0, 0, -11), root=(-0.05, 0.09, -0.29))
-R1_CONTACT = pose(p=(0.14, -1.13, 4.08), angles=(93, 20, 8),
+R1_CONTACT = pose(p=(0.42, -1.13, 4.08), angles=(93, 55, 8),
                   body=(14, 0, 15), pelvis=(1, 0, 9), root=(0.04, -0.16, -0.30),
                   lf=(0.64, -0.55, 0))
 R1_END = pose(p=(0.53, -0.63, 3.95), angles=(113, 91, 22),

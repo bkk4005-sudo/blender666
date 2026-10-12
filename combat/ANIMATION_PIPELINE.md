@@ -6,7 +6,7 @@
 
 `tools/author_blender.py` opens the donor, creates key poses and interpolated curves in Blender, then bakes R15 joint transforms at 30 FPS into `assets/animations/r15/baked/*.json`. `tools/package_rbxmx.py` converts the samples into Roblox `KeyframeSequence`/`Keyframe`/`Pose`/`KeyframeMarker` XML. The resulting individual files are in `assets/animations/r15/combat_idle`, `straight_sword` and `dodge`. `CombatFoundation_Import.rbxmx` bundles those clips and the runtime scripts.
 
-The generated curves and rendered front/side frames were inspected as a first pass. The first roll render showed blade-floor penetration; the grip and sword axis were revised, then rerendered. That is insufficient to certify animation polish or foot contact in live R15 play. The Blender file remains the editable source; the generator is reproducible, but later hand edits in Blender must be exported with a compatible bake process to avoid overwriting them.
+The generated curves and rendered front/side frames were inspected as a first pass. The first roll render showed blade-floor penetration; the grip and sword axis were revised, then rerendered. A later R1 contact review found the blade foreshortened against the chest from the front; the contact grip and angle were revised and rerendered. The side view and foot planting still need polish. These checks are insufficient to certify animation quality or foot contact in live R15 play. The Blender file remains the editable source; the generator is reproducible, but later hand edits in Blender must be exported with a compatible bake process to avoid overwriting them.
 
 ## Studio validation already performed
 

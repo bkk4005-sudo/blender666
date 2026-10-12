@@ -1,11 +1,11 @@
 # Animation asset manifest
 
-Version: `prototype-2`, 2026-10-13. Rig: standard Roblox R15 joint names. Source: `assets/blender/animations/StraightSword_R15.blend`. Published Roblox Asset IDs: **none**. `AnimationRegistry` deliberately contains `nil` for every Asset ID.
+Version: `prototype-2.1`, 2026-10-13. Rig: standard Roblox R15 joint names. Source: `assets/blender/animations/StraightSword_R15.blend`. Published Roblox Asset IDs: **none**. `AnimationRegistry` deliberately contains `nil` for every Asset ID.
 
 | Semantic name | Source Action | Portable KeyframeSequence | Length at 30 FPS | Priority / loop | Timeline markers | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | CombatIdle | CombatIdle | `assets/animations/r15/combat_idle/CombatIdle.rbxmx` | 60/30 s | Idle / yes | none | First pass; Studio playback checked |
-| SwordR1_1 | SwordR1_1 | `assets/animations/r15/straight_sword/SwordR1_1.rbxmx` | 28/30 s | Action / no | AttackStart, HitStart, HitEnd, ComboOpen, ComboClose, RecoveryEnd | First pass; Studio playback and damage checked |
+| SwordR1_1 | SwordR1_1 | `assets/animations/r15/straight_sword/SwordR1_1.rbxmx` | 28/30 s | Action / no | AttackStart, HitStart, HitEnd, ComboOpen, ComboClose, RecoveryEnd | Contact silhouette revised; Studio playback and markers checked; further polish needed |
 | SwordR1_2 | SwordR1_2 | `assets/animations/r15/straight_sword/SwordR1_2.rbxmx` | 29/30 s | Action / no | AttackStart, HitStart, HitEnd, ComboOpen, ComboClose, RecoveryEnd | First pass; combo transition checked |
 | SwordR2 | SwordR2 | `assets/animations/r15/straight_sword/SwordR2.rbxmx` | 43/30 s | Action / no | AttackStart, HitStart, HitEnd, RecoveryEnd | First pass; visual render only |
 | RollForward / Backward / Left / Right | matching editable Actions | `assets/animations/r15/dodge/Roll*.rbxmx` | 25/30 s each | Action / no | IFrameStart, IFrameEnd, RecoveryEnd | First pass; Studio playback checked, visual polish pending |
