@@ -16,17 +16,17 @@ Config.Actions = {
     SwordR1_1 = {
         duration = frame(28), cost = 18, damage = 22,
         active = {frame(9), frame(14)}, combo = {frame(16), frame(22)}, bufferOpen = frame(11), chainAt = frame(21),
-        reach = 7.5, width = 4.2, advance = 2.0, turnRate = 90,
+        reach = 7.5, width = 4.2, advance = 2.0, advanceWindow = {frame(4), frame(12)}, turnRate = 90,
     },
     SwordR1_2 = {
         duration = frame(29), cost = 20, damage = 24,
         active = {frame(8), frame(14)}, combo = {frame(16), frame(23)},
-        reach = 7.5, width = 4.2, advance = 1.8, turnRate = 90,
+        reach = 7.5, width = 4.2, advance = 1.8, advanceWindow = {frame(3), frame(11)}, turnRate = 90,
     },
     SwordR2 = {
         duration = frame(43), cost = 34, damage = 43,
         active = {frame(17), frame(25)}, reach = 8.0, width = 3.8,
-        advance = 2.4, turnRate = 55,
+        advance = 2.4, advanceWindow = {frame(14), frame(23)}, turnRate = 55,
     },
     RollForward = {duration = frame(25), cost = 27, iframes = {frame(5), frame(16)}, distance = 12},
     RollBackward = {duration = frame(25), cost = 27, iframes = {frame(5), frame(16)}, distance = 11},

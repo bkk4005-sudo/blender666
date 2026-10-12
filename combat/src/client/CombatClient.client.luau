@@ -19,6 +19,7 @@ local trackConnections = {}
 local predicted = nil
 local actionTrack = nil
 local target = nil
+local occludedSince = nil
 local facingAttachment = nil
 local facingAlign = nil
 local inputSequence = 0
@@ -79,9 +80,9 @@ local function playAction(semantic)
     if not track.IsPlaying then track:Play(0.10, 1, 1) end
 end
 
-local function send(kind, direction, predictedName)
+local function send(kind, direction, predictedName, moveDirection)
     inputSequence += 1
-    remote:FireServer({kind = kind, direction = direction, sequence = inputSequence})
+    remote:FireServer({kind = kind, direction = direction, moveDirection = moveDirection, sequence = inputSequence})
     if predictedName then
         predicted = {name = predictedName, deadline = os.clock() + 0.38}
         playAction(predictedName)
@@ -101,6 +102,16 @@ local function validTarget(model)
     params.FilterType = Enum.RaycastFilterType.Exclude
     params.FilterDescendantsInstances = {character}
     local ray = workspace:Raycast(camera.CFrame.Position, direction, params)
+    return not ray or ray.Instance:IsDescendantOf(model)
+end
+
+local function targetVisible(model)
+    local enemyRoot = model:FindFirstChild("HumanoidRootPart")
+    if not enemyRoot then return false end
+    local params = RaycastParams.new()
+    params.FilterType = Enum.RaycastFilterType.Exclude
+    params.FilterDescendantsInstances = {character}
+    local ray = workspace:Raycast(camera.CFrame.Position, enemyRoot.Position - camera.CFrame.Position, params)
     return not ray or ray.Instance:IsDescendantOf(model)
 end
 
@@ -141,6 +152,7 @@ end
 
 local function setLock(newTarget)
     target = newTarget
+    occludedSince = nil
     if not target then
         clearFacing()
         camera.CameraType = Enum.CameraType.Custom
@@ -153,8 +165,21 @@ end
 local function rollDirection()
     local f = (UserInputService:IsKeyDown(Enum.KeyCode.W) and 1 or 0) - (UserInputService:IsKeyDown(Enum.KeyCode.S) and 1 or 0)
     local r = (UserInputService:IsKeyDown(Enum.KeyCode.D) and 1 or 0) - (UserInputService:IsKeyDown(Enum.KeyCode.A) and 1 or 0)
-    if math.abs(r) > math.abs(f) then return r > 0 and "RollRight" or "RollLeft" end
-    return f < 0 and "RollBackward" or "RollForward"
+    if not root then return "RollForward", Vector3.new(0, 0, -1) end
+    if f == 0 and r == 0 then return "RollForward", Vector3.new(root.CFrame.LookVector.X, 0, root.CFrame.LookVector.Z).Unit end
+    local cameraForward = Vector3.new(camera.CFrame.LookVector.X, 0, camera.CFrame.LookVector.Z)
+    local cameraRight = Vector3.new(camera.CFrame.RightVector.X, 0, camera.CFrame.RightVector.Z)
+    local forward = cameraForward.Magnitude > 1e-4 and cameraForward.Unit or Vector3.new(root.CFrame.LookVector.X, 0, root.CFrame.LookVector.Z).Unit
+    local right = cameraRight.Magnitude > 1e-4 and cameraRight.Unit or Vector3.new(root.CFrame.RightVector.X, 0, root.CFrame.RightVector.Z).Unit
+    local world = forward * f + right * r
+    if world.Magnitude < 1e-4 then world = root.CFrame.LookVector end
+    world = Vector3.new(world.X, 0, world.Z).Unit
+    local forwardScore = world:Dot(root.CFrame.LookVector)
+    local rightScore = world:Dot(root.CFrame.RightVector)
+    if math.abs(rightScore) > math.abs(forwardScore) then
+        return rightScore > 0 and "RollRight" or "RollLeft", world
+    end
+    return forwardScore < 0 and "RollBackward" or "RollForward", world
 end
 
 local function bindCharacter(newCharacter)
@@ -188,8 +213,8 @@ local function handleInput(actionName, inputState, inputObject)
     elseif actionName == "CombatR2" and inputState == Enum.UserInputState.Begin then
         send("R2", nil, "SwordR2")
     elseif actionName == "CombatRoll" and inputState == Enum.UserInputState.Begin then
-        local name = rollDirection()
-        send("Roll", name, name)
+        local name, worldDirection = rollDirection()
+        send("Roll", name, name, worldDirection)
     elseif actionName == "CombatBlock" then
         if inputState == Enum.UserInputState.Begin then send("BlockStart")
         elseif inputState == Enum.UserInputState.End then send("BlockEnd") end
@@ -232,6 +257,14 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
         if not enemyHumanoid or enemyHumanoid.Health <= 0 or not enemyRoot or (enemyRoot.Position - root.Position).Magnitude > Config.TargetLossRange then
             setLock(nil)
         else
+            if targetVisible(target) then
+                occludedSince = nil
+            else
+                occludedSince = occludedSince or os.clock()
+                if os.clock() - occludedSince > 0.75 then setLock(nil) end
+            end
+        end
+        if target then
             ensureFacing()
             local delta = enemyRoot.Position - root.Position
             local flat = Vector3.new(delta.X, 0, delta.Z)

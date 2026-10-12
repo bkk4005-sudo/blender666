@@ -28,6 +28,32 @@ local function yawFor(name, u)
     return math.rad(-10 + 20 * u)
 end
 
+local function horizontalUnit(vector)
+    local flat = Vector3.new(vector.X, 0, vector.Z)
+    return flat.Magnitude > 1e-4 and flat.Unit or Vector3.new(0, 0, -1)
+end
+
+local function planarMotion(root, name, maxForce)
+    local attachment = Instance.new("Attachment")
+    attachment.Name = name .. "Attachment"
+    attachment.Parent = root
+    local velocity = Instance.new("LinearVelocity")
+    velocity.Name = name .. "Velocity"
+    velocity.Attachment0 = attachment
+    velocity.MaxForce = maxForce
+    velocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Plane
+    velocity.PrimaryTangentAxis = Vector3.xAxis
+    velocity.SecondaryTangentAxis = Vector3.zAxis
+    velocity.PlaneVelocity = Vector2.zero
+    velocity.RelativeTo = Enum.ActuatorRelativeTo.World
+    velocity.Parent = root
+    return attachment, velocity
+end
+
+local function velocityFactor(progress)
+    return math.max(0, math.min(progress / 0.15, 1, (1 - progress) / 0.25))
+end
+
 function CombatService.new(remote)
     local self = setmetatable({remote = remote, profiles = {}, connections = {}}, CombatService)
     table.insert(self.connections, remote.OnServerEvent:Connect(function(player, request)
@@ -58,7 +84,8 @@ function CombatService:bindPlayer(player)
         player = player, character = nil, action = nil, started = 0,
         stamina = Config.MaxStamina, lastSpend = 0, lastSequence = 0,
         rateWindow = 0, rateCount = 0, hit = {}, comboQueued = false,
-        sweepTime = nil, rollVelocity = nil, rollAttachment = nil, rollDirection = nil,
+        sweepTime = nil, motionVelocity = nil, motionAttachment = nil, motionDirection = nil,
+        facing = nil,
         alive = false, blocking = false, sprinting = false,
         characterConnections = {},
     }
@@ -124,9 +151,10 @@ function CombatService:spend(profile, amount, now)
 end
 
 function CombatService:finish(profile)
-    if profile.rollVelocity then profile.rollVelocity:Destroy(); profile.rollVelocity = nil end
-    if profile.rollAttachment then profile.rollAttachment:Destroy(); profile.rollAttachment = nil end
-    profile.rollDirection = nil
+    if profile.motionVelocity then profile.motionVelocity:Destroy(); profile.motionVelocity = nil end
+    if profile.motionAttachment then profile.motionAttachment:Destroy(); profile.motionAttachment = nil end
+    profile.motionDirection = nil
+    profile.facing = nil
     profile.action = nil
     profile.comboQueued = false
     profile.sweepTime = nil
@@ -139,7 +167,7 @@ function CombatService:finish(profile)
     end
 end
 
-function CombatService:start(profile, actionName, now)
+function CombatService:start(profile, actionName, now, rollVector)
     local action = Config.Actions[actionName]
     if not action or not self:spend(profile, action.cost or 0, now) then return false end
     local humanoid, root = living(profile.character)
@@ -151,27 +179,22 @@ function CombatService:start(profile, actionName, now)
     profile.sweepTime = nil
     profile.blocking = false
     profile.sprinting = false
-    humanoid.WalkSpeed = ATTACKS[actionName] and 4 or 0
-    humanoid.AutoRotate = not ROLL_DIRECTIONS[actionName]
+    humanoid.WalkSpeed = 0
+    humanoid.AutoRotate = false
     self:setState(profile, Timeline.phase(actionName, 0))
+    if ATTACKS[actionName] then
+        profile.facing = horizontalUnit(root.CFrame.LookVector)
+        profile.motionDirection = profile.facing
+        profile.motionAttachment, profile.motionVelocity = planarMotion(root, "CombatAdvance", 22000)
+    end
     if ROLL_DIRECTIONS[actionName] then
         local direction
         if actionName == "RollBackward" then direction = -root.CFrame.LookVector
         elseif actionName == "RollLeft" then direction = -root.CFrame.RightVector
         elseif actionName == "RollRight" then direction = root.CFrame.RightVector
         else direction = root.CFrame.LookVector end
-        local attachment = Instance.new("Attachment")
-        attachment.Name = "CombatRoll"
-        attachment.Parent = root
-        local velocity = Instance.new("LinearVelocity")
-        velocity.Name = "CombatRollVelocity"
-        velocity.Attachment0 = attachment
-        velocity.MaxForce = 35000
-        velocity.VectorVelocity = Vector3.zero
-        velocity.RelativeTo = Enum.ActuatorRelativeTo.World
-        velocity.Parent = root
-        profile.rollAttachment, profile.rollVelocity = attachment, velocity
-        profile.rollDirection = direction.Unit
+        profile.motionAttachment, profile.motionVelocity = planarMotion(root, "CombatRoll", 35000)
+        profile.motionDirection = horizontalUnit(rollVector or direction)
     end
     self.remote:FireAllClients("Started", profile.player, actionName, now)
     return true
@@ -188,7 +211,7 @@ function CombatService:request(player, request)
     if now - profile.rateWindow >= 1 then profile.rateWindow, profile.rateCount = now, 0 end
     profile.rateCount += 1
     if profile.rateCount > Config.MaxRequestRate then return end
-    local humanoid = living(profile.character)
+    local humanoid, root = living(profile.character)
     if not humanoid then return end
     local kind = request.kind
     if type(kind) ~= "string" then return end
@@ -202,7 +225,22 @@ function CombatService:request(player, request)
         if not profile.action and not profile.blocking then self:start(profile, "SwordR2", now) end
     elseif kind == "Roll" then
         local name = request.direction
-        if not profile.action and not profile.blocking and ROLL_DIRECTIONS[name] then self:start(profile, name, now) end
+        if not profile.action and not profile.blocking and ROLL_DIRECTIONS[name] then
+            local vector = request.moveDirection
+            if vector ~= nil then
+                if typeof(vector) ~= "Vector3" then return end
+                local flat = Vector3.new(vector.X, 0, vector.Z)
+                if flat.Magnitude < 0.8 or flat.Magnitude > 1.2 then return end
+                local expected
+                if name == "RollBackward" then expected = -root.CFrame.LookVector
+                elseif name == "RollLeft" then expected = -root.CFrame.RightVector
+                elseif name == "RollRight" then expected = root.CFrame.RightVector
+                else expected = root.CFrame.LookVector end
+                if horizontalUnit(expected):Dot(flat.Unit) < 0.5 then return end
+                vector = flat.Unit
+            end
+            self:start(profile, name, now, vector)
+        end
     elseif kind == "BlockStart" then
         if not profile.action and profile.stamina > 0 then
             profile.blocking = true
@@ -294,7 +332,8 @@ function CombatService:sweep(profile, actionName, elapsed, now)
     -- position and action time define the query; client never supplies hit targets.
     for i = 0, 2 do
         local sampleU = oldU + (u - oldU) * i / 2
-        local frame = root.CFrame * CFrame.Angles(0, yawFor(actionName, sampleU), 0)
+        local facing = profile.facing or horizontalUnit(root.CFrame.LookVector)
+        local frame = CFrame.lookAt(root.Position, root.Position + facing) * CFrame.Angles(0, yawFor(actionName, sampleU), 0)
         local center = frame * CFrame.new(0, 0, -action.reach * 0.52)
         for _, part in workspace:GetPartBoundsInBox(center, Vector3.new(action.width, 4.5, action.reach), params) do
             local model = part:FindFirstAncestorOfClass("Model")
@@ -344,11 +383,29 @@ function CombatService:update(dt)
             local actionName = profile.action
             local action = Config.Actions[actionName]
             local elapsed = now - profile.started
-            if ROLL_DIRECTIONS[actionName] and profile.rollVelocity and profile.rollDirection then
-                local progress = math.clamp(elapsed / action.duration, 0, 1)
-                local ramp = math.min(progress / 0.15, 1, (1 - progress) / 0.25)
-                local peakSpeed = action.distance / action.duration / 0.80
-                profile.rollVelocity.VectorVelocity = profile.rollDirection * peakSpeed * math.max(0, ramp)
+            if ATTACKS[actionName] and profile.facing then
+                local _, root = living(profile.character)
+                if root then
+                    local wanted = horizontalUnit(root.CFrame.LookVector)
+                    local current = profile.facing
+                    local signedAngle = math.atan2(current.Z * wanted.X - current.X * wanted.Z, current:Dot(wanted))
+                    local maxTurn = math.rad(action.turnRate) * dt
+                    local step = math.clamp(signedAngle, -maxTurn, maxTurn)
+                    profile.facing = CFrame.Angles(0, step, 0):VectorToWorldSpace(current)
+                    profile.motionDirection = profile.facing
+                end
+            end
+            if profile.motionVelocity and profile.motionDirection then
+                local window = ROLL_DIRECTIONS[actionName] and {0, action.duration} or action.advanceWindow
+                if window then
+                    local span = window[2] - window[1]
+                    local progress = math.clamp((elapsed - window[1]) / span, 0, 1)
+                    local distance = ROLL_DIRECTIONS[actionName] and action.distance or action.advance
+                    local speed = distance / span / 0.80 * velocityFactor(progress)
+                    if elapsed < window[1] or elapsed > window[2] then speed = 0 end
+                    local horizontal = profile.motionDirection * speed
+                    profile.motionVelocity.PlaneVelocity = Vector2.new(horizontal.X, horizontal.Z)
+                end
             end
             if actionName == "SwordR1_1" and profile.comboQueued and elapsed >= action.chainAt then
                 self:finish(profile)
