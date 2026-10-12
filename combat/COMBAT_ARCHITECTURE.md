@@ -1,0 +1,9 @@
+# Combat architecture
+
+`src/shared/CombatConfig.luau` owns the prototype balance numbers. `ActionTimeline.luau` derives server phases and windows from the same config. `AnimationRegistry.luau` maps semantic names to per-rig animation assets and reserves profile registration for future custom rigs. Animation IDs do not drive damage or stamina.
+
+`src/server/CombatService.luau` owns one profile per player: character generation, sequence number, rate counter, state, stamina, active action, hit set and temporary roll actuator. It validates action requests and samples sword hit volumes on the server at 30 Hz. It applies damage once per humanoid per action, checks defender roll windows, facing, parry and block, and cleans up on death/respawn. Static models with `CombatDummy=true` receive damage but keep at least 1 HP and heal after a delay.
+
+`src/client/CombatClient.client.luau` sends intent only. It starts local animation prediction, listens for server starts, caches tracks and uses real marker signals only for future VFX/SFX. Lock-on camera and facing are local; the server still decides damage from server-observed state. The current sweep uses broad boxes along an authored yaw arc. Its shape can strike within the box even where the blade is not visible. Before competitive PvP, replace it with sampled blade attachment sweep plus obstruction/angle checks and test it under latency.
+
+The default Roblox `Humanoid` remains the movement primitive. `WalkSpeed` limits action movement; `LinearVelocity` moves a roll over a bounded duration. Blender root transforms are visual and do not move the HumanoidRootPart. The current system does not offer custom acceleration or lock-on locomotion animations, and client lock-on input requires integration review alongside the project's PlayerModule and existing controls.
