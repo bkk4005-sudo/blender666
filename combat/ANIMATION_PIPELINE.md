@@ -14,6 +14,8 @@ The import script constructed eight real KeyframeSequences with marker instances
 
 ## Required next animation pass
 
+The donor `AshenOath_R15.blend` contains older `WalkForward`, `WalkBackward`, `StrafeLeft`, `StrafeRight`, `RunForward`, guard and parry Actions. Front/side inspection found a two-hand upright greatsword pose and very small leg changes in the locomotion loops. They do not match this one-hand straight-sword set or solve visible foot sliding, so they were left in the donor source and were not presented as finished combat locomotion. Their original files remain untouched.
+
 1. Find unobstructed movement references and document precise visible key poses. The supplied longsword clip is partly obscured; see [ANIMATION_REFERENCE_BREAKDOWN.md](ANIMATION_REFERENCE_BREAKDOWN.md).
 2. In Blender, refine foot planting, hip-to-shoulder delay, grip, sword clearance, follow-through and R1_1 to R1_2 continuity. Review front, side, back and gameplay camera views at full and reduced speed.
 3. Polish the four roll variants, then author combat locomotion, block, parry and reactions as real Actions before enabling their visuals in production.
