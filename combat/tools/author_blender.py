@@ -320,6 +320,8 @@ def cframe(matrix):
 
 rig_data = json.loads((HERE / "assets/blender/rig/R15_joint_schema.json").read_text())
 joints = rig_data["joints"]
+target_data = json.loads((HERE / "assets/blender/rig/R15_standard_joint_schema.json").read_text())
+target_joints = {joint["name"]: joint for joint in target_data["joints"]}
 
 
 def matrix_of(values):
@@ -333,9 +335,57 @@ def matrix_of(values):
 
 rests = {joint["name"]: matrix_of(joint["rest"]) for joint in joints}
 rests["HumanoidRootPart"] = matrix_of(rig_data["rootRest"])
+target_rests = {joint["name"]: matrix_of(joint["rest"]) for joint in target_data["joints"]}
+target_rests["HumanoidRootPart"] = matrix_of(target_data["rootRest"])
 bones = {joint["name"]: converted(rig.matrix_world @ rig.data.bones[joint["name"]].matrix_local)
          for joint in joints}
 body_parts = [bpy.data.objects[name] for name in rig_data["bodyNames"]]
+
+
+def rotation_matrix(matrix):
+    return matrix.to_quaternion().to_matrix().to_4x4()
+
+
+def box_floor(matrix, size):
+    return min((matrix @ Vector((x * size[0] / 2, y * size[1] / 2, z * size[2] / 2))).y
+               for x in (-1, 1) for y in (-1, 1) for z in (-1, 1))
+
+
+target_floor = min(box_floor(target_rests[name], target_joints[name]["size"]) for name in target_joints)
+
+
+def retarget_standard(posed, ground_clearance):
+    # Donor C0/C1 frames have imported FBX rotations. Exporting their Transform
+    # directly rotates a standard R15 joint around the wrong axes. Preserve the
+    # posed part-relative rotation, then express it in the target joint frame.
+    transforms = {}
+    target_posed = {"HumanoidRootPart": target_rests["HumanoidRootPart"]}
+    for joint in joints:
+        name, parent = joint["name"], joint["parent"]
+        target = target_joints[name]
+        assert target["parent"] == parent
+        c0, c1 = matrix_of(target["c0"]), matrix_of(target["c1"])
+        source_rest_local = rotation_matrix(rests[parent]).inverted() @ rotation_matrix(rests[name])
+        target_rest_local = rotation_matrix(target_rests[parent]).inverted() @ rotation_matrix(target_rests[name])
+        source_local = rotation_matrix(posed[parent]).inverted() @ rotation_matrix(posed[name])
+        desired_local = target_rest_local @ source_rest_local.inverted() @ source_local
+        value = rotation_matrix(c0).inverted() @ desired_local @ rotation_matrix(c1)
+        if name == "LowerTorso":
+            delta = posed[name].translation - rests[name].translation
+            value.translation = rotation_matrix(c0).inverted().to_3x3() @ delta
+        target_posed[name] = target_posed[parent] @ c0 @ value @ c1.inverted()
+        expected = rotation_matrix(target_posed[parent]) @ desired_local
+        error = expected.to_quaternion().rotation_difference(target_posed[name].to_quaternion()).angle
+        assert error < 0.0001, (name, error)
+        transforms[name] = value
+    body_minimum = min(box_floor(target_posed[name], target_joints[name]["size"]) for name in target_joints)
+    sword_center = target_posed["RightHand"] @ weapon_hilt @ Matrix.Translation(Vector((0, 1.195 * 0.68, 0)))
+    sword_minimum = box_floor(sword_center, (1.51340294 * 0.62, 4.71 * 0.68, 0.37736732 * 0.86))
+    lift = max(target_floor + max(ground_clearance, 0.03) - body_minimum,
+               target_floor + 0.01 - sword_minimum)
+    root_c0 = matrix_of(target_joints["LowerTorso"]["c0"])
+    transforms["LowerTorso"].translation += rotation_matrix(root_c0).inverted().to_3x3() @ Vector((0, lift, 0))
+    return {name: cframe(value) for name, value in transforms.items()}
 
 
 def body_floor():
@@ -364,9 +414,12 @@ def sword_floor():
 def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, grounded_roll=False):
     # Semantic poses clear the floor, but joint/rig interpolation can dip
     # between them. Bake a smoothed correction at the export sampling rate.
+    sample_count = (frame_count - 1) * 2 + 1
+    spread_frames *= 2
     sampled = []
-    for index in range(frame_count):
-        scene.frame_set(index + 1)
+    for index in range(sample_count):
+        frame = 1 + index / 2
+        scene.frame_set(int(frame), subframe=frame % 1)
         bpy.context.view_layer.update()
         body_minimum = body_floor()
         sword_minimum = sword_floor() if include_sword else math.inf
@@ -374,14 +427,14 @@ def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, gro
         needed = max(0.0, target_floor - minimum)
         sampled.append((rig.location.z, prop.location.z, needed, body_minimum, sword_minimum))
     correction = []
-    for index in range(frame_count):
+    for index in range(sample_count):
         correction.append(max(sampled[neighbor][2] * max(0.0, 1.0 - abs(index - neighbor) / spread_frames)
                               for neighbor in range(max(0, index - spread_frames + 1),
-                                                    min(frame_count, index + spread_frames))))
+                                                    min(sample_count, index + spread_frames))))
     correction[0] = 0.0
     correction[-1] = 0.0
     for index, lift in enumerate(correction):
-        if grounded_roll and 7 <= index <= 19:
+        if grounded_roll and 14 <= index <= 38:
             # The inverted body must pass close to the ground. The sword can
             # limit the downward adjustment so its edge never cuts the floor.
             body_clearance = sampled[index][3] + lift
@@ -389,11 +442,12 @@ def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, gro
             sink = min(max(0.0, body_clearance - 0.06),
                        max(0.0, sword_clearance - target_floor))
             lift -= sink
-        scene.frame_set(index + 1)
+        frame = 1 + index / 2
+        scene.frame_set(int(frame), subframe=frame % 1)
         rig.location.z = sampled[index][0] + lift
         prop.location.z = sampled[index][1] + lift
-        rig.keyframe_insert("location", frame=index + 1, group="Floor clearance")
-        prop.keyframe_insert("location", frame=index + 1, group="Floor clearance")
+        rig.keyframe_insert("location", frame=frame, group="Floor clearance")
+        prop.keyframe_insert("location", frame=frame, group="Floor clearance")
     print("FLOOR_CORRECTION", round(max(correction), 4), flush=True)
 
 
@@ -410,7 +464,57 @@ def clamp_location_curves(animated_action):
                         curve.update()
 
 
+rig.matrix_world = Matrix.Identity(4)
+pose_at(NEUTRAL)
+bpy.context.view_layer.update()
+neutral_hand = converted(rig.matrix_world @ rig.pose.bones["RightHand"].matrix) @ bones["RightHand"].inverted() @ rests["RightHand"]
+weapon_hilt = neutral_hand.inverted() @ converted(prop.matrix_world)
+anchor = bpy.data.objects.new("Sword grip / rigid hand anchor", None)
+scene.collection.objects.link(anchor)
+anchor.parent = rig
+anchor.parent_type = "BONE"
+anchor.parent_bone = "RightHand"
+anchor.matrix_parent_inverse = Matrix.Identity(4)
+bone_parent = rig.matrix_world @ rig.pose.bones["RightHand"].matrix @ Matrix.Translation(Vector((0, rig.data.bones["RightHand"].length, 0)))
+anchor.matrix_basis = bone_parent.inverted() @ prop.matrix_world
+prop_constraint = prop.constraints.new("COPY_TRANSFORMS")
+prop_constraint.name = "Rigid sword grip / source of truth"
+prop_constraint.target = anchor
+prop_constraint.owner_space = "WORLD"
+prop_constraint.target_space = "WORLD"
+prop_constraint.mute = True
+weapon_config = {
+    "sourceMeshId": "rbxassetid://139047510233988",
+    "meshScale": [0.62, 0.68, 0.86],
+    "handToHilt": cframe(weapon_hilt),
+    "sourceGrip": [0, -1.195, 0],
+}
+(HERE / "assets/weapon/weapon_grip.json").write_text(json.dumps(weapon_config, indent=2))
+grip_values = ", ".join(str(value) for value in weapon_config["handToHilt"])
+(HERE / "src/shared/WeaponVisualConfig.luau").write_text(
+    "-- Generated from the Blender hand part frame, not the bone frame.\n"
+    "return {\n    MeshId = \"rbxassetid://139047510233988\",\n"
+    "    MeshScale = Vector3.new(0.62, 0.68, 0.86),\n"
+    f"    HandToHilt = CFrame.new({grip_values}),\n"
+    "    SourceGrip = CFrame.new(0, -1.195, 0),\n}\n")
+
+
+def match_prop_to_hand(frame_count):
+    previous = None
+    for index in range(frame_count):
+        scene.frame_set(index + 1)
+        bpy.context.view_layer.update()
+        hand = converted(rig.matrix_world @ rig.pose.bones["RightHand"].matrix) @ bones["RightHand"].inverted() @ rests["RightHand"]
+        prop.matrix_world = AXIS.inverted() @ (hand @ weapon_hilt) @ AXIS
+        if previous and prop.rotation_quaternion.dot(previous) < 0:
+            prop.rotation_quaternion.negate()
+        previous = prop.rotation_quaternion.copy()
+        prop.keyframe_insert("location", frame=index + 1, group="Hand attachment bake")
+        prop.keyframe_insert("rotation_quaternion", frame=index + 1, group="Hand attachment bake")
+
+
 for clip in CLIPS:
+    prop_constraint.mute = True
     name = clip["name"]
     action = bpy.data.actions.new(name)
     action.use_fake_user = True
@@ -462,6 +566,8 @@ for clip in CLIPS:
         prop.keyframe_insert("rotation_quaternion", frame=frame)
     for marker_name, time in clip["markers"].items():
         action.pose_markers.new(marker_name).frame = 1+round(time*30)
+    match_prop_to_hand(round(clip["duration"] * 30) + 1)
+    prop_constraint.mute = False
     if name.startswith("Roll"):
         stabilize_floor(round(clip["duration"] * 30) + 1, 0.015, 4, True, True)
     elif name.startswith("Sword"):
@@ -470,24 +576,23 @@ for clip in CLIPS:
     clamp_location_curves(prop_action)
     # Bake from the editable Blender Action, not from the authoring pose table.
     frames = []
-    for index in range(round(clip["duration"]*30)+1):
-        scene.frame_set(1+index)
+    for index in range(round(clip["duration"]*60)+1):
+        frame = 1 + index / 2
+        scene.frame_set(int(frame), subframe=frame % 1)
         bpy.context.view_layer.update()
         posed = {"HumanoidRootPart": rests["HumanoidRootPart"]}
         for joint in joints:
             n = joint["name"]
             posed[n] = converted(rig.matrix_world @ rig.pose.bones[n].matrix) @ bones[n].inverted() @ rests[n]
-        transforms = {}
-        for joint in joints:
-            n, parent = joint["name"], joint["parent"]
-            c0, c1 = matrix_of(joint["c0"]), matrix_of(joint["c1"])
-            transforms[n] = cframe(c0.inverted() @ posed[parent].inverted() @ posed[n] @ c1)
-        frames.append({"time": index/30, "poses": transforms})
+        clearance = body_floor()
+        transforms = retarget_standard(posed, clearance)
+        frames.append({"time": index/60, "poses": transforms, "groundClearance": round(clearance, 7)})
     output = {"name": name, "rig": "R15", "duration": clip["duration"],
               "loop": clip["loop"], "priority": clip["priority"],
               "markers": clip["markers"], "frames": frames,
               "sourceBlend": OUT_BLEND.relative_to(ROOT).as_posix(),
-              "status": "ITERATED_REQUIRES_STUDIO_QA"}
+              "status": "ITERATED_REQUIRES_STUDIO_QA", "exportProfile": "R15Standard",
+              "jointSchema": "combat/assets/blender/rig/R15_standard_joint_schema.json", "sampleRate": 60}
     (OUT_DATA / (name+".json")).write_text(json.dumps(output, separators=(",", ":")))
     print("AUTHORED", name, len(frames), flush=True)
 

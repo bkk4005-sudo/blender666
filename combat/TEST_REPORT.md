@@ -1,6 +1,8 @@
-# Test report — 2026-10-13
+# Test report — latest verification 2026-10-14
 
 Scope: local Blender 5.2 and one connected Roblox Studio instance using the old Coliseum in Play Solo. This is a prototype test, not release certification. Prototype balance timings are authored values, not Dark Souls III measurements.
+
+The following table records the earlier 2026-10-13 prototype checks. The current export and avatar-preview results are recorded in the 2026-10-14 section below.
 
 | Check | Result | Evidence / limit |
 | --- | --- | --- |
@@ -38,3 +40,19 @@ Scope: local Blender 5.2 and one connected Roblox Studio instance using the old 
 | Packaged test sword script | PASS offline | `CombatTestSwordScript.rbxmx` parses and contains the same Source as `CombatTestSword.server.luau`. Independent XML import is not tested. |
 
 The Blender renders still show stiff leg mechanics and abrupt arm changes in parts of the R1_2 preparation and some roll variants. The sword test made these limitations easier to see on a standard player avatar. Locomotion and defensive Actions remain missing before a credible PvP quality gate. The old `.rbxl` on disk was left unchanged.
+
+## Canonical R15 export and rigid sword grip — 2026-10-14
+
+| Check | Result | Evidence / limit |
+| --- | --- | --- |
+| Donor-to-standard joint axes | PASS numeric and Studio visual | The previous export used rotated donor C0/C1 frames directly. Export now preserves part-relative rotations in canonical R15 frames. CombatIdle and both R1 contact poses now match the intended low guard and lateral sword swing in Studio. |
+| Rigid grip between Blender keys | PASS at 60 FPS | The previous paired curves drifted up to about 0.079 stud and 14 degrees between keys. A bone-parented anchor and Copy Transforms constraint now keep the sword attached continuously. Final sampled grip translation error is below 0.000001 stud, with zero reported angular difference at tested samples. |
+| Source floor clearance | PASS at 60 FPS | `tools/validate_blender.py` evaluates the real body and sword meshes. Minimum body clearance is about 0.00279 stud; minimum sword clearance about 0.015 stud. All eight clips pass. |
+| Canonical exported poses | PASS FK and XML structure | 528 total samples at 60 samples/sec. Forward kinematics verifies body clearance of at least about 0.03 stud and sword clearance of at least 0.01 stud for the recorded standard rig. XML pose, grounding metadata, priorities and marker times match the JSON. |
+| Actual avatar normal-speed playback | PASS for one avatar on flat ground | All eight clips were played through Animator on eurokid7's R15. Across 523 Heartbeat samples, minimum body clearance was about 0.00506 stud and sword bounding-box clearance about 0.16449 stud. Maximum grip error was about 0.000037 stud. These are stationary-root animation tests; results are stored in `tests/visual_playback_2026_10_14.json`. |
+| Actual combat-client idle and locomotion handoff | PASS Play Solo | After waiting for appearance loading, eight preview tracks were cached. CombatIdle played at Movement priority with length 2 s. Holding W produced MoveDirection magnitude 1 and stopped CombatIdle; releasing W restored it at MoveDirection 0. Default locomotion quality remains unpolished. |
+| Marker dispatch through the real client | PASS controlled roll | Native roll tracks emitted RecoveryEnd twice at the identical end time. The client now gates repeated identical marker signals before cue dispatch. A server-accepted RollForward produced exactly three visual cues and returned to Idle. Damage/i-frames still use the server timeline. |
+| Death and respawn with sword | PASS Play Solo | A new character received one sword and exactly one CombatTestSwordGrip. After appearance loading, eight tracks were cached again and CombatIdle had length 2 s. Console output was empty. |
+| Review views | PASS for inspection | The source was rerendered from front, side, back and approximate third-person cameras after the rigid-grip fix. R1_2 preparation, rear-view blade visibility and moving-root foot contact remain visual polish tasks. |
+
+The avatar grounding bake is Studio-only. Published animations, additional avatar proportions, slopes and two-player latency remain NOT TESTED. This session preserved the user's preexisting modification to `roblox-transfer/blender666_Studio.rbxl`; that place file was not staged or rewritten by this work.

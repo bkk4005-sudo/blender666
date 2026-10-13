@@ -10,11 +10,13 @@ local rootFolder = ReplicatedStorage:WaitForChild("CombatFoundation")
 local shared = rootFolder:WaitForChild("Shared")
 local Config = require(shared:WaitForChild("CombatConfig"))
 local Registry = require(shared:WaitForChild("AnimationRegistry"))
+local PreviewRetarget = require(shared:WaitForChild("R15PreviewRetarget"))
 local remote = rootFolder:WaitForChild("CombatRemote")
 local sources = rootFolder:WaitForChild("Animations")
 
 local character, humanoid, root, animator
 local tracks = {}
+local previewSequences = {}
 local trackConnections = {}
 local predicted = nil
 local actionTrack = nil
@@ -28,12 +30,15 @@ local camera = workspace.CurrentCamera
 local controls = nil
 local lastPosition = nil
 local deathConnection = nil
+local characterVersion = 0
 
 local function disconnectTracks()
     for _, connection in trackConnections do connection:Disconnect() end
     table.clear(trackConnections)
     for _, track in tracks do track:Stop(0); track:Destroy() end
     table.clear(tracks)
+    for _, sequence in previewSequences do sequence:Destroy() end
+    table.clear(previewSequences)
     actionTrack = nil
     predicted = nil
 end
@@ -47,9 +52,12 @@ local function loadTrack(semantic)
         local sequence = sources:FindFirstChild(semantic)
         if sequence and sequence:IsA("KeyframeSequence") then
             local ok, temporaryId = pcall(function()
-                return KeyframeSequenceProvider:RegisterKeyframeSequence(sequence)
+                local preview = PreviewRetarget.forCharacter(sequence, character)
+                table.insert(previewSequences, preview)
+                return KeyframeSequenceProvider:RegisterKeyframeSequence(preview)
             end)
             if ok then assetId = temporaryId end
+            if not ok then warn("Combat preview retarget failed:", semantic, temporaryId) end
         end
     end
     if not assetId then return nil end
@@ -59,14 +67,24 @@ local function loadTrack(semantic)
     local ok, track = pcall(function() return animator:LoadAnimation(animation) end)
     animation:Destroy()
     if not ok then warn("Combat animation failed:", semantic, track); return nil end
+    track.Name = semantic
     track.Priority = entry.priority
     track.Looped = entry.loop == true
     tracks[semantic] = track
+    local lastReached = {}
     local markers = {"AttackStart", "HitStart", "HitEnd", "ComboOpen", "ComboClose", "RecoveryEnd", "IFrameStart", "IFrameEnd", "FootstepLeft", "FootstepRight", "ParryActiveStart", "ParryActiveEnd"}
     for _, marker in markers do
         table.insert(trackConnections, track:GetMarkerReachedSignal(marker):Connect(function()
+            local now = os.clock()
+            local previous = lastReached[marker]
+            if previous and now - previous.at < 1 / 15
+                and math.abs(track.TimePosition - previous.position) < 1 / 120 then return end
+            lastReached[marker] = {at = now, position = track.TimePosition}
             -- Observable for sound/VFX integration only. Combat authority stays on server.
-            if script.Parent then script:SetAttribute("LastAnimationMarker", semantic .. ":" .. marker) end
+            if script.Parent then
+                script:SetAttribute("LastAnimationMarker", semantic .. ":" .. marker)
+                script:SetAttribute("AnimationCueSerial", (script:GetAttribute("AnimationCueSerial") or 0) + 1)
+            end
         end))
     end
     return track
@@ -183,10 +201,19 @@ local function rollDirection()
 end
 
 local function bindCharacter(newCharacter)
+    characterVersion += 1
+    local version = characterVersion
     if deathConnection then deathConnection:Disconnect(); deathConnection = nil end
     disconnectTracks()
     setLock(nil)
     character = newCharacter
+    humanoid, root, animator = nil, nil, nil
+    -- Appearance application can rebuild the joints/Animator after CharacterAdded.
+    -- Preview geometry and tracks must be cached on the completed avatar.
+    local deadline = os.clock() + 8
+    while player.Character == newCharacter and not player:HasAppearanceLoaded()
+        and os.clock() < deadline do RunService.Heartbeat:Wait() end
+    if version ~= characterVersion or player.Character ~= newCharacter then return end
     humanoid = character:WaitForChild("Humanoid")
     root = character:WaitForChild("HumanoidRootPart")
     animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
@@ -194,7 +221,13 @@ local function bindCharacter(newCharacter)
     lastPosition = root.Position
     for name in Registry.Profiles.R15 do loadTrack(name) end
     local idle = tracks.CombatIdle
-    if idle then idle:Play(0.20) end
+    if idle then
+        idle.Priority = Enum.AnimationPriority.Movement
+        idle:Play(0.20)
+    end
+    local count = 0
+    for _ in tracks do count += 1 end
+    script:SetAttribute("PreviewAnimationCount", count)
     deathConnection = humanoid.Died:Connect(function()
         if character == newCharacter then
             disconnectTracks()
@@ -291,6 +324,13 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
         if moveVector.Magnitude < 0.01 then moveVector = Vector3.zero end
         if character:GetAttribute("CombatState") == "Rolling" then moveVector = Vector3.zero end
         humanoid:Move(moveVector, true)
+    end
+    local idle = tracks.CombatIdle
+    if idle then
+        local standing = humanoid.MoveDirection.Magnitude < 0.05
+            and humanoid.FloorMaterial ~= Enum.Material.Air
+        if standing and not idle.IsPlaying then idle:Play(0.15)
+        elseif not standing and idle.IsPlaying then idle:Stop(0.15) end
     end
 end)
 

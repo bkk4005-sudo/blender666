@@ -45,11 +45,13 @@ def sequence_node(data, parent):
     ET.SubElement(props, "token", {"name": "Priority"}).text = "0" if data["priority"] == "Idle" else "2"
     markers = {}
     for name, seconds in data["markers"].items():
-        frame_number = round(seconds*30)
+        frame_number = round(seconds*data["sampleRate"])
         markers.setdefault(frame_number, []).append(name)
     for index, frame in enumerate(data["frames"]):
         key, key_props = item("Keyframe", f"Frame_{index:03d}", node)
         ET.SubElement(key_props, "float", {"name": "Time"}).text = str(frame["time"])
+        _, clearance_props = item("NumberValue", "SourceGroundClearance", key)
+        ET.SubElement(clearance_props, "double", {"name": "Value"}).text = str(frame["groundClearance"])
         pose_node("HumanoidRootPart", key, frame["poses"])
         for marker_name in markers.get(index, []):
             _, marker_props = item("KeyframeMarker", marker_name, key)

@@ -5,11 +5,10 @@
 if not game:GetService("RunService"):IsStudio() then return end
 local Players = game:GetService("Players")
 local ServerStorage = game:GetService("ServerStorage")
-
-local SCALE = Vector3.new(0.62, 0.86, 0.68)
--- A visible test grip for a standard player R15 hand. The Blender prop uses
--- its own paired Action, so this weld is only for in-game silhouette review.
-local HAND_TO_HILT = CFrame.new(0, 0, 0.2) * CFrame.Angles(0, 0, math.rad(45))
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local foundation = ReplicatedStorage:WaitForChild("CombatFoundation", 8)
+if not foundation then warn("CombatTestSword: CombatFoundation missing"); return end
+local Visual = require(foundation:WaitForChild("Shared"):WaitForChild("WeaponVisualConfig"))
 
 local function getTemplate(): Model?
     local direct = ServerStorage:FindFirstChild("CombatTestSwordTemplate")
@@ -29,6 +28,8 @@ local function attach(character: Model)
     end
     local existing = character:FindFirstChild("CombatTestSword")
     if existing then existing:Destroy() end
+    local oldGrip = hand:FindFirstChild("CombatTestSwordGrip")
+    if oldGrip then oldGrip:Destroy() end
 
     local swordModel = template:Clone()
     swordModel.Name = "CombatTestSword"
@@ -44,13 +45,13 @@ local function attach(character: Model)
         -- records the handle at this point relative to the mesh centre.
         originalGrip = Instance.new("Attachment")
         originalGrip.Name = "RightGrip"
-        originalGrip.CFrame = CFrame.new(0, -1.195, 0)
+        originalGrip.CFrame = Visual.SourceGrip
         originalGrip.Parent = blade
     end
-    blade.Size = blade.Size * SCALE
+    blade.Size = blade.Size * Visual.MeshScale
     for _, child in blade:GetChildren() do
         if child:IsA("Attachment") then
-            child.Position = child.Position * SCALE
+            child.Position = child.Position * Visual.MeshScale
         end
     end
     blade.Anchored = false
@@ -62,7 +63,7 @@ local function attach(character: Model)
     grip.Name = "CombatTestSwordGrip"
     grip.Part0 = hand
     grip.Part1 = blade
-    grip.C0 = HAND_TO_HILT * originalGrip.CFrame:Inverse()
+    grip.C0 = Visual.HandToHilt * originalGrip.CFrame:Inverse()
     grip.C1 = CFrame.new()
     blade.CFrame = hand.CFrame * grip.C0
     grip.Parent = hand

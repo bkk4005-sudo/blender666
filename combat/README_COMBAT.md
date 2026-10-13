@@ -7,6 +7,7 @@ Status: **prototype for an R15 playtest, not release ready**. The existing Colis
 - Eight original R15 clips: `CombatIdle`, `SwordR1_1`, `SwordR1_2`, `SwordR2`, and four directional rolls. They were authored in Blender 5.2 as editable Actions and converted to KeyframeSequences. This iteration revises the low guard, attack steps and roll ground contact; final avatar visual QA remains open.
 - Server-authoritative R1, buffered second R1, R2, stamina, four directional roll motions with timed invulnerability, block/parry state handling and a sampled sword arc hit query. The client cannot name a hit target or set damage. Attack advances and rolls use horizontal-plane velocity, leaving vertical gravity active.
 - Local animation preview in Studio through `KeyframeSequenceProvider`, with marker signals for visual effects. The project's existing sword mesh can be attached to a player R15 hand using the test script in `tools/CombatTestSword.server.luau`. Published AnimationIds are intentionally absent.
+- Canonical R15 export corrects the donor's imported joint axes. Studio preview bakes the poses for the actual avatar's joint frames and body dimensions. The sword grip is generated from Blender, and all eight clips were checked at normal speed on the current player avatar.
 - Target-facing lock-on camera and movement prototype. Keyboard and mouse only.
 
 ## Current limits

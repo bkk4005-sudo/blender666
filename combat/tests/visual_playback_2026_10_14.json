@@ -1,0 +1,178 @@
+{
+  "date": "2026-10-14",
+  "environment": "Roblox Studio Play Solo, eurokid7 R15 avatar, Heartbeat samples, stationary physical root",
+  "method": "Source clips retargeted to actual avatar for Studio preview; standard-size exported clips require their own avatar profile QA.",
+  "clips": [
+    {
+      "bodyMinimum": 0.03000020980834961,
+      "name": "CombatIdle",
+      "gripMaximum": 0.00003635316534200683,
+      "samples": 116,
+      "markers": [],
+      "swordMinimum": 2.1402297019958496
+    },
+    {
+      "bodyMinimum": 0.013623714447021484,
+      "name": "SwordR1_1",
+      "gripMaximum": 0.000035053311876254156,
+      "samples": 57,
+      "markers": [
+        {
+          "name": "HitStart",
+          "at": 0.3125000298023224
+        },
+        {
+          "name": "HitEnd",
+          "at": 0.4666668176651001
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.9333333373069763
+        }
+      ],
+      "swordMinimum": 1.727982997894287
+    },
+    {
+      "bodyMinimum": 0.005055904388427734,
+      "name": "SwordR1_2",
+      "gripMaximum": 0.00003486153218545951,
+      "samples": 59,
+      "markers": [
+        {
+          "name": "HitStart",
+          "at": 0.2666666805744171
+        },
+        {
+          "name": "HitEnd",
+          "at": 0.4666668176651001
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.9666666388511658
+        }
+      ],
+      "swordMinimum": 1.6568312644958496
+    },
+    {
+      "bodyMinimum": 0.021756649017333984,
+      "name": "SwordR2",
+      "gripMaximum": 0.00003547598316799849,
+      "samples": 87,
+      "markers": [
+        {
+          "name": "HitStart",
+          "at": 0.5666667819023132
+        },
+        {
+          "name": "HitEnd",
+          "at": 0.8499998450279236
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 1.4333332777023315
+        }
+      ],
+      "swordMinimum": 0.9829573631286621
+    },
+    {
+      "bodyMinimum": 0.019414424896240234,
+      "name": "RollForward",
+      "gripMaximum": 0.00003380629641469568,
+      "samples": 51,
+      "markers": [
+        {
+          "name": "IFrameStart",
+          "at": 0.1666666716337204
+        },
+        {
+          "name": "IFrameEnd",
+          "at": 0.533333420753479
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        }
+      ],
+      "swordMinimum": 0.1644911766052246
+    },
+    {
+      "bodyMinimum": 0.01872396469116211,
+      "name": "RollBackward",
+      "gripMaximum": 0.000035796474548988044,
+      "samples": 51,
+      "markers": [
+        {
+          "name": "IFrameStart",
+          "at": 0.17916665971279144
+        },
+        {
+          "name": "IFrameEnd",
+          "at": 0.533333420753479
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        }
+      ],
+      "swordMinimum": 0.3411574363708496
+    },
+    {
+      "bodyMinimum": 0.019689083099365234,
+      "name": "RollLeft",
+      "gripMaximum": 0.00003522145198076032,
+      "samples": 51,
+      "markers": [
+        {
+          "name": "IFrameStart",
+          "at": 0.17916667461395264
+        },
+        {
+          "name": "IFrameEnd",
+          "at": 0.5333334803581238
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        }
+      ],
+      "swordMinimum": 0.7475714683532715
+    },
+    {
+      "bodyMinimum": 0.01951742172241211,
+      "name": "RollRight",
+      "gripMaximum": 0.000035604734875960276,
+      "samples": 51,
+      "markers": [
+        {
+          "name": "IFrameStart",
+          "at": 0.1666666716337204
+        },
+        {
+          "name": "IFrameEnd",
+          "at": 0.5333334803581238
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        },
+        {
+          "name": "RecoveryEnd",
+          "at": 0.8333333134651184
+        }
+      ],
+      "swordMinimum": 0.3195662498474121
+    }
+  ]
+}

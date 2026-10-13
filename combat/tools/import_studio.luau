@@ -58,12 +58,16 @@ local function animationOf(name, parent)
         local key = Instance.new("Keyframe")
         key.Name = string.format("Frame_%03d", index - 1)
         key.Time = frame.time
+        local clearance = Instance.new("NumberValue")
+        clearance.Name = "SourceGroundClearance"
+        clearance.Value = frame.groundClearance
+        clearance.Parent = key
         poseTree("HumanoidRootPart", frame.poses, key)
         key.Parent = sequence
         if index % 10 == 0 then task.wait() end
     end
     for markerName, time in data.markers do
-        local index = math.clamp(math.round(time * 30) + 1, 1, #data.frames)
+        local index = math.clamp(math.round(time * data.sampleRate) + 1, 1, #data.frames)
         local key = sequence:FindFirstChild(string.format("Frame_%03d", index - 1))
         local marker = Instance.new("KeyframeMarker")
         marker.Name = markerName
@@ -85,7 +89,7 @@ local ok, outcome = pcall(function()
     table.insert(staged, client)
     local shared = folder("Shared", root)
     local animations = folder("Animations", root)
-    for _, name in {"CombatConfig", "ActionTimeline", "AnimationRegistry"} do
+    for _, name in {"CombatConfig", "ActionTimeline", "AnimationRegistry", "WeaponVisualConfig", "R15PreviewRetarget"} do
         scriptOf("ModuleScript", name, "src/shared/" .. name .. ".luau", shared)
     end
     for _, name in {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2", "RollForward", "RollBackward", "RollLeft", "RollRight"} do

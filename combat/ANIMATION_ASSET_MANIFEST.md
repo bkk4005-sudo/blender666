@@ -1,6 +1,6 @@
 # Animation asset manifest
 
-Version: `prototype-2.2`, 2026-10-13. Rig: standard Roblox R15 joint names. Source: `assets/blender/animations/StraightSword_R15.blend`. Published Roblox Animation Asset IDs: **none**. `AnimationRegistry` deliberately contains `nil` for every Asset ID.
+Version: `prototype-2.3`, 2026-10-14. Export profile: canonical standard R15 joint frames, with an editable donor rig in Blender. Source: `assets/blender/animations/StraightSword_R15.blend`. Published Roblox Animation Asset IDs: **none**. `AnimationRegistry` deliberately contains `nil` for every Asset ID. Source Actions use 30 FPS; portable sequences bake at 60 samples/second: Idle 121 samples, R1_1 57, R1_2 59, R2 87 and each roll 51. Durations and gameplay markers remain unchanged.
 
 | Semantic name | Source Action | Portable KeyframeSequence | Length at 30 FPS | Priority / loop | Timeline markers | Status |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -38,12 +38,16 @@ local function build(name, joints)
         local key = Instance.new("Keyframe")
         key.Name = string.format("Frame_%03d", index - 1)
         key.Time = frame.time
+        local clearance = Instance.new("NumberValue")
+        clearance.Name = "SourceGroundClearance"
+        clearance.Value = frame.groundClearance
+        clearance.Parent = key
         poseTree("HumanoidRootPart", frame.poses, joints, key)
         key.Parent = sequence
         if index % 10 == 0 then task.wait() end
     end
     for markerName, time in data.markers do
-        local index = math.clamp(math.round(time * 30) + 1, 1, #data.frames)
+        local index = math.clamp(math.round(time * data.sampleRate) + 1, 1, #data.frames)
         local key = assert(sequence:FindFirstChild(string.format("Frame_%03d", index - 1)))
         local marker = Instance.new("KeyframeMarker")
         marker.Name = markerName
@@ -57,6 +61,15 @@ local ok, result = pcall(function()
     local joints = get("assets/blender/rig/R15_joint_schema.json").joints
     local staged = {}
     for _, name in names do staged[name] = build(name, joints) end
+    local visual = Instance.new("ModuleScript")
+    visual.Name = "WeaponVisualConfig"
+    visual.Source = Http:GetAsync(host .. "src/shared/WeaponVisualConfig.luau")
+    local retarget = Instance.new("ModuleScript")
+    retarget.Name = "R15PreviewRetarget"
+    retarget.Source = Http:GetAsync(host .. "src/shared/R15PreviewRetarget.luau")
+    local client = Instance.new("LocalScript")
+    client.Name = "CombatClient"
+    client.Source = Http:GetAsync(host .. "src/client/CombatClient.client.luau")
     local backup = Instance.new("Folder")
     backup.Name = "AnimationBackup_" .. os.date("!%Y%m%d_%H%M%S")
     backup.Parent = root
@@ -65,6 +78,17 @@ local ok, result = pcall(function()
         if previous then previous.Parent = backup end
         staged[name].Parent = folder
     end
+    local shared = assert(root:FindFirstChild("Shared"))
+    local previousVisual = shared:FindFirstChild("WeaponVisualConfig")
+    if previousVisual then previousVisual.Parent = backup end
+    visual.Parent = shared
+    local previousRetarget = shared:FindFirstChild("R15PreviewRetarget")
+    if previousRetarget then previousRetarget.Parent = backup end
+    retarget.Parent = shared
+    local playerScripts = game:GetService("StarterPlayer").StarterPlayerScripts
+    local previousClient = playerScripts:FindFirstChild("CombatClient")
+    if previousClient then previousClient.Parent = backup end
+    client.Parent = playerScripts
     return "Updated " .. tostring(#names) .. " sequences; backup: " .. backup:GetFullName()
 end)
 Http.HttpEnabled = oldHttpEnabled
