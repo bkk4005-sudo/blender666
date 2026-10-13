@@ -12,9 +12,10 @@ Registry.Profiles = {
         RollBackward = {assetId = nil, source = "combat/assets/animations/r15/dodge/RollBackward.rbxmx", status = "FIRST_PASS_REQUIRES_VISUAL_QA", priority = Enum.AnimationPriority.Action},
         RollLeft = {assetId = nil, source = "combat/assets/animations/r15/dodge/RollLeft.rbxmx", status = "FIRST_PASS_REQUIRES_VISUAL_QA", priority = Enum.AnimationPriority.Action},
         RollRight = {assetId = nil, source = "combat/assets/animations/r15/dodge/RollRight.rbxmx", status = "FIRST_PASS_REQUIRES_VISUAL_QA", priority = Enum.AnimationPriority.Action},
-        Block = {assetId = nil, source = nil, loop = true, priority = Enum.AnimationPriority.Action},
-        Parry = {assetId = nil, source = nil, priority = Enum.AnimationPriority.Action},
-        Stagger = {assetId = nil, source = nil, priority = Enum.AnimationPriority.Action},
+        Block = {assetId = nil, source = "combat/assets/animations/r15/defensive/Block.rbxmx", loop = true, priority = Enum.AnimationPriority.Action},
+        Parry = {assetId = nil, source = "combat/assets/animations/r15/defensive/Parry.rbxmx", priority = Enum.AnimationPriority.Action},
+        Stagger = {assetId = nil, source = "combat/assets/animations/r15/reactions/Stagger.rbxmx", priority = Enum.AnimationPriority.Action},
+        GuardBroken = {assetId = nil, source = "combat/assets/animations/r15/reactions/GuardBroken.rbxmx", priority = Enum.AnimationPriority.Action},
     },
 }
 

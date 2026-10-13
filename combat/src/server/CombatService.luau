@@ -243,6 +243,7 @@ function CombatService:request(player, request)
         end
     elseif kind == "BlockStart" then
         if not profile.action and profile.stamina > 0 then
+            profile.sprinting = false
             profile.blocking = true
             humanoid.WalkSpeed = Config.BlockWalkSpeed
             self:setState(profile, "Blocking")
@@ -297,7 +298,9 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             self:finish(defender)
             defender.action = "GuardBroken"
             defender.started = now
+            targetHumanoid.WalkSpeed = 0
             self:setState(defender, "GuardBroken")
+            self.remote:FireAllClients("Started", defender.player, "GuardBroken", now)
         end
     end
     local damage = Config.Actions[actionName].damage

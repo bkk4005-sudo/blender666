@@ -33,8 +33,8 @@ Config.Actions = {
     RollLeft = {duration = frame(25), cost = 27, iframes = {frame(5), frame(16)}, distance = 11},
     RollRight = {duration = frame(25), cost = 27, iframes = {frame(5), frame(16)}, distance = 11},
     Parry = {duration = 0.90, cost = 20, parry = {0.18, 0.34}},
-    Stagger = {duration = 0.66},
-    GuardBroken = {duration = 1.15},
+    Stagger = {duration = frame(20)},
+    GuardBroken = {duration = frame(35)},
 }
 Config.Block = {absorb = 0.75, staminaPerDamage = 1.1}
 Config.SprintDrainPerSecond = 13

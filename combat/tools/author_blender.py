@@ -75,7 +75,7 @@ R1_CONTACT = pose(p=(0.42, -1.13, 4.08), angles=(93, 55, 8),
 R1_END = pose(p=(0.53, -0.63, 3.95), angles=(113, 91, 22),
               body=(12, 0, 29), pelvis=(0, 0, 15), root=(0.07, -0.12, -0.27),
               lf=(0.64, -0.85, 0), rf=(-0.65, 0.88, 0))
-R2_WIND = pose(p=(-0.28, -0.22, 5.08), angles=(-44, -29, -4),
+R2_WIND = pose(p=(-0.95, -0.42, 5.08), angles=(-44, -29, -4),
                body=(-12, 0, -24), pelvis=(-3, 0, -14), root=(-0.07, 0.11, -0.40),
                lf=(0.64, -0.18, 0), rf=(-0.65, 0.65, 0))
 R2_CONTACT = pose(p=(0.02, -1.20, 4.10), angles=(100, 8, 3),
@@ -89,29 +89,31 @@ R2_END = pose(p=(0.20, -1.03, 3.54), angles=(150, 12, 2),
 # expose reliable source frames for a roll, so these are authored project poses.
 ROLL_CROUCH = pose(root=(0, 0, -0.62), body=(37, 0, -10), pelvis=(18, 0, -6),
                    lf=(0.54, 0.00, 0), rf=(-0.54, 0.00, 0),
-                   p=(-0.16, -0.60, 3.56), angles=(90, 90, 0),
+                   p=(-1.00, -0.60, 3.56), angles=(90, 0, 0),
                    left_hand=(0.18, -0.45, -0.48), head=(16, 0, 0))
 ROLL_PREP = pose(root=(0, 0, -0.40), body=(22, 0, -9), pelvis=(10, 0, -4),
                  lf=(0.59, -0.12, 0), rf=(-0.59, 0.15, 0),
-                 p=(-0.13, -0.68, 3.83), left_hand=(0.30, -0.33, -0.80),
+                 p=(-.95, -0.68, 3.83), angles=(100, -15, 8), left_hand=(0.30, -0.33, -0.80),
                  head=(5, 0, 3))
 ROLL_TUCK = pose(root=(0, 0, -0.73), body=(67, 0, -12), pelvis=(34, 0, -8),
                  lf=(0.35, 0.08, 1.48), rf=(-0.35, 0.08, 1.48),
-                 p=(-0.05, -0.35, 3.00), angles=(90, 90, 0),
+                 p=(-.95, -0.45, 3.00), angles=(90, 0, 0),
                  left_hand=(0.10, -0.48, -0.28), head=(28, 0, 0))
 ROLL_MID = pose(root=(0, 0, -0.69), body=(53, 0, -11), pelvis=(27, 0, -7),
                 lf=(0.44, 0.04, 0.70), rf=(-0.44, 0.04, 0.70),
-                p=(-0.10, -0.47, 3.28), left_hand=(0.13, -0.46, -0.38),
+                p=(-1.00, -0.47, 3.28), angles=(90, 0, 0), left_hand=(0.13, -0.46, -0.38),
                 head=(23, 0, 0))
 
 
 def roll_clip(name, axis):
     # Turn the blade toward the roll path without twisting the wrist through
     # more than its usable range during the short takeoff and landing.
-    raw_yaw = math.degrees(math.atan2(axis[0], -axis[1]))
     neutral_yaw = NEUTRAL["angles"][1]
-    blade_yaw = (raw_yaw if name == "RollRight" else
-                 neutral_yaw + max(-75, min(75, raw_yaw - neutral_yaw)))
+    raw_yaw = math.degrees(math.atan2(axis[0], -axis[1]))
+    # Keep the blade approximately parallel to the tumble axis to avoid driving
+    # it into the floor. Right roll uses the opposite axis direction so it points
+    # away from the chest without a 180-degree wrist turn.
+    blade_yaw = raw_yaw - 180 if name == "RollRight" else neutral_yaw + max(-75, min(75, raw_yaw - neutral_yaw))
     def at(t, posture, angle):
         value = posture.copy()
         if 0 < t < 25:
@@ -138,6 +140,9 @@ def roll_clip(name, axis):
                       at(21, ROLL_CROUCH, 348), at(23, ROLL_PREP, 358),
                       at(25, NEUTRAL, 360)])
 
+GUARD = pose(p=(-0.42, -0.92, 4.18), angles=(26, -18, 8),
+             body=(8, 0, -14), pelvis=(0, 0, -9), root=(0, 0.06, -0.28),
+             lf=(0.62, -0.48, 0), rf=(-0.62, 0.58, 0), left_hand=(0.40, -0.34, -0.76))
 CLIPS = [
     dict(name="CombatIdle", duration=2.0, loop=True, priority="Idle", markers={},
          keys=[(0, NEUTRAL), (0.5, pose(body=(7, 0, -8), p=(-0.35, -0.65, 3.70))),
@@ -171,10 +176,10 @@ CLIPS = [
                (0.36, pose(p=(-0.30, -1.05, 3.97), angles=(98, -40, -11),
                            body=(13, 0, -20), pelvis=(0, 0, -8), root=(-0.05, -0.16, -0.31),
                            lf=(0.64, 0.65, 0), rf=(-0.65, -0.60, 0))),
-               (0.45, pose(p=(-0.62, -0.46, 3.98), angles=(109, -108, -20),
+               (0.45, pose(p=(-0.62, -0.80, 3.98), angles=(109, -108, -20),
                            body=(9, 0, -30), pelvis=(0, 0, -15), root=(-0.07, -0.11, -0.27),
                            lf=(0.64, 0.75, 0), rf=(-0.65, -0.65, 0))),
-               (0.62, pose(p=(-0.60, -0.48, 4.00), angles=(104, -101, -16),
+               (0.62, pose(p=(-0.60, -0.80, 4.00), angles=(104, -101, -16),
                            body=(8, 0, -22), lf=(0.64, 0.75, 0),
                            rf=(-0.65, -0.65, 0))),
                (0.78, pose(p=(-0.34, -0.64, 4.02), angles=(74, -52, -8),
@@ -197,6 +202,31 @@ CLIPS = [
     roll_clip("RollBackward", (-0.87, 0.49, 0)),
     roll_clip("RollLeft", (0.57, -0.82, 0)),
     roll_clip("RollRight", (0.57, 0.82, 0)),
+    dict(name="Block", duration=1.6, loop=True, priority="Action", markers={},
+         keys=[(0, GUARD), (.4, pose(**{**GUARD, "body": (9, 0, -14), "p": (-.42, -.92, 4.20)})),
+               (.8, GUARD), (1.2, pose(**{**GUARD, "body": (7, 0, -14), "p": (-.42, -.92, 4.16)})), (1.6, GUARD)]),
+    dict(name="Parry", duration=.9, loop=False, priority="Action",
+         markers={"ParryActiveStart": .18, "ParryActiveEnd": .34, "RecoveryEnd": .9},
+         keys=[(0, NEUTRAL), (.1, GUARD),
+               (.2, pose(p=(-.52, -.95, 4.38), angles=(42, -66, -6), body=(4, 0, -22), pelvis=(0, 0, -10), root=(0, .03, -.28))),
+               (.3, pose(p=(.32, -1.10, 4.30), angles=(34, 50, 12), body=(10, 0, 18), pelvis=(0, 0, 9), root=(.03, -.08, -.30))),
+               (.4, pose(p=(.52, -.72, 4.24), angles=(43, 74, 12), body=(9, 0, 23), pelvis=(0, 0, 12))),
+               (.6, pose(p=(.24, -.64, 4.12), angles=(66, 36, 10), body=(6, 0, 10))), (.9, NEUTRAL)]),
+    dict(name="Stagger", duration=20/30, loop=False, priority="Action",
+         markers={"RecoveryEnd": 20/30},
+         keys=[(0, NEUTRAL), (.1, pose(body=(-16, 3, -5), pelvis=(-5, 0, -3), root=(0, .10, -.32),
+                                    p=(-.55, -.38, 3.53), angles=(118, -54, 10), head=(9, 0, 2))),
+               (.23, pose(body=(-9, -2, -6), pelvis=(-2, 0, -2), root=(0, .06, -.29), p=(-.43, -.46, 3.55), angles=(111, -45, 8))),
+               (.43, pose(body=(5, 0, -9), root=(0, 0, -.25))), (20/30, NEUTRAL)]),
+    dict(name="GuardBroken", duration=35/30, loop=False, priority="Action",
+         markers={"RecoveryEnd": 35/30},
+         keys=[(0, GUARD), (.13, pose(body=(-19, 0, -7), pelvis=(-7, 0, -4), root=(0, .14, -.35),
+                                   p=(-.55, -.25, 3.70), angles=(133, -60, 16), head=(10, 0, 2))),
+               (.3, pose(body=(25, 0, -8), pelvis=(9, 0, -4), root=(0, -.05, -.56),
+                                  p=(-.56, -.62, 3.05), angles=(148, -35, 5), head=(18, 0, 2))),
+               (.73, pose(body=(21, 0, -8), pelvis=(6, 0, -4), root=(0, 0, -.47),
+                                   p=(-.48, -.61, 3.18), angles=(140, -35, 5), head=(12, 0, 2))),
+               (.96, pose(body=(11, 0, -8), root=(0, 0, -.30))), (35/30, NEUTRAL)]),
 ]
 
 
@@ -570,7 +600,7 @@ for clip in CLIPS:
     prop_constraint.mute = False
     if name.startswith("Roll"):
         stabilize_floor(round(clip["duration"] * 30) + 1, 0.015, 4, True, True)
-    elif name.startswith("Sword"):
+    elif not clip["loop"]:
         stabilize_floor(round(clip["duration"] * 30) + 1, 0.003, 2, False)
     clamp_location_curves(action)
     clamp_location_curves(prop_action)
@@ -592,7 +622,8 @@ for clip in CLIPS:
               "markers": clip["markers"], "frames": frames,
               "sourceBlend": OUT_BLEND.relative_to(ROOT).as_posix(),
               "status": "ITERATED_REQUIRES_STUDIO_QA", "exportProfile": "R15Standard",
-              "jointSchema": "combat/assets/blender/rig/R15_standard_joint_schema.json", "sampleRate": 60}
+              "jointSchema": "combat/assets/blender/rig/R15_standard_joint_schema.json", "sampleRate": 60,
+              "authoredHipHeight": 2.192423105239868}
     (OUT_DATA / (name+".json")).write_text(json.dumps(output, separators=(",", ":")))
     print("AUTHORED", name, len(frames), flush=True)
 

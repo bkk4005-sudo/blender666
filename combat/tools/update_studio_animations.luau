@@ -6,7 +6,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local root = assert(ReplicatedStorage:FindFirstChild("CombatFoundation"), "CombatFoundation missing")
 local folder = assert(root:FindFirstChild("Animations"), "Animation folder missing")
 local names = {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2",
-    "RollForward", "RollBackward", "RollLeft", "RollRight"}
+    "RollForward", "RollBackward", "RollLeft", "RollRight", "Block", "Parry", "Stagger", "GuardBroken"}
 local host = "http://127.0.0.1:8766/"
 local oldHttpEnabled = Http.HttpEnabled
 
@@ -31,6 +31,9 @@ local function build(name, joints)
     local sequence = Instance.new("KeyframeSequence")
     sequence.Name = name
     sequence.Loop = data.loop
+    sequence.AuthoredHipHeight = data.authoredHipHeight
+    local height = Instance.new("NumberValue")
+    height.Name, height.Value, height.Parent = "SourceAuthoredHipHeight", data.authoredHipHeight, sequence
     sequence.Priority = data.priority == "Idle" and Enum.AnimationPriority.Idle or Enum.AnimationPriority.Action
     sequence:SetAttribute("SourceBlend", data.sourceBlend)
     sequence:SetAttribute("Status", data.status)
@@ -70,9 +73,34 @@ local ok, result = pcall(function()
     local client = Instance.new("LocalScript")
     client.Name = "CombatClient"
     client.Source = Http:GetAsync(host .. "src/client/CombatClient.client.luau")
+    local extras = {}
+    for _, name in {"InputBindings", "BladeClearance", "AvatarGroundClearance", "AnimationRegistry", "CombatConfig", "ActionTimeline"} do
+        local item = Instance.new("ModuleScript")
+        item.Name, item.Source = name, Http:GetAsync(host .. "src/shared/" .. name .. ".luau")
+        table.insert(extras, {item = item, parent = root.Shared})
+    end
+    local settings = Instance.new("LocalScript")
+    settings.Name, settings.Source = "CombatSettings", Http:GetAsync(host .. "src/client/CombatSettings.client.luau")
+    table.insert(extras, {item = settings, parent = game.StarterPlayer.StarterPlayerScripts})
+    local serverFolder = assert(game.ServerScriptService:FindFirstChild("CombatFoundation"))
+    for _, name in {"CombatService", "CombatSettings.server", "WeaponVisual.server"} do
+        local item = Instance.new(name == "CombatService" and "ModuleScript" or "Script")
+        item.Name = name:gsub("%.server$", "")
+        item.Source = Http:GetAsync(host .. "src/server/" .. name .. ".luau")
+        table.insert(extras, {item = item, parent = serverFolder})
+    end
+    local clearanceClient = Instance.new("LocalScript")
+    clearanceClient.Name = "AvatarWeaponClearance"
+    clearanceClient.Source = Http:GetAsync(host .. "src/client/AvatarWeaponClearance.client.luau")
+    table.insert(extras, {item = clearanceClient, parent = game.StarterPlayer.StarterPlayerScripts})
     local backup = Instance.new("Folder")
     backup.Name = "AnimationBackup_" .. os.date("!%Y%m%d_%H%M%S")
     backup.Parent = root
+    for _, entry in extras do
+        local old = entry.parent:FindFirstChild(entry.item.Name)
+        if old then old.Parent = backup end
+        entry.item.Parent = entry.parent
+    end
     for _, name in names do
         local previous = folder:FindFirstChild(name)
         if previous then previous.Parent = backup end

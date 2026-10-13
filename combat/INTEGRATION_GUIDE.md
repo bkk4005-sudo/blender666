@@ -1,4 +1,10 @@
-# Integrate into the newer Coliseum
+# Combat installation and saved files
+
+Transfer to the newer map is deferred at the user's request. This pass does not perform a map transfer. The steps below remain an optional reference.
+
+For the current scene, WeaponVisual replaces the disabled legacy CombatTestSword harness. The registered unscaled source template lives in ServerStorage/CombatWeaponTemplates/StraightSword. The separately saved `assets/weapon/CombatWeaponTemplate.rbxmx` contains the same verified mesh/texture references, but local XML reimport still needs manual verification. Do not scale this template before WeaponVisual applies its scale.
+
+The portable bundle now contains eight shared modules, four server scripts/modules, three LocalScripts and twelve animation sources. The initial HTTP importer includes these files; the update importer stages replacements and preserves existing foundation sources in dated backup folders. The rest of the map is not part of either importer. Published IDs and DataStore access still require testing in a published experience.
 
 Do this on a copy or isolated Git branch of the newer place. The combat folder has no map dependency and must not replace `Workspace` or the newer Coliseum geometry.
 

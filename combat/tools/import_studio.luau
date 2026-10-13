@@ -51,6 +51,9 @@ local function animationOf(name, parent)
     local sequence = Instance.new("KeyframeSequence")
     sequence.Name = name
     sequence.Loop = data.loop
+    sequence.AuthoredHipHeight = data.authoredHipHeight
+    local height = Instance.new("NumberValue")
+    height.Name, height.Value, height.Parent = "SourceAuthoredHipHeight", data.authoredHipHeight, sequence
     sequence.Priority = data.priority == "Idle" and Enum.AnimationPriority.Idle or Enum.AnimationPriority.Action
     sequence:SetAttribute("SourceBlend", data.sourceBlend)
     sequence:SetAttribute("Status", data.status)
@@ -89,10 +92,10 @@ local ok, outcome = pcall(function()
     table.insert(staged, client)
     local shared = folder("Shared", root)
     local animations = folder("Animations", root)
-    for _, name in {"CombatConfig", "ActionTimeline", "AnimationRegistry", "WeaponVisualConfig", "R15PreviewRetarget"} do
+    for _, name in {"CombatConfig", "ActionTimeline", "AnimationRegistry", "WeaponVisualConfig", "R15PreviewRetarget", "BladeClearance", "AvatarGroundClearance", "InputBindings"} do
         scriptOf("ModuleScript", name, "src/shared/" .. name .. ".luau", shared)
     end
-    for _, name in {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2", "RollForward", "RollBackward", "RollLeft", "RollRight"} do
+    for _, name in {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2", "RollForward", "RollBackward", "RollLeft", "RollRight", "Block", "Parry", "Stagger", "GuardBroken"} do
         animationOf(name, animations)
     end
     local remote = Instance.new("RemoteEvent")
@@ -100,10 +103,18 @@ local ok, outcome = pcall(function()
     remote.Parent = root
     scriptOf("ModuleScript", "CombatService", "src/server/CombatService.luau", server)
     scriptOf("Script", "CombatBootstrap", "src/server/CombatBootstrap.server.luau", server)
+    scriptOf("Script", "CombatSettings", "src/server/CombatSettings.server.luau", server)
+    scriptOf("Script", "WeaponVisual", "src/server/WeaponVisual.server.luau", server)
+    for _, name in {"CombatSettings", "AvatarWeaponClearance"} do
+        local extra = Instance.new("LocalScript")
+        extra.Name, extra.Source = name, source("src/client/" .. name .. ".client.luau")
+        table.insert(staged, extra)
+    end
     client.Source = source("src/client/CombatClient.client.luau")
     root.Parent = ReplicatedStorage
     server.Parent = ServerScriptService
     client.Parent = StarterPlayer.StarterPlayerScripts
+    for _, item in staged do if item:IsA("LocalScript") then item.Parent = StarterPlayer.StarterPlayerScripts end end
     return {animations = #animations:GetChildren(), sharedModules = #shared:GetChildren(), serverScripts = #server:GetChildren()}
 end)
 Http.HttpEnabled = oldHttpEnabled

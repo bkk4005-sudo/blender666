@@ -1,5 +1,13 @@
 # Animation pipeline
 
+## Current avatar pass — prototype 2.4
+
+There are now twelve editable Blender Actions, including Block, Parry, Stagger and GuardBroken. Use `tools/write_asset_manifest.py` for the exact file inventory. Original roll positions and R2 wind-up were revised; R1_2 recovery now keeps the blade farther forward of the torso. Defenses are authored project reconstructions, not measurements from an isolated DS3 parry recording.
+
+Studio bakes compensate root translation scaling using SourceAuthoredHipHeight metadata because the AuthoredHipHeight property is protected from game scripts. The importer writes the actual property in Edit mode; the runtime reads its NumberValue metadata. Body proportions are applied after appearance loading, with a retry on CharacterAppearanceLoaded. See AVATAR_COMPATIBILITY.md for the body-box solver, physical clearance values and untested clothing cases.
+
+Run `tools/qa_avatar_geometry.luau` in Edit for five body/scale profiles and intermediate-pose checks. Run `tools/qa_visual_playback.luau` in Client Play for real normal-speed playback. The latter restores its temporary root anchor after the check. Blender validation still evaluates actual source mesh vertices and rigid grip, rather than accepting keyframe presence as proof of visual quality.
+
 ## Source and mapping
 
 `assets/blender/animations/StraightSword_R15.blend` stores the editable `CombatIdle`, `SwordR1_1`, `SwordR1_2`, `SwordR2` and four directional roll Actions. Its rig was adapted from the repository's AshenOath donor without changing the game R15 hierarchy. The source joint schema is retained in `assets/blender/rig/R15_joint_schema.json`. A hand constraint drives the sword during Blender review, and `tools/CombatTestSword.server.luau` attaches the same project mesh to a player R15 hand using the generated grip. The donor and standard export retain separate joint schemas.

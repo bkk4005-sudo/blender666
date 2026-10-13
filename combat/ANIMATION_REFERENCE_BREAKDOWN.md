@@ -1,5 +1,18 @@
 # Animation reference breakdown — verified viewing pass
 
+## Additional authored defenses (2026-10-14)
+
+No clean frame-by-frame DS3 parry/guard-break sequence was isolated for this pass. The following poses are original project reconstructions, **ESTIMATED**, rather than measured DS3 poses or weapon skills. Blender is their actual source; the video observations documented below remain the reference context for overall stance and weight.
+
+| Action | Authored frames (30 FPS, zero-based) | Pose progression | Confidence |
+| --- | --- | --- | --- |
+| Block | 0, 12, 24, 36, 48 | Knees soft, staggered stable feet; torso slightly forward and turned; right elbow bent, upright blade ahead of shoulder; free hand clear of blade; subtle breath; seamless guard loop | Original / ESTIMATED |
+| Parry | 0, 3, 6, 9, 12, 18, 27 | Low stance; raised preparation; torso-led lateral deflection; opposing pelvis/shoulder turn; wrist holds hilt; controlled follow-through and return | Original / ESTIMATED |
+| Stagger | 0, 3, 7, 13, 20 | Stable feet; short backward torso reaction and softened knees; blade lowers beside body; forward balance recovery and neutral return | Original / ESTIMATED |
+| GuardBroken | 0, 4, 9, 22, 29, 35 | Raised guard; recoil; knees and pelvis lower; torso folds forward with blade kept ahead/right; deliberate recovery pause; rise to neutral | Original / ESTIMATED |
+
+These are authoring frames, not video timestamps. Ground clearance and shoulder corrections are runtime/avatar adaptations. The sword parry is a prototype deflection, not a claim to reproduce the DS3 longsword weapon art or a shield parry.
+
 Date: 2026-10-13. These are observations from the accessible YouTube player, not extracted game animation data. Absolute positions are player timestamps. Frame numbers below are **not** original DS3 source frames. The authoring timeline will use 30 FPS, but the source encode frame rate has not been independently verified.
 
 ## A — Longsword Moveset (Dark Souls 3)

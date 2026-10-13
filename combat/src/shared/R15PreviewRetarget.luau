@@ -2,6 +2,7 @@
 -- intended RigProfile; this module never changes HumanoidRootPart at runtime.
 local RunService = game:GetService("RunService")
 local Visual = require(script.Parent.WeaponVisualConfig)
+local Clearance = require(script.Parent.BladeClearance)
 local Retarget = {}
 local names = {"LowerTorso", "UpperTorso", "Head", "LeftUpperArm", "LeftLowerArm",
     "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg",
@@ -49,8 +50,19 @@ function Retarget.forCharacter(source: KeyframeSequence, character: Model): Keyf
     assert(RunService:IsStudio(), "Avatar preview retarget is Studio-only")
     local joints, ground = skeleton(character)
     local sequence = source:Clone()
+    -- AuthoredHipHeight cannot be written by a game script (Plugin security).
+    -- Compensate the Animator's root translation scaling in the baked poses.
+    local height = character:FindFirstChildOfClass("Humanoid").HipHeight
+    ground = -(height + character.HumanoidRootPart.Size.Y / 2)
+    local metadata = assert(sequence:FindFirstChild("SourceAuthoredHipHeight"), "Authored height metadata missing")
+    local translationScale = if height > .01 and metadata.Value > .01
+        then height / metadata.Value else 1
     sequence:SetAttribute("PreviewRig", character.Name)
-    for _, key in sequence:GetKeyframes() do
+    local keys = sequence:GetKeyframes()
+    table.sort(keys, function(a, b) return a.Time < b.Time end)
+    local duration = keys[#keys].Time
+    local previous, unresolved, maxCorrection = nil, 0, 0
+    for _, key in keys do
         local poses = {}
         for _, pose in key:GetDescendants() do
             if pose:IsA("Pose") then poses[pose.Name] = pose end
@@ -69,18 +81,33 @@ function Retarget.forCharacter(source: KeyframeSequence, character: Model): Keyf
             frames[name] = frames[joint.parent] * joint.c0 * pose.CFrame * joint.c1:Inverse()
             minimum = math.min(minimum, boxFloor(frames[name], joint.size))
         end
+        previous = Clearance.correct(poses, joints, frames, previous)
+        unresolved += previous.unresolved
+        maxCorrection = math.max(maxCorrection, math.abs(previous.yaw), math.abs(previous.tilt))
+        -- Recompute arm clearance after changing its rotations.
+        for _, name in {"RightUpperArm", "RightLowerArm", "RightHand"} do
+            minimum = math.min(minimum, boxFloor(frames[name], joints[name].size))
+        end
         local swordFrame = frames.RightHand * Visual.HandToHilt
             * CFrame.new(0, 1.195 * Visual.MeshScale.Y, 0)
         local swordSize = Vector3.new(1.51340294, 4.71, 0.37736732) * Visual.MeshScale
         local swordMinimum = boxFloor(swordFrame, swordSize)
         -- Small bounding-box clearance absorbs interpolation and physical
         -- AnimationConstraint settling between the sampled poses.
-        local adjustment = math.max(ground + math.max(clearance.Value, 0.03) - minimum,
-            ground + 0.01 - swordMinimum)
+        -- The inverted root swings body corners between samples. Fade the
+        -- extra margin smoothly so the first/last standing poses stay identical.
+        local guard = .07
+        if source.Name:sub(1, 4) == "Roll" and duration > 0 then
+            guard += .17 * math.sin(math.pi * key.Time / duration)^2
+        end
+        local adjustment = math.max(ground + math.max(clearance.Value, guard) - minimum,
+            ground + guard - swordMinimum)
         local rootPose = poses.LowerTorso
         local offset = joints.LowerTorso.c0.Rotation:VectorToObjectSpace(Vector3.new(0, adjustment, 0))
-        rootPose.CFrame = CFrame.new(rootPose.CFrame.Position + offset) * rootPose.CFrame.Rotation
+        rootPose.CFrame = CFrame.new((rootPose.CFrame.Position + offset) / translationScale) * rootPose.CFrame.Rotation
     end
+    sequence:SetAttribute("UnresolvedBladeSamples", unresolved)
+    sequence:SetAttribute("MaximumArmCorrectionDegrees", maxCorrection)
     return sequence
 end
 

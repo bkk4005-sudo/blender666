@@ -1,5 +1,20 @@
 # Test report — latest verification 2026-10-14
 
+## Latest pass: avatar clearance, defenses and input settings
+
+- PASS: 12 real editable Blender Actions and corresponding portable KeyframeSequences, priorities, loops, duration/marker consistency, authored-height metadata, R1 chain and recovery seams. `validate_assets.py` and `validate_blender.py` completed successfully.
+- PASS: five R15 body/scale profiles × twelve clips, keyed and quarter-interval interpolated poses (240 samples/second), no blade-centreline/body-box intersections in the final pass. Evidence: `tests/avatar_geometry_2026_10_14.json`. This excludes clothing/accessory meshes. Corrections can reach 60 degrees and still need silhouette review.
+- PASS: all twelve clips through the real Animator at normal speed on the current avatar; 760 sampled playing frames in the final fast-overlay pass. Lowest body bound: 0.060768 stud above the test floor; lowest sword bound: 0.147941 stud. Sampled rigid grip position error: zero. Evidence: `tests/visual_playback_adaptive_2026_10_14.json`. The test root was temporarily anchored; this does not certify terrain movement.
+- PASS: native game-script preview loads all twelve tracks without protected-property errors. AuthoredHipHeight is set in Edit only; scripts use public NumberValue metadata. Native duplicate RecoveryEnd cues on rolls are gated by CombatClient for VFX; server i-frames use the timeline.
+- PASS: an injected delayed Loaded response does not overwrite a local Space→G edit. Clicking reset during key capture restores Space and retains Mouse1 for R1. GUI-button clicks are not captured as combat bindings. Tool-generated CoreGUI mouse-position warnings occurred during the UI run; no foundation script error was reported.
+- PASS: real UI rebind Space→G, ContextActionService uses G, G starts server Rolling and reduces stamina to 73; duplicate G assignment rejected; settings menu prevents combat while rebinding. Reset/session persistence and responsive menu sizing are implemented. Menu was reviewed at 781×463 viewport, 781×405 GUI area.
+- PASS: holding F enters Blocking with the looping Block track. Opening settings or focusing a TextBox releases the server block to Idle. A respawn retains session binding G, returns to Idle, reloads twelve clips and equips exactly one sword joint. This was performed in Play Solo.
+- NOT TESTED: permanent preference save/load in a published experience; the local place cannot access DataStore, so the UI correctly states session-only storage. Esc cancellation could not be injected by the tool because Esc belongs to CoreGUI; closing via the UI was tested.
+- NOT TESTED: direct local XML reimport. InsertService.LoadLocalAsset was rejected for lacking RobloxScript capability. XML/source consistency was checked; native instance installation succeeded.
+- NOT TESTED: arbitrary marketplace bodies, layered clothing, accessories, late appearance under emulated latency, two-player observers, published AnimationIds, slopes/stairs, dynamic wardrobe changes and low-end performance. Default combat locomotion and blade-matched server swept hitboxes remain unfinished.
+
+No release-ready or universal no-clipping claim is made. Historical tests follow.
+
 Scope: local Blender 5.2 and one connected Roblox Studio instance using the old Coliseum in Play Solo. This is a prototype test, not release certification. Prototype balance timings are authored values, not Dark Souls III measurements.
 
 The following table records the earlier 2026-10-13 prototype checks. The current export and avatar-preview results are recorded in the 2026-10-14 section below.

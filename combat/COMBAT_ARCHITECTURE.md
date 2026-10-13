@@ -1,5 +1,13 @@
 # Combat architecture
 
+## Avatar visuals and controls (prototype 2.4)
+
+WeaponVisual equips the server-owned unscaled sword template after appearance loading and retries on CharacterAppearanceLoaded. One Motor6D holds the rigid mesh; no visual part supplies authoritative damage. BladeClearance preserves limb lengths/grip while rotating the shoulder away from body-box intersections. AvatarWeaponClearance renders this overlay on each observed player after Animator evaluation, restores it before the next evaluation and uses a fast safe-correction path. AvatarGroundClearance changes only the visual root joint during action states.
+
+InputBindings defines the seven semantic actions, defaults and validation. CombatSettings provides the menu and applies bindings immediately; CombatSettings.server validates/coalesces persistence independently of combat. Preference data cannot change attack kind validation, damage, stamina or i-frames. Held block/sprint release on menu, chat, focus loss, End or Cancel. Block stops sprint drain; guard break stops movement and broadcasts its real reaction clip.
+
+Studio-only R15PreviewRetarget bakes actual proportions and translation-scale compensation. Published animation playback remains gated by absent AnimationIds. Avatar correction changes the visible blade arc; the current approximate combat query must be replaced/verified against that arc before release.
+
 `src/shared/CombatConfig.luau` owns the prototype balance numbers. `ActionTimeline.luau` derives server phases and windows from the same config. `AnimationRegistry.luau` maps semantic names to per-rig animation assets and reserves profile registration for future custom rigs. Animation IDs do not drive damage or stamina.
 
 `src/server/CombatService.luau` owns one profile per player: character generation, sequence number, rate counter, state, stamina, active action, hit set and temporary motion actuator. It validates action requests and samples sword hit volumes on the server at 30 Hz. A server raycast rejects targets behind an obstruction. It applies damage once per humanoid per action, checks defender roll windows, facing, parry and block, and cleans up on death/respawn. Invulnerability does not consume the attack's hit entitlement, so a target still overlapping the later active window can be struck. Static models with `CombatDummy=true` receive damage but keep at least 1 HP and heal after a delay.

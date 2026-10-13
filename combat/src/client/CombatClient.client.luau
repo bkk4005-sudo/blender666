@@ -10,6 +10,7 @@ local rootFolder = ReplicatedStorage:WaitForChild("CombatFoundation")
 local shared = rootFolder:WaitForChild("Shared")
 local Config = require(shared:WaitForChild("CombatConfig"))
 local Registry = require(shared:WaitForChild("AnimationRegistry"))
+local Bindings = require(shared:WaitForChild("InputBindings"))
 local PreviewRetarget = require(shared:WaitForChild("R15PreviewRetarget"))
 local remote = rootFolder:WaitForChild("CombatRemote")
 local sources = rootFolder:WaitForChild("Animations")
@@ -100,6 +101,7 @@ end
 
 local function send(kind, direction, predictedName, moveDirection)
     inputSequence += 1
+    script:SetAttribute("LastInputRequest", kind)
     remote:FireServer({kind = kind, direction = direction, moveDirection = moveDirection, sequence = inputSequence})
     if predictedName then
         predicted = {name = predictedName, deadline = os.clock() + 0.38}
@@ -205,6 +207,7 @@ local function bindCharacter(newCharacter)
     local version = characterVersion
     if deathConnection then deathConnection:Disconnect(); deathConnection = nil end
     disconnectTracks()
+    script:SetAttribute("PreviewAnimationCount", 0)
     setLock(nil)
     character = newCharacter
     humanoid, root, animator = nil, nil, nil
@@ -237,6 +240,13 @@ local function bindCharacter(newCharacter)
 end
 
 local function handleInput(actionName, inputState, inputObject)
+    script:SetAttribute("LastBoundInput", actionName .. ":" .. inputState.Name)
+    -- Held actions must release even if chat/menu focus changed after Begin.
+    if inputState == Enum.UserInputState.End or inputState == Enum.UserInputState.Cancel then
+        if actionName == "CombatBlock" then send("BlockEnd"); return Enum.ContextActionResult.Sink end
+        if actionName == "CombatSprint" then send("SprintEnd"); return Enum.ContextActionResult.Sink end
+    end
+    if player:GetAttribute("CombatSettingsOpen") then return Enum.ContextActionResult.Sink end
     if UserInputService:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
     if not humanoid or humanoid.Health <= 0 then return Enum.ContextActionResult.Sink end
     if actionName == "CombatR1" and inputState == Enum.UserInputState.Begin then
@@ -250,25 +260,41 @@ local function handleInput(actionName, inputState, inputObject)
         send("Roll", name, name, worldDirection)
     elseif actionName == "CombatBlock" then
         if inputState == Enum.UserInputState.Begin then send("BlockStart")
-        elseif inputState == Enum.UserInputState.End then send("BlockEnd") end
+        elseif inputState == Enum.UserInputState.End or inputState == Enum.UserInputState.Cancel then send("BlockEnd") end
     elseif actionName == "CombatParry" and inputState == Enum.UserInputState.Begin then
         send("Parry", nil, "Parry")
     elseif actionName == "CombatSprint" then
         if inputState == Enum.UserInputState.Begin then send("SprintStart")
-        elseif inputState == Enum.UserInputState.End then send("SprintEnd") end
+        elseif inputState == Enum.UserInputState.End or inputState == Enum.UserInputState.Cancel then send("SprintEnd") end
     elseif actionName == "CombatLock" and inputState == Enum.UserInputState.Begin then
         setLock(target and nil or chooseTarget())
     end
     return Enum.ContextActionResult.Sink
 end
 
-ContextActionService:BindAction("CombatR1", handleInput, false, Enum.UserInputType.MouseButton1)
-ContextActionService:BindAction("CombatR2", handleInput, false, Enum.UserInputType.MouseButton2)
-ContextActionService:BindAction("CombatRoll", handleInput, false, Enum.KeyCode.Space)
-ContextActionService:BindAction("CombatBlock", handleInput, false, Enum.KeyCode.F)
-ContextActionService:BindAction("CombatParry", handleInput, false, Enum.KeyCode.E)
-ContextActionService:BindAction("CombatSprint", handleInput, false, Enum.KeyCode.LeftShift)
-ContextActionService:BindAction("CombatLock", handleInput, false, Enum.KeyCode.Q)
+local function bindAction(action)
+    if action == "CombatBlock" then send("BlockEnd") end
+    if action == "CombatSprint" then send("SprintEnd") end
+    ContextActionService:UnbindAction(action)
+    local key = Bindings.resolve(player:GetAttribute("Binding_" .. action)) or Bindings.resolve(Bindings.Defaults[action])
+    ContextActionService:BindActionAtPriority(action, handleInput, false, Enum.ContextActionPriority.High.Value + 1, key)
+end
+for _, action in Bindings.Order do
+    bindAction(action)
+    player:GetAttributeChangedSignal("Binding_" .. action):Connect(function() bindAction(action) end)
+end
+player:GetAttributeChangedSignal("CombatSettingsOpen"):Connect(function()
+    if player:GetAttribute("CombatSettingsOpen") then
+        send("BlockEnd")
+        send("SprintEnd")
+    end
+end)
+local function releaseHeldActions()
+    send("BlockEnd")
+    send("SprintEnd")
+end
+UserInputService.WindowFocusReleased:Connect(releaseHeldActions)
+UserInputService.TextBoxFocused:Connect(releaseHeldActions)
 
 remote.OnClientEvent:Connect(function(kind, owner, semantic)
     if kind == "Started" and owner == player then
@@ -284,7 +310,13 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
         if actionTrack then actionTrack:Stop(0.10) end
         predicted = nil
     end
-    if target then
+    local state = character:GetAttribute("CombatState")
+    local block = tracks.Block
+    if block then
+        if state == "Blocking" and not block.IsPlaying then playAction("Block")
+        elseif state ~= "Blocking" and block.IsPlaying then block:Stop(.12) end
+    end
+    if target and not player:GetAttribute("CombatSettingsOpen") then
         local enemyHumanoid = target:FindFirstChildOfClass("Humanoid")
         local enemyRoot = target:FindFirstChild("HumanoidRootPart")
         if not enemyHumanoid or enemyHumanoid.Health <= 0 or not enemyRoot or (enemyRoot.Position - root.Position).Magnitude > Config.TargetLossRange then
@@ -335,4 +367,7 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
 end)
 
 player.CharacterAdded:Connect(bindCharacter)
+player.CharacterAppearanceLoaded:Connect(function(loadedCharacter)
+    if player.Character == loadedCharacter then bindCharacter(loadedCharacter) end
+end)
 if player.Character then bindCharacter(player.Character) end

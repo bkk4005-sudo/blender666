@@ -22,6 +22,10 @@ rig = bpy.data.objects["R15_Combat_Rig"]
 prop = bpy.data.objects["Sword motion / paired PROP actions"]
 checks = {
     "CombatIdle": [1],
+    "Block": [1, 13, 25, 49],
+    "Parry": [1, 4, 7, 10, 13, 19, 28],
+    "Stagger": [1, 4, 8, 14, 21],
+    "GuardBroken": [1, 5, 10, 23, 30, 36],
     "SwordR1_1": [1, 6, 12, 22, 29],
     "SwordR1_2": [1, 6, 12, 24, 30],
     "SwordR2": [1, 15, 22, 33, 44],

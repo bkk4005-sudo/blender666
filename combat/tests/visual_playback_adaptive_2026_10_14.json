@@ -1,0 +1,141 @@
+{
+  "RollForward": {
+    "unresolved": 0,
+    "swordFloor": 0.14794158935546875,
+    "bodyFloor": 0.07165145874023438,
+    "samples": 48,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "gripError": 0
+  },
+  "Stagger": {
+    "unresolved": 0,
+    "swordFloor": 1.1202201843261719,
+    "bodyFloor": 0.0683441162109375,
+    "samples": 38,
+    "markers": {
+      "RecoveryEnd": 1
+    },
+    "gripError": 0
+  },
+  "GuardBroken": {
+    "unresolved": 0,
+    "swordFloor": 0.7267189025878906,
+    "bodyFloor": 0.06076812744140625,
+    "samples": 68,
+    "markers": {
+      "RecoveryEnd": 1
+    },
+    "gripError": 0
+  },
+  "Parry": {
+    "unresolved": 0,
+    "swordFloor": 2.0482749938964844,
+    "bodyFloor": 0.06959915161132812,
+    "samples": 52,
+    "markers": {
+      "ParryActiveEnd": 1,
+      "ParryActiveStart": 1,
+      "RecoveryEnd": 1
+    },
+    "gripError": 0
+  },
+  "SwordR2": {
+    "unresolved": 0,
+    "swordFloor": 1.0534400939941406,
+    "bodyFloor": 0.06343460083007812,
+    "samples": 83,
+    "markers": {
+      "HitEnd": 1,
+      "AttackStart": 1,
+      "RecoveryEnd": 1,
+      "HitStart": 1
+    },
+    "gripError": 0
+  },
+  "RollBackward": {
+    "unresolved": 0,
+    "swordFloor": 0.6042747497558594,
+    "bodyFloor": 0.062225341796875,
+    "samples": 50,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "gripError": 0
+  },
+  "SwordR1_1": {
+    "unresolved": 0,
+    "swordFloor": 2.006824493408203,
+    "bodyFloor": 0.06775665283203125,
+    "samples": 54,
+    "markers": {
+      "AttackStart": 1,
+      "ComboOpen": 1,
+      "HitStart": 1,
+      "RecoveryEnd": 1,
+      "ComboClose": 1,
+      "HitEnd": 1
+    },
+    "gripError": 0
+  },
+  "SwordR1_2": {
+    "unresolved": 0,
+    "swordFloor": 2.0441207885742188,
+    "bodyFloor": 0.06483840942382812,
+    "samples": 56,
+    "markers": {
+      "AttackStart": 1,
+      "ComboOpen": 1,
+      "HitStart": 1,
+      "RecoveryEnd": 1,
+      "ComboClose": 1,
+      "HitEnd": 1
+    },
+    "gripError": 0
+  },
+  "CombatIdle": {
+    "unresolved": 0,
+    "swordFloor": 2.0171966552734375,
+    "bodyFloor": 0.07282257080078125,
+    "samples": 116,
+    "markers": [],
+    "gripError": 0
+  },
+  "Block": {
+    "unresolved": 0,
+    "swordFloor": 2.054515838623047,
+    "bodyFloor": 0.07123565673828125,
+    "samples": 97,
+    "markers": [],
+    "gripError": 0
+  },
+  "RollLeft": {
+    "unresolved": 0,
+    "swordFloor": 0.1628875732421875,
+    "bodyFloor": 0.07191848754882812,
+    "samples": 48,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "gripError": 0
+  },
+  "RollRight": {
+    "unresolved": 0,
+    "swordFloor": 0.16825485229492188,
+    "bodyFloor": 0.07232666015625,
+    "samples": 50,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "gripError": 0
+  }
+}

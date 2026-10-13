@@ -41,6 +41,9 @@ def pose_node(name, parent, transforms):
 def sequence_node(data, parent):
     node, props = item("KeyframeSequence", data["name"], parent)
     ET.SubElement(props, "bool", {"name": "Loop"}).text = "true" if data["loop"] else "false"
+    ET.SubElement(props, "float", {"name": "AuthoredHipHeight"}).text = str(data["authoredHipHeight"])
+    _, height_props = item("NumberValue", "SourceAuthoredHipHeight", node)
+    ET.SubElement(height_props, "double", {"name": "Value"}).text = str(data["authoredHipHeight"])
     # Verified against the connected Studio Enum on 2026-10-13: Idle=0, Action=2.
     ET.SubElement(props, "token", {"name": "Priority"}).text = "0" if data["priority"] == "Idle" else "2"
     markers = {}
@@ -100,6 +103,10 @@ for path in sorted(BAKED.glob("*.json")):
         output = COMBAT / "assets/animations/r15/combat_idle" / (data["name"] + ".rbxmx")
     elif data["name"].startswith("Roll"):
         output = COMBAT / "assets/animations/r15/dodge" / (data["name"] + ".rbxmx")
+    elif data["name"] in ("Block", "Parry"):
+        output = COMBAT / "assets/animations/r15/defensive" / (data["name"] + ".rbxmx")
+    elif data["name"] in ("Stagger", "GuardBroken"):
+        output = COMBAT / "assets/animations/r15/reactions" / (data["name"] + ".rbxmx")
     else:
         output = COMBAT / "assets/animations/r15/straight_sword" / (data["name"] + ".rbxmx")
     save_xml(standalone, output)

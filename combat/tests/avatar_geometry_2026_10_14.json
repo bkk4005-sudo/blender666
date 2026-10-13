@@ -1,0 +1,312 @@
+{
+  "Default": {
+    "RollForward": {
+      "maximumCorrection": 45.625,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "Stagger": {
+      "maximumCorrection": 2.5,
+      "samples": 161,
+      "bladeBodyIntersections": 0
+    },
+    "GuardBroken": {
+      "maximumCorrection": 2.5,
+      "samples": 281,
+      "bladeBodyIntersections": 0
+    },
+    "Parry": {
+      "maximumCorrection": 22.5,
+      "samples": 217,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR2": {
+      "maximumCorrection": 21.25,
+      "samples": 345,
+      "bladeBodyIntersections": 0
+    },
+    "RollBackward": {
+      "maximumCorrection": 2.5,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_1": {
+      "maximumCorrection": 10,
+      "samples": 225,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_2": {
+      "maximumCorrection": 7.5,
+      "samples": 233,
+      "bladeBodyIntersections": 0
+    },
+    "CombatIdle": {
+      "maximumCorrection": 2.5,
+      "samples": 481,
+      "bladeBodyIntersections": 0
+    },
+    "Block": {
+      "maximumCorrection": 0,
+      "samples": 385,
+      "bladeBodyIntersections": 0
+    },
+    "RollLeft": {
+      "maximumCorrection": 42.5,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "RollRight": {
+      "maximumCorrection": 2.5,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    }
+  },
+  "ProjectAvatar": {
+    "RollForward": {
+      "maximumCorrection": 60,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "Stagger": {
+      "maximumCorrection": 24.375,
+      "samples": 161,
+      "bladeBodyIntersections": 0
+    },
+    "GuardBroken": {
+      "maximumCorrection": 19.375,
+      "samples": 281,
+      "bladeBodyIntersections": 0
+    },
+    "Parry": {
+      "maximumCorrection": 13.75,
+      "samples": 217,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR2": {
+      "maximumCorrection": 47.5,
+      "samples": 345,
+      "bladeBodyIntersections": 0
+    },
+    "RollBackward": {
+      "maximumCorrection": 13.125,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_1": {
+      "maximumCorrection": 13.125,
+      "samples": 225,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_2": {
+      "maximumCorrection": 45,
+      "samples": 233,
+      "bladeBodyIntersections": 0
+    },
+    "CombatIdle": {
+      "maximumCorrection": 15,
+      "samples": 481,
+      "bladeBodyIntersections": 0
+    },
+    "Block": {
+      "maximumCorrection": 0,
+      "samples": 385,
+      "bladeBodyIntersections": 0
+    },
+    "RollLeft": {
+      "maximumCorrection": 60,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "RollRight": {
+      "maximumCorrection": 13.125,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    }
+  },
+  "TallNarrow": {
+    "RollForward": {
+      "maximumCorrection": 18.75,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "Stagger": {
+      "maximumCorrection": 10,
+      "samples": 161,
+      "bladeBodyIntersections": 0
+    },
+    "GuardBroken": {
+      "maximumCorrection": 7.5,
+      "samples": 281,
+      "bladeBodyIntersections": 0
+    },
+    "Parry": {
+      "maximumCorrection": 14.375,
+      "samples": 217,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR2": {
+      "maximumCorrection": 13.75,
+      "samples": 345,
+      "bladeBodyIntersections": 0
+    },
+    "RollBackward": {
+      "maximumCorrection": 0,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_1": {
+      "maximumCorrection": 0,
+      "samples": 225,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_2": {
+      "maximumCorrection": 14.375,
+      "samples": 233,
+      "bladeBodyIntersections": 0
+    },
+    "CombatIdle": {
+      "maximumCorrection": 0,
+      "samples": 481,
+      "bladeBodyIntersections": 0
+    },
+    "Block": {
+      "maximumCorrection": 2.5,
+      "samples": 385,
+      "bladeBodyIntersections": 0
+    },
+    "RollLeft": {
+      "maximumCorrection": 14.375,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "RollRight": {
+      "maximumCorrection": 0,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    }
+  },
+  "ProjectTallNarrow": {
+    "RollForward": {
+      "maximumCorrection": 51.25,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "Stagger": {
+      "maximumCorrection": 16.875,
+      "samples": 161,
+      "bladeBodyIntersections": 0
+    },
+    "GuardBroken": {
+      "maximumCorrection": 20,
+      "samples": 281,
+      "bladeBodyIntersections": 0
+    },
+    "Parry": {
+      "maximumCorrection": 16.875,
+      "samples": 217,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR2": {
+      "maximumCorrection": 40,
+      "samples": 345,
+      "bladeBodyIntersections": 0
+    },
+    "RollBackward": {
+      "maximumCorrection": 0,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_1": {
+      "maximumCorrection": 18.75,
+      "samples": 225,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_2": {
+      "maximumCorrection": 23.75,
+      "samples": 233,
+      "bladeBodyIntersections": 0
+    },
+    "CombatIdle": {
+      "maximumCorrection": 0,
+      "samples": 481,
+      "bladeBodyIntersections": 0
+    },
+    "Block": {
+      "maximumCorrection": 0,
+      "samples": 385,
+      "bladeBodyIntersections": 0
+    },
+    "RollLeft": {
+      "maximumCorrection": 45,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "RollRight": {
+      "maximumCorrection": 0,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    }
+  },
+  "ShortWide": {
+    "RollForward": {
+      "maximumCorrection": 50.625,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "Stagger": {
+      "maximumCorrection": 0,
+      "samples": 161,
+      "bladeBodyIntersections": 0
+    },
+    "GuardBroken": {
+      "maximumCorrection": 0,
+      "samples": 281,
+      "bladeBodyIntersections": 0
+    },
+    "Parry": {
+      "maximumCorrection": 25,
+      "samples": 217,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR2": {
+      "maximumCorrection": 19.375,
+      "samples": 345,
+      "bladeBodyIntersections": 0
+    },
+    "RollBackward": {
+      "maximumCorrection": 0,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_1": {
+      "maximumCorrection": 6.25,
+      "samples": 225,
+      "bladeBodyIntersections": 0
+    },
+    "SwordR1_2": {
+      "maximumCorrection": 8.75,
+      "samples": 233,
+      "bladeBodyIntersections": 0
+    },
+    "CombatIdle": {
+      "maximumCorrection": 0,
+      "samples": 481,
+      "bladeBodyIntersections": 0
+    },
+    "Block": {
+      "maximumCorrection": 0,
+      "samples": 385,
+      "bladeBodyIntersections": 0
+    },
+    "RollLeft": {
+      "maximumCorrection": 45.625,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    },
+    "RollRight": {
+      "maximumCorrection": 0,
+      "samples": 201,
+      "bladeBodyIntersections": 0
+    }
+  }
+}

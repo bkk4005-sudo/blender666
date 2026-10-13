@@ -38,12 +38,16 @@ for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
     name = data["name"]
     clips[name] = data
     assert data["exportProfile"] == "R15Standard" and data["sampleRate"] == 60
-    folder = "combat_idle" if name == "CombatIdle" else "dodge" if name.startswith("Roll") else "straight_sword"
+    folder = "combat_idle" if name == "CombatIdle" else "dodge" if name.startswith("Roll") else "defensive" if name in ("Block", "Parry") else "reactions" if name in ("Stagger", "GuardBroken") else "straight_sword"
     xml_path = combat / "assets/animations/r15" / folder / f"{name}.rbxmx"
     root = ET.parse(xml_path).getroot()
     nodes = [node for node in root.findall("Item") if node.attrib.get("class") == "KeyframeSequence"]
     assert len(nodes) == 1 and name in packaged, f"missing sequence {name}"
     for node in [nodes[0], packaged[name]]:
+        authored_height = float(node.find("./Properties/float[@name='AuthoredHipHeight']").text)
+        metadata = float(node.find("./Item[@class='NumberValue']/Properties/double[@name='Value']").text)
+        assert math.isclose(authored_height, data["authoredHipHeight"], abs_tol=1e-6)
+        assert math.isclose(metadata, data["authoredHipHeight"], abs_tol=1e-6)
         frames, markers, ground_clearances = sequence_data(node)
         assert len(frames) == len(data["frames"]), f"frame count mismatch {name}"
         assert all(math.isclose(a, b["time"], abs_tol=1e-5) for a, b in zip(frames, data["frames"])), f"frame time mismatch {name}"
@@ -56,7 +60,7 @@ for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
         assert token == ("0" if data["priority"] == "Idle" else "2"), f"priority mismatch {name}"
     print(f"PASS {name}: {len(data['frames'])} frames, {len(data['markers'])} markers")
 
-assert len(packaged) == 8, "unexpected package clip count"
+assert len(packaged) == 12, "unexpected package clip count"
 print("PASS portable package structure")
 
 def pose_difference(a, b):
@@ -68,7 +72,8 @@ chain_error = pose_difference(clips["SwordR1_1"]["frames"][chain_sample]["poses"
 assert chain_error < 0.002, f"R1 chain seam mismatch: {chain_error}"
 idle_pose = clips["CombatIdle"]["frames"][0]["poses"]
 for name, clip in clips.items():
-    assert pose_difference(clip["frames"][-1]["poses"], idle_pose) < 0.002, f"Recovery seam mismatch: {name}"
+    target_pose = clip["frames"][0]["poses"] if clip["loop"] else idle_pose
+    assert pose_difference(clip["frames"][-1]["poses"], target_pose) < 0.002, f"Recovery seam mismatch: {name}"
 print(f"PASS R1 chain and recovery seams: chain max component difference {chain_error:.7f}")
 
 test_sword = ET.parse(combat / "assets/weapon/CombatTestSwordScript.rbxmx").getroot()
