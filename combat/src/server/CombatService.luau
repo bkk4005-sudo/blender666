@@ -402,7 +402,7 @@ function CombatService:update(dt)
                 end
             end
             if profile.motionVelocity and profile.motionDirection then
-                local window = ROLL_DIRECTIONS[actionName] and {0, action.duration} or action.advanceWindow
+                local window = ROLL_DIRECTIONS[actionName] and action.motionWindow or action.advanceWindow
                 if window then
                     local span = window[2] - window[1]
                     local progress = math.clamp((elapsed - window[1]) / span, 0, 1)

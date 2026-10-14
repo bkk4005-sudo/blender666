@@ -10,13 +10,13 @@ for path in sorted((root / "assets/animations/r15/baked").glob("*.json")):
     rows.append(f"| {name} | {name} | `assets/animations/r15/{folder}/{name}.rbxmx` | {clip['duration']:.6f} s | {len(clip['frames'])} | {clip['priority']} / {clip['loop']} | {', '.join(clip['markers']) or 'none'} | unpublished; visual iteration |")
 text = """# Animation asset manifest
 
-Version: prototype-2.5, 2026-10-14. All twelve editable Actions live in `assets/blender/animations/StraightSword_R15.blend`, authored at 30 FPS and baked at 60 samples/second. All animation Asset IDs are **nil**. Original project reconstructions; no timings below are claimed to be measured DS3 values. Export profile: canonical standard R15 with anatomical arm axis calibration, authored HipHeight 2.192423105239868 (measured in Studio).
+Version: prototype-2.6 / deliberate-1 pacing, 2026-10-14. All twelve editable Actions live in `assets/blender/animations/StraightSword_R15.blend`, authored at 30 FPS and baked at 60 samples/second. All animation Asset IDs are **nil**. Original project reconstructions; no timings below are claimed to be measured DS3 values. Export profile: canonical standard R15 with anatomical arm axis calibration, authored HipHeight 2.192423105239868 (measured in Studio).
 
 | Semantic name | Blender Action | Portable source | Duration | Samples | Priority / loop | Real markers | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 """ + "\n".join(rows) + """
 
-The JSON bakes under `assets/animations/r15/baked/` and all KeyframeSequences are generated from the saved Blender Actions. `AnimationRegistry` uses the semantic names above. Rig compatibility and current QA limits are in AVATAR_COMPATIBILITY.md. Parry active timings remain project values 0.18–0.34 s, quantized to the nearest bake sample for visual markers; server rules use the exact configured values.
+The JSON bakes under `assets/animations/r15/baked/` and all KeyframeSequences are generated from the saved Blender Actions. `AnimationRegistry` uses the semantic names above. Rig compatibility and current QA limits are in AVATAR_COMPATIBILITY.md. `config/action_pacing.json` generates both the actual authored phase times and `CombatPacing.luau` server windows. Parry is active at project values 0.200000–0.366667 s; roll i-frames are 0.200000–0.600000 s, followed by vulnerable recovery.
 
 ## Sword assets
 

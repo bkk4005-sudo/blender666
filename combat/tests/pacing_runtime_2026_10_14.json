@@ -1,0 +1,98 @@
+{
+  "version": "deliberate-1",
+  "actions": {
+    "RollForward": {
+      "stationaryRecovery": 0.233333333333,
+      "peakCommandSpeed": 12.115384615379956,
+      "duration": 1.2000000476837158,
+      "markers": {
+        "IFrameStart": 0.20000000298023224,
+        "IFrameEnd": 0.6000000238418579,
+        "RecoveryEnd": 1.2000000476837158
+      },
+      "integratedCommandDistance": 8.399870562130186
+    },
+    "GuardBroken": {
+      "markers": {
+        "RecoveryEnd": 1.5
+      },
+      "duration": 1.5
+    },
+    "Parry": {
+      "markers": {
+        "ParryActiveEnd": 0.36666667461395264,
+        "ParryActiveStart": 0.20000000298023224,
+        "RecoveryEnd": 1.100000023841858
+      },
+      "duration": 1.100000023841858
+    },
+    "Stagger": {
+      "markers": {
+        "RecoveryEnd": 0.8666666746139526
+      },
+      "duration": 0.8666666746139526
+    },
+    "SwordR1_2": {
+      "markers": {
+        "HitEnd": 0.699999988079071,
+        "AttackStart": 0,
+        "RecoveryEnd": 1.3333333730697632,
+        "HitStart": 0.4333333373069763
+      },
+      "duration": 1.3333333730697632
+    },
+    "RollBackward": {
+      "stationaryRecovery": 0.233333333333,
+      "peakCommandSpeed": 11.249999999995671,
+      "duration": 1.2000000476837158,
+      "markers": {
+        "IFrameStart": 0.20000000298023224,
+        "IFrameEnd": 0.6000000238418579,
+        "RecoveryEnd": 1.2000000476837158
+      },
+      "integratedCommandDistance": 7.799879807692339
+    },
+    "SwordR1_1": {
+      "markers": {
+        "AttackStart": 0,
+        "ComboOpen": 0.800000011920929,
+        "HitStart": 0.46666666865348816,
+        "RecoveryEnd": 1.2999999523162842,
+        "ComboClose": 0.9666666388511658,
+        "HitEnd": 0.7333333492279053
+      },
+      "duration": 1.2999999523162842
+    },
+    "SwordR2": {
+      "markers": {
+        "HitEnd": 1.2999999523162842,
+        "AttackStart": 0,
+        "RecoveryEnd": 1.9666666984558105,
+        "HitStart": 0.9333333373069763
+      },
+      "duration": 1.9666666984558105
+    },
+    "RollLeft": {
+      "stationaryRecovery": 0.233333333333,
+      "peakCommandSpeed": 11.249999999995671,
+      "duration": 1.2000000476837158,
+      "markers": {
+        "IFrameStart": 0.20000000298023224,
+        "IFrameEnd": 0.6000000238418579,
+        "RecoveryEnd": 1.2000000476837158
+      },
+      "integratedCommandDistance": 7.799879807692339
+    },
+    "RollRight": {
+      "stationaryRecovery": 0.233333333333,
+      "peakCommandSpeed": 11.249999999995671,
+      "duration": 1.2000000476837158,
+      "markers": {
+        "IFrameStart": 0.20000000298023224,
+        "IFrameEnd": 0.6000000238418579,
+        "RecoveryEnd": 1.2000000476837158
+      },
+      "integratedCommandDistance": 7.799879807692339
+    }
+  }
+}

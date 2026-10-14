@@ -3,6 +3,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 import json
 import math
+from pacing import PACING, FPS, runtime_actions
 
 combat = Path(__file__).resolve().parents[1]
 schema = json.loads((combat / "assets/blender/rig/R15_joint_schema.json").read_text())
@@ -37,6 +38,10 @@ for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
     data = json.loads(path.read_text())
     name = data["name"]
     clips[name] = data
+    timing = PACING["clips"][name]
+    assert data["pacingVersion"] == PACING["version"], f"Stale pacing bake {name}"
+    assert math.isclose(data["duration"], timing["durationFrame"] / FPS), f"Pacing duration mismatch {name}"
+    assert data["markers"] == {marker: frame / FPS for marker, frame in timing["markers"].items()}, f"Pacing markers mismatch {name}"
     assert data["exportProfile"] == "R15Standard" and data["sampleRate"] == 60
     folder = "combat_idle" if name == "CombatIdle" else "dodge" if name.startswith("Roll") else "defensive" if name in ("Block", "Parry") else "reactions" if name in ("Stagger", "GuardBroken") else "straight_sword"
     xml_path = combat / "assets/animations/r15" / folder / f"{name}.rbxmx"
@@ -66,7 +71,8 @@ print("PASS portable package structure")
 def pose_difference(a, b):
     return max(abs(x - y) for name in a for x, y in zip(a[name], b[name]))
 
-chain_sample = round(0.7 * clips["SwordR1_1"]["sampleRate"])
+actions = runtime_actions()
+chain_sample = round(actions["SwordR1_1"]["chainAt"] * clips["SwordR1_1"]["sampleRate"])
 chain_error = pose_difference(clips["SwordR1_1"]["frames"][chain_sample]["poses"],
                               clips["SwordR1_2"]["frames"][0]["poses"])
 assert chain_error < 0.002, f"R1 chain seam mismatch: {chain_error}"
@@ -75,6 +81,22 @@ for name, clip in clips.items():
     target_pose = clip["frames"][0]["poses"] if clip["loop"] else idle_pose
     assert pose_difference(clip["frames"][-1]["poses"], target_pose) < 0.002, f"Recovery seam mismatch: {name}"
 print(f"PASS R1 chain and recovery seams: chain max component difference {chain_error:.7f}")
+
+for name, fields in actions.items():
+    markers = clips[name]["markers"]
+    assert fields["duration"] == clips[name]["duration"]
+    for window, start, end in (("active", "HitStart", "HitEnd"), ("combo", "ComboOpen", "ComboClose"),
+                               ("iframes", "IFrameStart", "IFrameEnd"), ("parry", "ParryActiveStart", "ParryActiveEnd")):
+        if window in fields:
+            a, b = fields[window]
+            assert 0 <= a < b <= fields["duration"]
+            assert markers[start] == a and markers[end] == b, f"Gameplay/animation window mismatch {name} {window}"
+    if "chainAt" in fields:
+        assert fields["active"][1] < fields["combo"][0] <= fields["combo"][1] <= fields["chainAt"] < fields["duration"]
+    if "motionWindow" in fields:
+        assert fields["motionWindow"][1] < fields["duration"], f"Roll has no stationary recovery: {name}"
+        assert fields["iframes"][1] <= fields["motionWindow"][1]
+print("PASS shared pacing phases, marker authority, combo gate and roll recovery")
 
 test_sword = ET.parse(combat / "assets/weapon/CombatTestSwordScript.rbxmx").getroot()
 script_nodes = [node for node in test_sword.findall("Item") if node.attrib.get("class") == "Script"]

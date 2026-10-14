@@ -398,7 +398,8 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
                 local state = character:GetAttribute("CombatState")
                 local action = state == "AttackStartup" or state == "AttackActive" or state == "AttackRecovery"
                 facingAlign.Enabled = not rolling()
-                facingAlign.MaxAngularVelocity = math.rad(action and 75 or 180)
+                local facingAction = localAction and Config.Actions[localAction.name]
+                facingAlign.MaxAngularVelocity = math.rad(action and (facingAction and facingAction.turnRate or Config.Actions.SwordR1_1.turnRate) or 180)
                 facingAlign.CFrame = CFrame.lookAt(Vector3.zero, flat.Unit)
                 humanoid.AutoRotate = false
                 local desiredPosition = root.Position - flat.Unit * 12 + Vector3.new(0, 5, 0)

@@ -1,3 +1,5 @@
 *.rbxl.lock
 combat/review/
 *.blend1
+__pycache__/
+*.pyc

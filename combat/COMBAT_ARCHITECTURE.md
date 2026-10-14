@@ -1,5 +1,7 @@
 # Combat architecture
 
+Current pacing: `config/action_pacing.json` is the authored schedule for both Blender pose retiming and generated `CombatPacing.luau`. CombatConfig merges that schedule with damage, stamina and hit-profile settings. ActionTimeline and client duration/combination gates read the resulting config. Rolls have an explicit movement window followed by stationary recovery; expanding duration does not proportionally expand invulnerability. Client lock-on attack turn limits use the same per-action setting as server arc orientation. See COMBAT_PACING.md.
+
 Roll presentation is now exclusive: Action4 source/registry/track priority, local state guard established on the first predicted input, no competing attack/parry predictions, and immediate suppression of foreign action tracks during the roll. Server-authorized reactions and death remain able to interrupt. Roll-facing AlignOrientation is disabled while rolling, preserving the server motion direction. Combo R1 only submits an input; the server's Started event switches clips at chainAt. Sequence-specific Rejected responses roll back rejected predictions. Balance windows and server i-frames remain independent of animation markers.
 
 ## Avatar visuals and controls (prototype 2.4)

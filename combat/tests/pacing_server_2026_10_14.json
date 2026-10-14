@@ -1,0 +1,17 @@
+{
+  "started": [
+    "SwordR1_1",
+    "SwordR1_2",
+    "SwordR2",
+    "RollForward",
+    "RollBackward",
+    "RollLeft",
+    "RollRight"
+  ],
+  "rejectedBusyRequests": 5,
+  "checks": {
+    "r2LongStartupAndRecovery": true,
+    "allRollRecoveryAndCleanup": true,
+    "r1StartupDamageComboRecovery": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "version": "deliberate-1",
+  "provenance": "Project playtest tuning following user feedback; not measured Dark Souls III timing",
+  "authoringFPS": 30,
+  "sampleRate": 60,
+  "movement": {"WalkSpeed": 10, "SprintSpeed": 15, "BlockWalkSpeed": 5.5},
+  "clips": {
+    "CombatIdle": {"durationFrame": 96, "poseFrames": [[0,0],[15,24],[30,48],[45,72],[60,96]], "markers": {}},
+    "Block": {"durationFrame": 84, "poseFrames": [[0,0],[12,21],[24,42],[36,63],[48,84]], "markers": {}},
+    "SwordR1_1": {
+      "durationFrame": 39,
+      "poseFrames": [[0,0],[2,4],[5,9],[7,12],[9,14],[11,18],[14,22],[21,29],[25,35],[28,39]],
+      "markers": {"AttackStart":0,"HitStart":14,"HitEnd":22,"ComboOpen":24,"ComboClose":29,"RecoveryEnd":39},
+      "runtimeFrames": {"active":[14,22],"combo":[24,29],"bufferOpen":20,"chainAt":29,"advanceWindow":[9,21]},
+      "runtimeValues": {"advance":1.45}
+    },
+    "SwordR1_2": {
+      "durationFrame": 40,
+      "poseFrames": [[0,0],[3,5],[5,9],[8,13],[11,17],[14,21],[19,27],[23,33],[29,40]],
+      "markers": {"AttackStart":0,"HitStart":13,"HitEnd":21,"RecoveryEnd":40},
+      "runtimeFrames": {"active":[13,21],"advanceWindow":[7,20]},
+      "runtimeValues": {"advance":1.3}
+    },
+    "SwordR2": {
+      "durationFrame": 59,
+      "poseFrames": [[0,0],[4,7],[10,17],[14,24],[17,28],[21,33],[25,39],[32,47],[38,54],[43,59]],
+      "markers": {"AttackStart":0,"HitStart":28,"HitEnd":39,"RecoveryEnd":59},
+      "runtimeFrames": {"active":[28,39],"advanceWindow":[24,36]},
+      "runtimeValues": {"advance":1.8}
+    },
+    "RollForward": {
+      "durationFrame":36,"poseFrames":[[0,0],[2,3],[4,6],[6,9],[9,13],[12,18],[15,22],[18,26],[21,29],[23,32],[25,36]],
+      "markers":{"IFrameStart":6,"IFrameEnd":18,"RecoveryEnd":36},
+      "runtimeFrames":{"iframes":[6,18],"motionWindow":[3,29]},"runtimeValues":{"distance":8.4},"groundedFrames":[10,27]
+    },
+    "RollBackward": {
+      "durationFrame":36,"poseFrames":[[0,0],[2,3],[4,6],[6,9],[9,13],[12,18],[15,22],[18,26],[21,29],[23,32],[25,36]],
+      "markers":{"IFrameStart":6,"IFrameEnd":18,"RecoveryEnd":36},
+      "runtimeFrames":{"iframes":[6,18],"motionWindow":[3,29]},"runtimeValues":{"distance":7.8},"groundedFrames":[10,27]
+    },
+    "RollLeft": {
+      "durationFrame":36,"poseFrames":[[0,0],[2,3],[4,6],[6,9],[9,13],[12,18],[15,22],[18,26],[21,29],[23,32],[25,36]],
+      "markers":{"IFrameStart":6,"IFrameEnd":18,"RecoveryEnd":36},
+      "runtimeFrames":{"iframes":[6,18],"motionWindow":[3,29]},"runtimeValues":{"distance":7.8},"groundedFrames":[10,27]
+    },
+    "RollRight": {
+      "durationFrame":36,"poseFrames":[[0,0],[2,3],[4,6],[6,9],[9,13],[12,18],[15,22],[18,26],[21,29],[23,32],[25,36]],
+      "markers":{"IFrameStart":6,"IFrameEnd":18,"RecoveryEnd":36},
+      "runtimeFrames":{"iframes":[6,18],"motionWindow":[3,29]},"runtimeValues":{"distance":7.8},"groundedFrames":[10,27]
+    },
+    "Parry": {
+      "durationFrame":33,"poseFrames":[[0,0],[3,4],[6,7],[9,11],[12,15],[18,24],[27,33]],
+      "markers":{"ParryActiveStart":6,"ParryActiveEnd":11,"RecoveryEnd":33},"runtimeFrames":{"parry":[6,11]}
+    },
+    "Stagger": {"durationFrame":26,"poseFrames":[[0,0],[3,4],[7,9],[13,17],[20,26]],"markers":{"RecoveryEnd":26},"runtimeFrames":{}},
+    "GuardBroken": {"durationFrame":45,"poseFrames":[[0,0],[4,5],[9,12],[22,29],[29,37],[35,45]],"markers":{"RecoveryEnd":45},"runtimeFrames":{}}
+  }
+}

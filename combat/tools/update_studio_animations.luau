@@ -74,7 +74,7 @@ local ok, result = pcall(function()
     client.Name = "CombatClient"
     client.Source = Http:GetAsync(host .. "src/client/CombatClient.client.luau")
     local extras = {}
-    for _, name in {"InputBindings", "BladeClearance", "AvatarGroundClearance", "AnimationRegistry", "CombatConfig", "ActionTimeline"} do
+    for _, name in {"InputBindings", "BladeClearance", "AvatarGroundClearance", "AnimationRegistry", "CombatPacing", "CombatConfig", "ActionTimeline"} do
         local item = Instance.new("ModuleScript")
         item.Name, item.Source = name, Http:GetAsync(host .. "src/shared/" .. name .. ".luau")
         table.insert(extras, {item = item, parent = root.Shared})

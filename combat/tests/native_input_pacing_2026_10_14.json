@@ -1,0 +1,101 @@
+{
+  "inputs": [
+    {
+      "input": "CombatR1:Begin"
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "SwordR1_1",
+      "elapsed": 0.038583993911743164
+    },
+    {
+      "input": "CombatR1:Begin",
+      "action": "SwordR1_1",
+      "elapsed": 0.8394439220428467
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "SwordR1_1",
+      "elapsed": 0.972074031829834
+    },
+    {
+      "input": "CombatR2:Begin"
+    },
+    {
+      "input": "CombatR2:End",
+      "action": "SwordR2",
+      "elapsed": 0.04193305969238281
+    },
+    {
+      "input": "CombatRoll:Begin"
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollForward",
+      "elapsed": 0.038520097732543945
+    },
+    {
+      "input": "CombatR1:Begin",
+      "action": "RollForward",
+      "elapsed": 0.3684580326080322
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "RollForward",
+      "elapsed": 0.4356880187988281
+    }
+  ],
+  "version": "deliberate-1",
+  "missingRollFrames": 0,
+  "actions": [
+    {
+      "peakHorizontalVelocity": 4.5452799797058105,
+      "expectedDuration": 1.3,
+      "frames": 59,
+      "observedDuration": 1.0199639797210693,
+      "name": "SwordR1_1",
+      "maximumTrackTime": 1.0333330631256104,
+      "speed": 1,
+      "length": 1.2999999523162842,
+      "endedBy": "Started:SwordR1_2",
+      "displacement": 1.4501029253005981
+    },
+    {
+      "peakHorizontalVelocity": 3.7778353691101074,
+      "expectedDuration": 1.33333333333,
+      "frames": 82,
+      "observedDuration": 1.405745029449463,
+      "name": "SwordR1_2",
+      "maximumTrackTime": 1.3333333730697632,
+      "speed": 1,
+      "length": 1.3333333730697632,
+      "endedBy": "Idle",
+      "displacement": 1.2954524755477905
+    },
+    {
+      "peakHorizontalVelocity": 5.641913890838623,
+      "expectedDuration": 1.96666666667,
+      "frames": 119,
+      "observedDuration": 2.0195820331573486,
+      "name": "SwordR2",
+      "maximumTrackTime": 1.9666666984558105,
+      "speed": 1,
+      "length": 1.9666666984558105,
+      "endedBy": "Idle",
+      "displacement": 1.8033161163330078
+    },
+    {
+      "peakHorizontalVelocity": 12.165386199951172,
+      "expectedDuration": 1.2,
+      "frames": 73,
+      "observedDuration": 1.2527949810028076,
+      "name": "RollForward",
+      "maximumTrackTime": 1.2000000476837158,
+      "speed": 1,
+      "length": 1.2000000476837158,
+      "endedBy": "Idle",
+      "displacement": 8.383737564086914
+    }
+  ],
+  "competingRollFrames": 0
+}

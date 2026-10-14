@@ -1,6 +1,10 @@
 # Animation pipeline
 
-## Current avatar pass — prototype 2.5
+## Current pacing pass — prototype 2.6
+
+`config/action_pacing.json` now retimes the semantic poses individually before they are keyed in Blender and generates `CombatPacing.luau`. Action playback remains at speed 1. Preparation, swing, follow-through and recovery have separate mappings; the roll's floor-contact correction uses the new authored contact interval. The generated source Actions, baked transforms, real markers and server windows use the same schedule. `tools/render_review.py` derives review frames from that schedule. See COMBAT_PACING.md for the current values; old frame tables and verification counts below remain historical.
+
+## Avatar pass — prototype 2.5
 
 The current stance fixes the high, inward hand targets and the donor-to-R15 anatomical arm axis mismatch. The free hand follows the forearm. `assets/weapon/r15_hand_grip.json` records the standard R15 palm frame measured in Studio; Blender solves the weapon hand part around this grip, not around the imported bone axes. WeaponVisual resolves each equipped avatar's RightGripAttachment. Preview/runtime blade and floor checks use the same frame. Updated roll takeoff/landing poses lower the weapon with the crouch. The current tests are recorded at the top of TEST_REPORT.md; older eight-clip checks below are historical.
 

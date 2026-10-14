@@ -8,8 +8,12 @@ The authored Actions remain subject to Studio and player-rig visual review.
 import bpy
 import json
 import math
+import sys
 from pathlib import Path
 from mathutils import Vector, Matrix, Quaternion, Euler
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pacing import PACING, pace_clip, write_runtime
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = ROOT / "combat"
@@ -236,6 +240,11 @@ CLIPS = [
                                    p=(-.48, -.61, 3.18), angles=(140, -35, 5), head=(12, 0, 2))),
                (.96, pose(body=(11, 0, -8), root=(0, 0, -.30))), (35/30, NEUTRAL)]),
 ]
+
+
+for clip in CLIPS:
+    pace_clip(clip)
+write_runtime()
 
 
 def transform(rot, pos):
@@ -498,7 +507,7 @@ def sword_floor():
     return floor
 
 
-def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, grounded_roll=False):
+def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, grounded_frames=None):
     # Semantic poses clear the floor, but joint/rig interpolation can dip
     # between them. Bake a smoothed correction at the export sampling rate.
     sample_count = (frame_count - 1) * 2 + 1
@@ -521,7 +530,7 @@ def stabilize_floor(frame_count, target_floor, spread_frames, include_sword, gro
     correction[0] = 0.0
     correction[-1] = 0.0
     for index, lift in enumerate(correction):
-        if grounded_roll and 14 <= index <= 38:
+        if grounded_frames and grounded_frames[0] * 2 <= index <= grounded_frames[1] * 2:
             # The inverted body must pass close to the ground. The sword can
             # limit the downward adjustment so its edge never cuts the floor.
             body_clearance = sampled[index][3] + lift
@@ -662,7 +671,7 @@ for clip in CLIPS:
     match_prop_to_hand(round(clip["duration"] * 30) + 1)
     prop_constraint.mute = False
     if name.startswith("Roll"):
-        stabilize_floor(round(clip["duration"] * 30) + 1, 0.015, 4, True, True)
+        stabilize_floor(round(clip["duration"] * 30) + 1, 0.015, 4, True, clip["groundedFrames"])
     elif not clip["loop"]:
         stabilize_floor(round(clip["duration"] * 30) + 1, 0.003, 2, False)
     clamp_location_curves(action)
@@ -686,7 +695,7 @@ for clip in CLIPS:
               "sourceBlend": OUT_BLEND.relative_to(ROOT).as_posix(),
               "status": "ITERATED_REQUIRES_STUDIO_QA", "exportProfile": "R15Standard",
               "jointSchema": "combat/assets/blender/rig/R15_standard_joint_schema.json", "sampleRate": 60,
-              "authoredHipHeight": 2.192423105239868}
+              "authoredHipHeight": 2.192423105239868, "pacingVersion": PACING["version"]}
     (OUT_DATA / (name+".json")).write_text(json.dumps(output, separators=(",", ":")))
     print("AUTHORED", name, len(frames), flush=True)
 

@@ -1,5 +1,9 @@
 # Animation reference breakdown — verified viewing pass
 
+## Current project pacing — 2026-10-14
+
+The current `deliberate-1` schedule is in `config/action_pacing.json` and COMBAT_PACING.md. It responds to playtest feedback about rushed movement: pose-to-pose anticipation/recovery was expanded and travel reduced. The source A player was reopened at playback rate 1; the inspected 00:11.265690 snapshot displayed "Heavy Attack" at 640×360. This is a visible source checkpoint, not an isolated R1 or medium-roll measurement. No new exact DS3 timing claim follows from it. The original source observations below and old **project-authored** frame tables are historical; their own-frame indices are mapped to the current authored frames by the pacing file.
+
 ## Additional authored defenses (2026-10-14)
 
 No clean frame-by-frame DS3 parry/guard-break sequence was isolated for this pass. The following poses are original project reconstructions, **ESTIMATED**, rather than measured DS3 poses or weapon skills. Blender is their actual source; the video observations documented below remain the reference context for overall stance and weight.

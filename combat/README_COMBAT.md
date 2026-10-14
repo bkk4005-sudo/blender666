@@ -1,10 +1,10 @@
 # R15 straight sword combat foundation
 
-Status: **prototype for an R15 playtest, not release ready**. The existing Coliseum place and its map assets were not changed on disk. This folder is portable; it contains the Luau sources, editable Blender Actions, baked joint data, Roblox KeyframeSequences and an import package.
+Status: **prototype for an R15 playtest, not release ready**. The existing Coliseum map geometry is preserved. The pre-existing dirty `.rbxl` remains excluded from combat commits. This folder is portable; it contains the Luau sources, editable Blender Actions, baked joint data, Roblox KeyframeSequences and an import package.
 
 ## Implemented in this pass
 
-Latest: the one-hand ready stance has a lower weapon hand and relaxed free arm. Canonical export calibrates the donor's splayed anatomical arm axes; the sword follows each avatar's own RightGripAttachment. Roll preparation lowers the sword with the body. All 12 clips were checked through the physical Animator, including actual palm-to-hilt alignment; five body profiles passed the blade/body-box matrix. Details and limits are in TEST_REPORT.md. Action4 roll protection and server-side combo buffering remain enabled.
+Latest: deliberate-1 pacing expands readable preparation and recovery, reduces roll/attack travel speed, and retimes all twelve editable Blender Actions. R1 lasts 1.3 / 1.333 s, R2 1.967 s and rolls 1.2 s. Roll i-frames remain limited to 0.2–0.6 s. One authored pacing file generates the real animation timelines and server timing module. See COMBAT_PACING.md and TEST_REPORT.md for exact phases and verification. Native palm grip, relaxed idle, Action4 roll protection and server-side combo buffering remain enabled.
 
 - Twelve original editable Blender clips: idle, two R1 swings, R2, four rolls, block, parry, stagger and guard break. This pass improves weapon clearance, heavy wind-up and roll wrist orientation.
 - Server-authoritative R1, buffered second R1, R2, stamina, four directional roll motions with timed invulnerability, block/parry state handling and a sampled sword arc hit query. The client cannot name a hit target or set damage. Attack advances and rolls use horizontal-plane velocity, leaving vertical gravity active.
