@@ -32,6 +32,20 @@ local controls = nil
 local lastPosition = nil
 local deathConnection = nil
 local characterVersion = 0
+local localAction = nil
+local comboSubmitted = false
+
+local function rolling()
+    return character and (character:GetAttribute("CombatState") == "Rolling"
+        or (localAction and localAction.name:sub(1, 4) == "Roll" and os.clock() < localAction.ends))
+end
+
+local function canStart()
+    if not character or predicted or rolling() then return false end
+    local state = character:GetAttribute("CombatState")
+    return (state == "Idle" or state == "Moving" or state == "Sprinting")
+        and (not localAction or os.clock() >= localAction.ends)
+end
 
 local function disconnectTracks()
     for _, connection in trackConnections do connection:Disconnect() end
@@ -42,6 +56,8 @@ local function disconnectTracks()
     table.clear(previewSequences)
     actionTrack = nil
     predicted = nil
+    localAction = nil
+    comboSubmitted = false
 end
 
 local function loadTrack(semantic)
@@ -94,17 +110,32 @@ end
 local function playAction(semantic)
     local track = loadTrack(semantic)
     if not track then return end
-    if actionTrack and actionTrack ~= track then actionTrack:Stop(0.12) end
+    local isRoll = semantic:sub(1, 4) == "Roll"
+    if isRoll then
+        -- Full-body exclusive track: remove residual combat weights at takeoff.
+        for name, other in tracks do if name ~= semantic and name ~= "CombatIdle" then other:Stop(.035) end end
+        track.Priority = Enum.AnimationPriority.Action4
+    elseif actionTrack and actionTrack ~= track then
+        actionTrack:Stop(actionTrack.Name:sub(1, 4) == "Roll" and .035 or .12)
+    end
     actionTrack = track
-    if not track.IsPlaying then track:Play(0.10, 1, 1) end
+    if not track.IsPlaying then track:Play(isRoll and .035 or .10, 1, 1) end
 end
 
 local function send(kind, direction, predictedName, moveDirection)
+    if predictedName then
+        local action = Config.Actions[predictedName]
+        local stamina = character and character:GetAttribute("Stamina")
+        if action and action.cost and type(stamina) == "number" and stamina < action.cost then return end
+    end
     inputSequence += 1
     script:SetAttribute("LastInputRequest", kind)
     remote:FireServer({kind = kind, direction = direction, moveDirection = moveDirection, sequence = inputSequence})
     if predictedName then
-        predicted = {name = predictedName, deadline = os.clock() + 0.38}
+        predicted = {name = predictedName, sequence = inputSequence, deadline = os.clock() + 0.38}
+        local action = Config.Actions[predictedName]
+        localAction = {name = predictedName, ends = os.clock() + (action and action.duration or .38)}
+        comboSubmitted = false
         playAction(predictedName)
     end
 end
@@ -220,6 +251,10 @@ local function bindCharacter(newCharacter)
     humanoid = character:WaitForChild("Humanoid")
     root = character:WaitForChild("HumanoidRootPart")
     animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
+    table.insert(trackConnections, animator.AnimationPlayed:Connect(function(track)
+        if rolling() and track ~= actionTrack and track.Priority ~= Enum.AnimationPriority.Core
+            and track.Priority.Value >= Enum.AnimationPriority.Action.Value then track:Stop(0) end
+    end))
     moveVector = Vector3.zero
     lastPosition = root.Position
     for name in Registry.Profiles.R15 do loadTrack(name) end
@@ -249,22 +284,28 @@ local function handleInput(actionName, inputState, inputObject)
     if player:GetAttribute("CombatSettingsOpen") then return Enum.ContextActionResult.Sink end
     if UserInputService:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
     if not humanoid or humanoid.Health <= 0 then return Enum.ContextActionResult.Sink end
+    if rolling() and actionName ~= "CombatLock" then return Enum.ContextActionResult.Sink end
     if actionName == "CombatR1" and inputState == Enum.UserInputState.Begin then
-        local current = character:GetAttribute("CombatState")
-        local predictedName = current == "AttackRecovery" and "SwordR1_2" or "SwordR1_1"
-        send("R1", nil, predictedName)
+        if localAction and os.clock() < localAction.ends and localAction.name == "SwordR1_1" and not comboSubmitted then
+            local action = Config.Actions.SwordR1_1
+            local elapsed = action.duration - (localAction.ends - os.clock())
+            if elapsed >= action.bufferOpen and elapsed <= action.combo[2] then
+                comboSubmitted = true
+                send("R1") -- Server starts the second clip at chainAt; preserve the current swing.
+            end
+        elseif canStart() then send("R1", nil, "SwordR1_1") end
     elseif actionName == "CombatR2" and inputState == Enum.UserInputState.Begin then
-        send("R2", nil, "SwordR2")
+        if canStart() then send("R2", nil, "SwordR2") end
     elseif actionName == "CombatRoll" and inputState == Enum.UserInputState.Begin then
         local name, worldDirection = rollDirection()
-        send("Roll", name, name, worldDirection)
+        if canStart() then send("Roll", name, name, worldDirection) end
     elseif actionName == "CombatBlock" then
-        if inputState == Enum.UserInputState.Begin then send("BlockStart")
+        if inputState == Enum.UserInputState.Begin and canStart() then send("BlockStart")
         elseif inputState == Enum.UserInputState.End or inputState == Enum.UserInputState.Cancel then send("BlockEnd") end
     elseif actionName == "CombatParry" and inputState == Enum.UserInputState.Begin then
-        send("Parry", nil, "Parry")
+        if canStart() then send("Parry", nil, "Parry") end
     elseif actionName == "CombatSprint" then
-        if inputState == Enum.UserInputState.Begin then send("SprintStart")
+        if inputState == Enum.UserInputState.Begin and canStart() then send("SprintStart")
         elseif inputState == Enum.UserInputState.End or inputState == Enum.UserInputState.Cancel then send("SprintEnd") end
     elseif actionName == "CombatLock" and inputState == Enum.UserInputState.Begin then
         setLock(target and nil or chooseTarget())
@@ -296,9 +337,18 @@ end
 UserInputService.WindowFocusReleased:Connect(releaseHeldActions)
 UserInputService.TextBoxFocused:Connect(releaseHeldActions)
 
-remote.OnClientEvent:Connect(function(kind, owner, semantic)
+remote.OnClientEvent:Connect(function(kind, owner, semantic, started)
+    if kind == "Rejected" and predicted and owner == predicted.sequence then
+        if actionTrack then actionTrack:Stop(.08) end
+        predicted, localAction = nil, nil
+        return
+    end
     if kind == "Started" and owner == player then
         predicted = nil
+        local action = Config.Actions[semantic]
+        local elapsed = type(started) == "number" and math.max(0, workspace:GetServerTimeNow() - started) or 0
+        localAction = {name = semantic, ends = os.clock() + math.max(0, (action and action.duration or 0) - elapsed)}
+        comboSubmitted = false
         playAction(semantic)
     end
 end)
@@ -307,10 +357,21 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
     if not humanoid or humanoid.Health <= 0 or not root then return end
     camera = workspace.CurrentCamera or camera
     if predicted and os.clock() >= predicted.deadline then
-        if actionTrack then actionTrack:Stop(0.10) end
+        -- A late acknowledgement must not visibly cut a predicted roll in half.
+        if predicted.name:sub(1, 4) ~= "Roll" then
+            if actionTrack then actionTrack:Stop(0.10) end
+            localAction = nil
+        end
         predicted = nil
     end
     local state = character:GetAttribute("CombatState")
+    if rolling() and actionTrack then
+        -- Suppress emotes/foreign action tracks while this complete roll is playing.
+        for _, other in animator:GetPlayingAnimationTracks() do
+            if other ~= actionTrack and other.Priority ~= Enum.AnimationPriority.Core
+                and other.Priority.Value >= Enum.AnimationPriority.Action.Value then other:Stop(0) end
+        end
+    end
     local block = tracks.Block
     if block then
         if state == "Blocking" and not block.IsPlaying then playAction("Block")
@@ -336,6 +397,7 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
             if flat.Magnitude > 0.2 then
                 local state = character:GetAttribute("CombatState")
                 local action = state == "AttackStartup" or state == "AttackActive" or state == "AttackRecovery"
+                facingAlign.Enabled = not rolling()
                 facingAlign.MaxAngularVelocity = math.rad(action and 75 or 180)
                 facingAlign.CFrame = CFrame.lookAt(Vector3.zero, flat.Unit)
                 humanoid.AutoRotate = false

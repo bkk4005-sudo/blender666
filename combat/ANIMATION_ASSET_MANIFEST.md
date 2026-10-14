@@ -8,10 +8,10 @@ Version: prototype-2.4, 2026-10-14. All twelve editable Actions live in `assets/
 | CombatIdle | CombatIdle | `assets/animations/r15/combat_idle/CombatIdle.rbxmx` | 2.000000 s | 121 | Idle / True | none | unpublished; visual iteration |
 | GuardBroken | GuardBroken | `assets/animations/r15/reactions/GuardBroken.rbxmx` | 1.166667 s | 71 | Action / False | RecoveryEnd | unpublished; visual iteration |
 | Parry | Parry | `assets/animations/r15/defensive/Parry.rbxmx` | 0.900000 s | 55 | Action / False | ParryActiveStart, ParryActiveEnd, RecoveryEnd | unpublished; visual iteration |
-| RollBackward | RollBackward | `assets/animations/r15/dodge/RollBackward.rbxmx` | 0.833333 s | 51 | Action / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
-| RollForward | RollForward | `assets/animations/r15/dodge/RollForward.rbxmx` | 0.833333 s | 51 | Action / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
-| RollLeft | RollLeft | `assets/animations/r15/dodge/RollLeft.rbxmx` | 0.833333 s | 51 | Action / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
-| RollRight | RollRight | `assets/animations/r15/dodge/RollRight.rbxmx` | 0.833333 s | 51 | Action / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
+| RollBackward | RollBackward | `assets/animations/r15/dodge/RollBackward.rbxmx` | 0.833333 s | 51 | Action4 / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
+| RollForward | RollForward | `assets/animations/r15/dodge/RollForward.rbxmx` | 0.833333 s | 51 | Action4 / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
+| RollLeft | RollLeft | `assets/animations/r15/dodge/RollLeft.rbxmx` | 0.833333 s | 51 | Action4 / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
+| RollRight | RollRight | `assets/animations/r15/dodge/RollRight.rbxmx` | 0.833333 s | 51 | Action4 / False | IFrameStart, IFrameEnd, RecoveryEnd | unpublished; visual iteration |
 | Stagger | Stagger | `assets/animations/r15/reactions/Stagger.rbxmx` | 0.666667 s | 41 | Action / False | RecoveryEnd | unpublished; visual iteration |
 | SwordR1_1 | SwordR1_1 | `assets/animations/r15/straight_sword/SwordR1_1.rbxmx` | 0.933333 s | 57 | Action / False | AttackStart, HitStart, HitEnd, ComboOpen, ComboClose, RecoveryEnd | unpublished; visual iteration |
 | SwordR1_2 | SwordR1_2 | `assets/animations/r15/straight_sword/SwordR1_2.rbxmx` | 0.966667 s | 59 | Action / False | AttackStart, HitStart, HitEnd, ComboOpen, ComboClose, RecoveryEnd | unpublished; visual iteration |

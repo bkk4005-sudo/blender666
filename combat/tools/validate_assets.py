@@ -57,7 +57,7 @@ for path in sorted((combat / "assets/animations/r15/baked").glob("*.json")):
         assert all(math.isclose(markers[key], value, abs_tol=1 / 60 + 1e-5)
                    for key, value in data["markers"].items()), f"marker time mismatch {name}"
         token = node.find("./Properties/token[@name='Priority']").text
-        assert token == ("0" if data["priority"] == "Idle" else "2"), f"priority mismatch {name}"
+        assert token == {"Idle": "0", "Action": "2", "Action4": "5"}[data["priority"]], f"priority mismatch {name}"
     print(f"PASS {name}: {len(data['frames'])} frames, {len(data['markers'])} markers")
 
 assert len(packaged) == 12, "unexpected package clip count"

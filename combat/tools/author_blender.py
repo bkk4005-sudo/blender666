@@ -72,7 +72,7 @@ R1_WIND = pose(p=(-0.65, -0.30, 4.43), angles=(66, -91, -12),
 R1_CONTACT = pose(p=(0.42, -1.13, 4.08), angles=(93, 55, 8),
                   body=(15, 0, 23), pelvis=(1, 0, 12), root=(0.04, -0.16, -0.30),
                   lf=(0.64, -0.85, 0), rf=(-0.65, 0.98, 0))
-R1_END = pose(p=(0.53, -0.63, 3.95), angles=(113, 91, 22),
+R1_END = pose(p=(0.53, -0.76, 3.95), angles=(113, 91, 22),
               body=(12, 0, 29), pelvis=(0, 0, 15), root=(0.07, -0.12, -0.27),
               lf=(0.64, -0.85, 0), rf=(-0.65, 0.88, 0))
 R2_WIND = pose(p=(-0.95, -0.42, 5.08), angles=(-44, -29, -4),
@@ -89,11 +89,11 @@ R2_END = pose(p=(0.20, -1.03, 3.54), angles=(150, 12, 2),
 # expose reliable source frames for a roll, so these are authored project poses.
 ROLL_CROUCH = pose(root=(0, 0, -0.62), body=(37, 0, -10), pelvis=(18, 0, -6),
                    lf=(0.54, 0.00, 0), rf=(-0.54, 0.00, 0),
-                   p=(-1.00, -0.60, 3.56), angles=(90, 0, 0),
+                   p=(-.82, -0.60, 3.56), angles=(90, 0, 0),
                    left_hand=(0.18, -0.45, -0.48), head=(16, 0, 0))
 ROLL_PREP = pose(root=(0, 0, -0.40), body=(22, 0, -9), pelvis=(10, 0, -4),
                  lf=(0.59, -0.12, 0), rf=(-0.59, 0.15, 0),
-                 p=(-.95, -0.68, 3.83), angles=(100, -15, 8), left_hand=(0.30, -0.33, -0.80),
+                 p=(-.62, -0.68, 3.83), angles=(100, -15, 8), left_hand=(0.30, -0.33, -0.80),
                  head=(5, 0, 3))
 ROLL_TUCK = pose(root=(0, 0, -0.73), body=(67, 0, -12), pelvis=(34, 0, -8),
                  lf=(0.35, 0.08, 1.48), rf=(-0.35, 0.08, 1.48),
@@ -103,6 +103,14 @@ ROLL_MID = pose(root=(0, 0, -0.69), body=(53, 0, -11), pelvis=(27, 0, -7),
                 lf=(0.44, 0.04, 0.70), rf=(-0.44, 0.04, 0.70),
                 p=(-1.00, -0.47, 3.28), angles=(90, 0, 0), left_hand=(0.13, -0.46, -0.38),
                 head=(23, 0, 0))
+ROLL_LAND = pose(root=(0, -.04, -.50), body=(28, 0, -9), pelvis=(12, 0, -5),
+                 lf=(.59, -.36, 0), rf=(-.59, .42, .12),
+                 p=(-.95, -.64, 3.61), angles=(96, -25, 4),
+                 left_hand=(.28, -.39, -.64), head=(8, 0, 2))
+ROLL_RISE = pose(root=(0, -.02, -.28), body=(12, 0, -8), pelvis=(4, 0, -2),
+                 lf=(.64, -.28, 0), rf=(-.65, .38, 0),
+                 p=(-.72, -.65, 3.73), angles=(101, -31, 6),
+                 left_hand=(.36, -.25, -.95), head=(0, 0, 4))
 
 
 def roll_clip(name, axis):
@@ -129,7 +137,7 @@ def roll_clip(name, axis):
                                8 * (1 - blend))
         value["tumble"] = angle
         return (t / 30, value)
-    return dict(name=name, duration=25 / 30, loop=False, priority="Action",
+    return dict(name=name, duration=25 / 30, loop=False, priority="Action4",
                 axis=axis, markers={"IFrameStart": 5 / 30,
                                     "IFrameEnd": 16 / 30,
                                     "RecoveryEnd": 25 / 30},
@@ -137,7 +145,7 @@ def roll_clip(name, axis):
                       at(4, ROLL_CROUCH, 18), at(6, ROLL_MID, 58),
                       at(9, ROLL_TUCK, 112), at(12, ROLL_TUCK, 177),
                       at(15, ROLL_TUCK, 242), at(18, ROLL_MID, 302),
-                      at(21, ROLL_CROUCH, 348), at(23, ROLL_PREP, 358),
+                      at(21, ROLL_LAND, 348), at(23, ROLL_RISE, 358),
                       at(25, NEUTRAL, 360)])
 
 GUARD = pose(p=(-0.42, -0.92, 4.18), angles=(26, -18, 8),
@@ -164,10 +172,10 @@ CLIPS = [
     dict(name="SwordR1_2", duration=29/30, loop=False, priority="Action",
          markers={"AttackStart": 0, "HitStart": 8/30, "HitEnd": 14/30,
                   "ComboOpen": 16/30, "ComboClose": 23/30, "RecoveryEnd": 29/30},
-         keys=[(0, R1_END), (0.09, pose(p=(0.68, -0.41, 4.12), angles=(72, 115, 25),
+         keys=[(0, R1_END), (0.09, pose(p=(0.68, -0.62, 4.12), angles=(72, 115, 25),
                                       body=(2, 0, 31), pelvis=(0, 0, 13),
                                       lf=(0.64, -0.72, 0), rf=(-0.65, 0.90, 0))),
-               (0.18, pose(p=(0.67, -0.32, 4.31), angles=(70, 124, 28),
+               (0.18, pose(p=(0.67, -0.54, 4.31), angles=(70, 124, 28),
                            body=(0, 0, 37), pelvis=(0, 0, 17), root=(0.08, 0.02, -0.29),
                            lf=(0.64, -0.20, 0), rf=(-0.65, 0.72, 0.20))),
                (0.27, pose(p=(0.31, -0.93, 4.15), angles=(87, 55, 12),
@@ -236,10 +244,15 @@ def transform(rot, pos):
     return m
 
 
-def orient_bone(name, a, b):
+def orient_bone(name, a, b, plane_normal=None):
     y = (b-a).normalized()
     rest_y = (TAIL[name]-HEAD[name]).normalized()
     q = rest_y.rotation_difference(y) @ REST[name].to_quaternion()
+    if plane_normal is not None:
+        x = plane_normal.normalized()
+        x = (x - y * x.dot(y)).normalized()
+        z = x.cross(y).normalized()
+        return transform(Matrix((x, y, z)).transposed(), a)
     return transform(q, a)
 
 
@@ -261,6 +274,7 @@ def two_bone_joint(a, target, length1, length2, pole):
 max_leg_extension = 0
 max_grip_error = 0
 current_pose_label = ""
+arm_plane_sign = {}
 
 
 def pose_at(p):
@@ -294,8 +308,15 @@ def pose_at(p):
         upper, lower, hand = side+"UpperArm", side+"LowerArm", side+"Hand"
         elbow, _ = two_bone_joint(a, wrist, (TAIL[upper]-HEAD[upper]).length,
                          (TAIL[lower]-HEAD[lower]).length, (sign*0.9, 0.20, -0.55))
-        desired[upper] = orient_bone(upper, a, elbow)
-        desired[lower] = orient_bone(lower, elbow, wrist)
+        normal = (elbow-a).cross(wrist-elbow).normalized()
+        # Both segments share the anatomical bend plane. The old shortest-arc
+        # orientation twisted the elbow near its antiparallel rest direction.
+        for bone_name, start, end in ((upper, a, elbow), (lower, elbow, wrist)):
+            if bone_name not in arm_plane_sign:
+                neutral_x = orient_bone(bone_name, start, end).to_3x3().col[0]
+                arm_plane_sign[bone_name] = 1 if normal.dot(neutral_x) >= 0 else -1
+            anatomical = orient_bone(bone_name, start, end, normal * arm_plane_sign[bone_name])
+            desired[bone_name] = anatomical
         hand_rotation = sword_basis @ Matrix.Diagonal((1, -1, -1))
         desired[hand] = transform(hand_rotation, wrist) if side == "Right" else orient_bone(
             hand, wrist, wrist+Vector((0, -0.25, -0.1)))

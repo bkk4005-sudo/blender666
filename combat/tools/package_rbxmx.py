@@ -45,7 +45,7 @@ def sequence_node(data, parent):
     _, height_props = item("NumberValue", "SourceAuthoredHipHeight", node)
     ET.SubElement(height_props, "double", {"name": "Value"}).text = str(data["authoredHipHeight"])
     # Verified against the connected Studio Enum on 2026-10-13: Idle=0, Action=2.
-    ET.SubElement(props, "token", {"name": "Priority"}).text = "0" if data["priority"] == "Idle" else "2"
+    ET.SubElement(props, "token", {"name": "Priority"}).text = {"Idle": "0", "Action": "2", "Action4": "5"}[data["priority"]]
     markers = {}
     for name, seconds in data["markers"].items():
         frame_number = round(seconds*data["sampleRate"])

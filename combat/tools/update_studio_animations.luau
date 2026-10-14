@@ -34,7 +34,7 @@ local function build(name, joints)
     sequence.AuthoredHipHeight = data.authoredHipHeight
     local height = Instance.new("NumberValue")
     height.Name, height.Value, height.Parent = "SourceAuthoredHipHeight", data.authoredHipHeight, sequence
-    sequence.Priority = data.priority == "Idle" and Enum.AnimationPriority.Idle or Enum.AnimationPriority.Action
+    sequence.Priority = Enum.AnimationPriority[data.priority]
     sequence:SetAttribute("SourceBlend", data.sourceBlend)
     sequence:SetAttribute("Status", data.status)
     for index, frame in data.frames do

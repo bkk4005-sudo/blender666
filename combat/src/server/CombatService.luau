@@ -215,14 +215,15 @@ function CombatService:request(player, request)
     if not humanoid then return end
     local kind = request.kind
     if type(kind) ~= "string" then return end
+    local function rejected() self.remote:FireClient(player, "Rejected", sequence) end
     if kind == "R1" then
         if profile.action == "SwordR1_1" and now - profile.started >= Config.Actions.SwordR1_1.bufferOpen and now - profile.started <= Config.Actions.SwordR1_1.combo[2] then
             profile.comboQueued = true
             return
         end
-        if not profile.action and not profile.blocking then self:start(profile, "SwordR1_1", now) end
+        if profile.action or profile.blocking or not self:start(profile, "SwordR1_1", now) then rejected() end
     elseif kind == "R2" then
-        if not profile.action and not profile.blocking then self:start(profile, "SwordR2", now) end
+        if profile.action or profile.blocking or not self:start(profile, "SwordR2", now) then rejected() end
     elseif kind == "Roll" then
         local name = request.direction
         if not profile.action and not profile.blocking and ROLL_DIRECTIONS[name] then
@@ -239,7 +240,9 @@ function CombatService:request(player, request)
                 if horizontalUnit(expected):Dot(flat.Unit) < 0.5 then return end
                 vector = flat.Unit
             end
-            self:start(profile, name, now, vector)
+            if not self:start(profile, name, now, vector) then rejected() end
+        else
+            rejected()
         end
     elseif kind == "BlockStart" then
         if not profile.action and profile.stamina > 0 then
@@ -252,7 +255,7 @@ function CombatService:request(player, request)
         profile.blocking = false
         if not profile.action then humanoid.WalkSpeed = Config.WalkSpeed; self:setState(profile, "Idle") end
     elseif kind == "Parry" then
-        if not profile.action and not profile.blocking then self:start(profile, "Parry", now) end
+        if profile.action or profile.blocking or not self:start(profile, "Parry", now) then rejected() end
     elseif kind == "SprintStart" then
         if not profile.action and not profile.blocking and profile.stamina > 0 then profile.sprinting = true; humanoid.WalkSpeed = Config.SprintSpeed end
     elseif kind == "SprintEnd" then

@@ -1,5 +1,7 @@
 # Combat architecture
 
+Roll presentation is now exclusive: Action4 source/registry/track priority, local state guard established on the first predicted input, no competing attack/parry predictions, and immediate suppression of foreign action tracks during the roll. Server-authorized reactions and death remain able to interrupt. Roll-facing AlignOrientation is disabled while rolling, preserving the server motion direction. Combo R1 only submits an input; the server's Started event switches clips at chainAt. Sequence-specific Rejected responses roll back rejected predictions. Balance windows and server i-frames remain independent of animation markers.
+
 ## Avatar visuals and controls (prototype 2.4)
 
 WeaponVisual equips the server-owned unscaled sword template after appearance loading and retries on CharacterAppearanceLoaded. One Motor6D holds the rigid mesh; no visual part supplies authoritative damage. BladeClearance preserves limb lengths/grip while rotating the shoulder away from body-box intersections. AvatarWeaponClearance renders this overlay on each observed player after Animator evaluation, restores it before the next evaluation and uses a fast safe-correction path. AvatarGroundClearance changes only the visual root joint during action states.

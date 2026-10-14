@@ -4,6 +4,8 @@ Status: **prototype for an R15 playtest, not release ready**. The existing Colis
 
 ## Implemented in this pass
 
+Latest: rolls have exclusive Action4 priority and immediately block attack/parry/extra-roll prediction. A late acknowledgement does not cut a predicted roll; valid server rejection can cancel it. Combo input queues server-side without prematurely swapping the first swing. Blender arm bend planes and roll landing/rise were reworked; latest evidence is in TEST_REPORT.md.
+
 - Twelve original editable Blender clips: idle, two R1 swings, R2, four rolls, block, parry, stagger and guard break. This pass improves weapon clearance, heavy wind-up and roll wrist orientation.
 - Server-authoritative R1, buffered second R1, R2, stamina, four directional roll motions with timed invulnerability, block/parry state handling and a sampled sword arc hit query. The client cannot name a hit target or set damage. Attack advances and rolls use horizontal-plane velocity, leaving vertical gravity active.
 - Studio previews use real KeyframeSequences and marker signals. `WeaponVisual.server.luau` equips the existing sword through one rigid hand joint after appearance loads. Its unscaled template belongs in `ServerStorage/CombatWeaponTemplates/StraightSword`. Published AnimationIds remain absent.

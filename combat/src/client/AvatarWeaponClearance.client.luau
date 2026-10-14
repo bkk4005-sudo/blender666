@@ -49,8 +49,10 @@ RunService.PreAnimation:Connect(function()
         elseif data.ready and data.raw then
             local joint = data.joints.RightUpperArm.instance
             if joint.Parent then joint.Transform = data.raw end
+            if data.rawWrist and data.joints.RightHand.instance.Parent then data.joints.RightHand.instance.Transform = data.rawWrist end
             if data.rawRoot and data.joints.LowerTorso.instance.Parent then data.joints.LowerTorso.instance.Transform = data.rawRoot end
             data.raw = nil
+            data.rawWrist = nil
             data.rawRoot = nil
         end
     end
@@ -73,9 +75,12 @@ RunService.PreSimulation:Connect(function()
         end
         if not valid then models[character] = nil; continue end
         local original = poses.RightUpperArm.CFrame
+        local originalWrist = poses.RightHand.CFrame
         data.previous = Solver.correct(poses, data.joints, frames, data.previous, true)
         data.raw = original
+        data.rawWrist = originalWrist
         data.joints.RightUpperArm.instance.Transform = poses.RightUpperArm.CFrame
+        data.joints.RightHand.instance.Transform = poses.RightHand.CFrame
         local state = character:GetAttribute("CombatState")
         if state ~= "Idle" and state ~= "Moving" and state ~= "Sprinting" and state ~= "Dead" then
             local lift = Ground.lift(frames, data.joints, data.humanoid.HipHeight, character.HumanoidRootPart.Size)

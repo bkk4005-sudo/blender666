@@ -1,5 +1,15 @@
 # Test report — latest verification 2026-10-14
 
+## Roll interruption and animation polish — latest pass
+
+- PASS: real mouse LMB/RMB, keyboard parry and repeated roll input during native rolls do not replace their tracks. The 10-second monitor recorded 601 frames, zero missing roll frames and zero competing action frames. Forward/back/right were captured by the monitor; a separate left-roll run retained RollLeft at 0.720833 s after actual LMB/RMB events (`LastBoundInput=CombatR2:End`). Direction key injection needed a short wait for IsKeyDown to update; fixed facing was used to select the lateral clip in the test.
+- PASS: deliberately playing a foreign Action4 attack during RollLeft stopped that track (IsPlaying=false, WeightCurrent=0), while the roll continued at 0.620833 s. This covers ordinary competing tracks, not arbitrary hostile scripts that directly stop the foundation's track or teleport the rig.
+- PASS: real mouse R1 at 0.44 s queues the combo without replacing the first swing. Server starts SwordR1_2 at chainAt; observed its track at 0.416667 s in AttackActive. Recovery and stamina gates are checked before client prediction. Rejected legitimate starts have a sequence-specific server response.
+- Blender: revised asymmetric landing and rise; gradual weapon tuck on takeoff; both arm segments use a stable anatomical bend plane, reducing abrupt forearm twist. New winding/contact poses keep R1_2 in front of the body. Roll sequences, registry and playback use Action4. Source floor/grip validation and portable source/marker/seam validation PASS.
+- PASS: all 12 revised clips × five body profiles, including quarter-frame interpolations, no blade/body-box intersections in the final pass. Evidence: `tests/avatar_geometry_roll_polish_2026_10_14.json`. Shoulder corrections now peak at 55.625 degrees in this set; a bounded wrist deflection (up to 30 degrees) handles thick-body poses and remains rigidly attached.
+- PASS: 758 normal-speed physical Animator samples across 12 clips; minimum body floor bound 0.060768 stud, minimum sword floor bound 0.172729 stud, sampled grip position error zero. Evidence: `tests/visual_playback_roll_polish_2026_10_14.json`. Root anchoring and clothing exclusions remain the same as earlier tests.
+- Limits remain: no published AnimationIds, no two-player latency/observer test, no universal clothing/accessory guarantee, no final silhouette review of every marketplace body, and no blade-matched authoritative sweep. This is not release certification.
+
 ## Latest pass: avatar clearance, defenses and input settings
 
 - PASS: 12 real editable Blender Actions and corresponding portable KeyframeSequences, priorities, loops, duration/marker consistency, authored-height metadata, R1 chain and recovery seams. `validate_assets.py` and `validate_blender.py` completed successfully.

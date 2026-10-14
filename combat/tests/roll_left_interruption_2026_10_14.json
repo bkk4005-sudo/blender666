@@ -1,0 +1,12 @@
+{
+  "state": "Rolling",
+  "tracks": {
+    "1": {
+      "name": "RollLeft",
+      "time": 0.7208331823348999
+    }
+  },
+  "request": "Roll",
+  "A": true,
+  "input": "CombatR2:End"
+}

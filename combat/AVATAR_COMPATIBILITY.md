@@ -1,5 +1,7 @@
 # Avatar compatibility — prototype 2.4
 
+Latest roll/arm iteration: anatomical arm planes replace singular shortest-arc twists. The conservative blade clearance margin is now 0.12 stud, with a bounded ±30-degree wrist fallback when shoulder motion alone cannot clear a thick body. The wrist and shoulder overlays are restored before Animator reevaluation. The final five-profile matrix in `tests/avatar_geometry_roll_polish_2026_10_14.json` has no sampled intersections; the older test results below remain historical.
+
 ## Implemented
 
 The server equips one noncolliding, massless sword MeshPart through one Motor6D on RightHand after character appearance has loaded. Respawn removes the old character assembly naturally. The production script replaces the optional Studio test script; run only one equip script. Templates with extra unconnected parts are rejected. The hand-to-hilt frame comes from Blender. Visual mesh scale does not increase server damage or reach.
