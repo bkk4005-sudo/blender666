@@ -49,6 +49,7 @@ end
 function Retarget.forCharacter(source: KeyframeSequence, character: Model): KeyframeSequence
     assert(RunService:IsStudio(), "Avatar preview retarget is Studio-only")
     local joints, ground = skeleton(character)
+    local handToHilt = Visual.forCharacter(character)
     local sequence = source:Clone()
     -- AuthoredHipHeight cannot be written by a game script (Plugin security).
     -- Compensate the Animator's root translation scaling in the baked poses.
@@ -81,14 +82,14 @@ function Retarget.forCharacter(source: KeyframeSequence, character: Model): Keyf
             frames[name] = frames[joint.parent] * joint.c0 * pose.CFrame * joint.c1:Inverse()
             minimum = math.min(minimum, boxFloor(frames[name], joint.size))
         end
-        previous = Clearance.correct(poses, joints, frames, previous)
+        previous = Clearance.correct(poses, joints, frames, previous, false, handToHilt)
         unresolved += previous.unresolved
         maxCorrection = math.max(maxCorrection, math.abs(previous.yaw), math.abs(previous.tilt))
         -- Recompute arm clearance after changing its rotations.
         for _, name in {"RightUpperArm", "RightLowerArm", "RightHand"} do
             minimum = math.min(minimum, boxFloor(frames[name], joints[name].size))
         end
-        local swordFrame = frames.RightHand * Visual.HandToHilt
+        local swordFrame = frames.RightHand * handToHilt
             * CFrame.new(0, 1.195 * Visual.MeshScale.Y, 0)
         local swordSize = Vector3.new(1.51340294, 4.71, 0.37736732) * Visual.MeshScale
         local swordMinimum = boxFloor(swordFrame, swordSize)

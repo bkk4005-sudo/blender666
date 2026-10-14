@@ -1,4 +1,4 @@
--- Studio Edit command: refresh only this foundation's eight preview clips.
+-- Studio Edit command: refresh only this foundation's twelve preview clips.
 -- Start an HTTP server rooted at combat/ on 127.0.0.1:8766 first.
 -- Existing sequences are moved into a dated backup folder.
 local Http = game:GetService("HttpService")

@@ -20,7 +20,8 @@ local function intersects(a, b, cf, size)
     end
     return true
 end
-function Solver.correct(poses, joints, frames, previous, fast)
+function Solver.correct(poses, joints, frames, previous, fast, handToHilt)
+    handToHilt = handToHilt or Visual.HandToHilt
     local shoulder = joints.RightUpperArm
     local original = poses.RightUpperArm.CFrame
     local originalHand = poses.RightHand.CFrame
@@ -38,7 +39,7 @@ function Solver.correct(poses, joints, frames, previous, fast)
             local pose = name == "RightUpperArm" and cf or name == "RightHand" and handPose(wrist) or poses[name].CFrame
             arm[name] = parent * j.c0 * pose * j.c1:Inverse()
         end
-        local sword = arm.RightHand * Visual.HandToHilt * CFrame.new(Visual.SourceGrip.Position * Visual.MeshScale):Inverse()
+        local sword = arm.RightHand * handToHilt * CFrame.new(Visual.SourceGrip.Position * Visual.MeshScale):Inverse()
         local a = sword:PointToWorldSpace(Vector3.new(0, -.635 * Visual.MeshScale.Y, 0))
         local b = sword:PointToWorldSpace(Vector3.new(0, 2.355 * Visual.MeshScale.Y, 0))
         local collisions = 0

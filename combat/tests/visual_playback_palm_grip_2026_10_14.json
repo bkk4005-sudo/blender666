@@ -1,0 +1,165 @@
+{
+  "RollForward": {
+    "palmHiltError": 0.000005394796517066425,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 0.25897979736328125,
+    "bodyFloor": 0.07139205932617188,
+    "samples": 49,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "Stagger": {
+    "palmHiltError": 0.000008529922524758149,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 1.8671875,
+    "bodyFloor": 0.0683441162109375,
+    "samples": 40,
+    "markers": {
+      "RecoveryEnd": 1
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "GuardBroken": {
+    "palmHiltError": 0.000005478441835293779,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 0.5797004699707031,
+    "bodyFloor": 0.060749053955078125,
+    "samples": 71,
+    "markers": {
+      "RecoveryEnd": 1
+    },
+    "palmHiltAngleDegrees": 0.07401874669521495
+  },
+  "Parry": {
+    "palmHiltError": 0.000005394796517066425,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 2.260814666748047,
+    "bodyFloor": 0.06959915161132812,
+    "samples": 55,
+    "markers": {
+      "ParryActiveEnd": 1,
+      "ParryActiveStart": 1,
+      "RecoveryEnd": 1
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "SwordR2": {
+    "palmHiltError": 0.000004862803962168982,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 0.8562698364257812,
+    "bodyFloor": 0.06340408325195312,
+    "samples": 86,
+    "markers": {
+      "HitEnd": 1,
+      "AttackStart": 1,
+      "RecoveryEnd": 1,
+      "HitStart": 1
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "RollBackward": {
+    "palmHiltError": 0.000005394796517066425,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 0.15512466430664062,
+    "bodyFloor": 0.0622406005859375,
+    "samples": 51,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "SwordR1_1": {
+    "palmHiltError": 0.000004672031082009198,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 2.0880508422851562,
+    "bodyFloor": 0.067596435546875,
+    "samples": 57,
+    "markers": {
+      "AttackStart": 1,
+      "ComboOpen": 1,
+      "HitStart": 1,
+      "RecoveryEnd": 1,
+      "ComboClose": 1,
+      "HitEnd": 1
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "SwordR1_2": {
+    "palmHiltError": 0.000005478441835293779,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 2.2745208740234375,
+    "bodyFloor": 0.06444168090820312,
+    "samples": 58,
+    "markers": {
+      "AttackStart": 1,
+      "ComboOpen": 1,
+      "HitStart": 1,
+      "RecoveryEnd": 1,
+      "ComboClose": 1,
+      "HitEnd": 1
+    },
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "CombatIdle": {
+    "palmHiltError": 0.000007864199687901419,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 2.26373291015625,
+    "bodyFloor": 0.07282257080078125,
+    "samples": 120,
+    "markers": [],
+    "palmHiltAngleDegrees": 0.06255725571100383
+  },
+  "Block": {
+    "palmHiltError": 0.000008529922524758149,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 2.2816810607910156,
+    "bodyFloor": 0.07084274291992188,
+    "samples": 97,
+    "markers": [],
+    "palmHiltAngleDegrees": 0.06852804166478502
+  },
+  "RollLeft": {
+    "palmHiltError": 0.000007864199687901419,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 0.2966194152832031,
+    "bodyFloor": 0.0723724365234375,
+    "samples": 49,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "palmHiltAngleDegrees": 0.06255725571100383
+  },
+  "RollRight": {
+    "palmHiltError": 0.0000043702848415705375,
+    "unresolved": 0,
+    "gripError": 0,
+    "swordFloor": 0.21677398681640625,
+    "bodyFloor": 0.07136917114257812,
+    "samples": 51,
+    "markers": {
+      "IFrameStart": 1,
+      "IFrameEnd": 1,
+      "RecoveryEnd": 2
+    },
+    "palmHiltAngleDegrees": 0.06255725571100383
+  }
+}

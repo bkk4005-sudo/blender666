@@ -5,6 +5,7 @@ local RunService = game:GetService("RunService")
 local root = game.ReplicatedStorage:WaitForChild("CombatFoundation")
 local Solver = require(root.Shared:WaitForChild("BladeClearance"))
 local Ground = require(root.Shared:WaitForChild("AvatarGroundClearance"))
+local Visual = require(root.Shared:WaitForChild("WeaponVisualConfig"))
 local order = {"LowerTorso", "UpperTorso", "Head", "LeftUpperArm", "LeftLowerArm", "LeftHand", "RightUpperArm", "RightLowerArm", "RightHand", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "RightUpperLeg", "RightLowerLeg", "RightFoot"}
 local models = {}
 local function register(character)
@@ -76,14 +77,15 @@ RunService.PreSimulation:Connect(function()
         if not valid then models[character] = nil; continue end
         local original = poses.RightUpperArm.CFrame
         local originalWrist = poses.RightHand.CFrame
-        data.previous = Solver.correct(poses, data.joints, frames, data.previous, true)
+        local handToHilt = Visual.forCharacter(character)
+        data.previous = Solver.correct(poses, data.joints, frames, data.previous, true, handToHilt)
         data.raw = original
         data.rawWrist = originalWrist
         data.joints.RightUpperArm.instance.Transform = poses.RightUpperArm.CFrame
         data.joints.RightHand.instance.Transform = poses.RightHand.CFrame
         local state = character:GetAttribute("CombatState")
         if state ~= "Idle" and state ~= "Moving" and state ~= "Sprinting" and state ~= "Dead" then
-            local lift = Ground.lift(frames, data.joints, data.humanoid.HipHeight, character.HumanoidRootPart.Size)
+            local lift = Ground.lift(frames, data.joints, data.humanoid.HipHeight, character.HumanoidRootPart.Size, handToHilt)
             local j = data.joints.LowerTorso
             data.rawRoot = j.instance.Transform
             local offset = j.c0.Rotation:VectorToObjectSpace(Vector3.new(0, lift, 0))

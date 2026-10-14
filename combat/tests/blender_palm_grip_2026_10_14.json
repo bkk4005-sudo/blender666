@@ -1,0 +1,98 @@
+{
+  "Block": {
+    "sourceBodyFloor": 0.0027930233627557755,
+    "sourceSwordFloor": 3.4236245155334473,
+    "handGripError": 1.618131632864264e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999971389770508,
+    "targetSwordClearance": 2.894312709569931
+  },
+  "CombatIdle": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 2.6405045986175537,
+    "handGripError": 1.7078577020042422e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999971389770508,
+    "targetSwordClearance": 2.113476872444153
+  },
+  "GuardBroken": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 0.993874192237854,
+    "handGripError": 1.6279816965756015e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999732971191406,
+    "targetSwordClearance": 0.7281579971313477
+  },
+  "Parry": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 2.6524016857147217,
+    "handGripError": 1.7316790665456886e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999732971191406,
+    "targetSwordClearance": 2.1022531986236572
+  },
+  "RollBackward": {
+    "sourceBodyFloor": 0.0027927090413868427,
+    "sourceSwordFloor": 0.014999791979789734,
+    "handGripError": 1.5826127585591976e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999971389770508,
+    "targetSwordClearance": 0.00999903678894043
+  },
+  "RollForward": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 0.2589370906352997,
+    "handGripError": 1.5600028429391861e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999494552612305,
+    "targetSwordClearance": 0.4055182933807373
+  },
+  "RollLeft": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 0.11700558662414551,
+    "handGripError": 1.9092103693541247e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999494552612305,
+    "targetSwordClearance": 0.34853386878967285
+  },
+  "RollRight": {
+    "sourceBodyFloor": 0.002792490180581808,
+    "sourceSwordFloor": 0.014999952167272568,
+    "handGripError": 1.710975181389728e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999494552612305,
+    "targetSwordClearance": 0.11219477653503418
+  },
+  "Stagger": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 2.3837177753448486,
+    "handGripError": 1.4901161193847656e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999494552612305,
+    "targetSwordClearance": 1.854918122291565
+  },
+  "SwordR1_1": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 2.6502647399902344,
+    "handGripError": 1.7408230145585816e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999732971191406,
+    "targetSwordClearance": 2.114351511001587
+  },
+  "SwordR1_2": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 2.6525049209594727,
+    "handGripError": 1.6911340903176198e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999732971191406,
+    "targetSwordClearance": 2.128148913383484
+  },
+  "SwordR2": {
+    "sourceBodyFloor": 0.002792712999507785,
+    "sourceSwordFloor": 1.439909815788269,
+    "handGripError": 1.7532785034278307e-06,
+    "handGripAngleDegrees": 0,
+    "targetBodyClearance": 0.029999732971191406,
+    "targetSwordClearance": 0.9569399356842041
+  }
+}

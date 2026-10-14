@@ -63,7 +63,7 @@ local function attach(character: Model)
     grip.Name = "CombatTestSwordGrip"
     grip.Part0 = hand
     grip.Part1 = blade
-    grip.C0 = Visual.HandToHilt * originalGrip.CFrame:Inverse()
+    grip.C0 = Visual.forCharacter(character) * originalGrip.CFrame:Inverse()
     grip.C1 = CFrame.new()
     blade.CFrame = hand.CFrame * grip.C0
     grip.Parent = hand

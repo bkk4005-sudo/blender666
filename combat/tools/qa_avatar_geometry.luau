@@ -68,7 +68,7 @@ for _, case in cases do
                 local j = joints[name]
                 fk[name] = fk[j.parent] * j.c0 * poses[name] * j.c1:Inverse()
             end
-            local sword = fk.RightHand * Visual.HandToHilt * CFrame.new(Visual.SourceGrip.Position * Visual.MeshScale):Inverse()
+            local sword = fk.RightHand * Visual.forCharacter(rig) * CFrame.new(Visual.SourceGrip.Position * Visual.MeshScale):Inverse()
             local base, tip = sword:PointToWorldSpace(Vector3.new(0, -.635 * Visual.MeshScale.Y, 0)), sword:PointToWorldSpace(Vector3.new(0, 2.355 * Visual.MeshScale.Y, 0))
             for _, name in checked do
                 if intersects(base, tip, fk[name], joints[name].size) then

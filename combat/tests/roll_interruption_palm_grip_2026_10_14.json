@@ -1,0 +1,12 @@
+{
+  "missingRollFrames": 0,
+  "rolls": {
+    "RollForward": {
+      "priority": "Action4",
+      "frames": 50,
+      "maximumTime": 0.8333333134651184
+    }
+  },
+  "samples": 601,
+  "competingActionFrames": 0
+}

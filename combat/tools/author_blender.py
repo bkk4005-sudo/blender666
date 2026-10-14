@@ -52,10 +52,10 @@ rig.rotation_mode = "QUATERNION"
 prop.rotation_mode = "QUATERNION"
 
 BASE = {
-    "p": (-0.35, -0.65, 3.68), "angles": (105, -35, 8),
-    "body": (6, 0, -8), "pelvis": (0, 0, 0), "root": (0, 0, -0.19),
+    "p": (-1.15, -0.65, 3.16), "angles": (55, -10, 0),
+    "body": (4, 0, -5), "pelvis": (0, 0, 0), "root": (0, 0, -0.19),
     "lf": (0.64, -0.28, 0), "rf": (-0.65, 0.38, 0),
-    "footyaw": (-8, 6), "head": (-4, 0, 5), "left_hand": (0.40, -0.18, -1.15),
+    "footyaw": (-8, 6), "head": (-3, 0, 3), "left_hand": (0.20, -0.12, -1.50),
 }
 
 
@@ -89,27 +89,27 @@ R2_END = pose(p=(0.20, -1.03, 3.54), angles=(150, 12, 2),
 # expose reliable source frames for a roll, so these are authored project poses.
 ROLL_CROUCH = pose(root=(0, 0, -0.62), body=(37, 0, -10), pelvis=(18, 0, -6),
                    lf=(0.54, 0.00, 0), rf=(-0.54, 0.00, 0),
-                   p=(-.82, -0.60, 3.56), angles=(90, 0, 0),
+                   p=(-1.15, -0.78, 2.65), angles=(90, 0, 0),
                    left_hand=(0.18, -0.45, -0.48), head=(16, 0, 0))
 ROLL_PREP = pose(root=(0, 0, -0.40), body=(22, 0, -9), pelvis=(10, 0, -4),
                  lf=(0.59, -0.12, 0), rf=(-0.59, 0.15, 0),
-                 p=(-.62, -0.68, 3.83), angles=(100, -15, 8), left_hand=(0.30, -0.33, -0.80),
+                 p=(-1.12, -0.75, 3.02), angles=(100, -15, 8), left_hand=(0.30, -0.33, -0.80),
                  head=(5, 0, 3))
 ROLL_TUCK = pose(root=(0, 0, -0.73), body=(67, 0, -12), pelvis=(34, 0, -8),
                  lf=(0.35, 0.08, 1.48), rf=(-0.35, 0.08, 1.48),
-                 p=(-.95, -0.45, 3.00), angles=(90, 0, 0),
+                 p=(-1.05, -0.66, 2.63), angles=(90, 0, 0),
                  left_hand=(0.10, -0.48, -0.28), head=(28, 0, 0))
 ROLL_MID = pose(root=(0, 0, -0.69), body=(53, 0, -11), pelvis=(27, 0, -7),
                 lf=(0.44, 0.04, 0.70), rf=(-0.44, 0.04, 0.70),
-                p=(-1.00, -0.47, 3.28), angles=(90, 0, 0), left_hand=(0.13, -0.46, -0.38),
+                p=(-1.12, -0.70, 2.68), angles=(90, 0, 0), left_hand=(0.13, -0.46, -0.38),
                 head=(23, 0, 0))
 ROLL_LAND = pose(root=(0, -.04, -.50), body=(28, 0, -9), pelvis=(12, 0, -5),
                  lf=(.59, -.36, 0), rf=(-.59, .42, .12),
-                 p=(-.95, -.64, 3.61), angles=(96, -25, 4),
+                 p=(-1.15, -.70, 3.00), angles=(96, -25, 4),
                  left_hand=(.28, -.39, -.64), head=(8, 0, 2))
 ROLL_RISE = pose(root=(0, -.02, -.28), body=(12, 0, -8), pelvis=(4, 0, -2),
                  lf=(.64, -.28, 0), rf=(-.65, .38, 0),
-                 p=(-.72, -.65, 3.73), angles=(101, -31, 6),
+                 p=(-1.10, -.65, 3.20), angles=(101, -31, 6),
                  left_hand=(.36, -.25, -.95), head=(0, 0, 4))
 
 
@@ -153,9 +153,9 @@ GUARD = pose(p=(-0.42, -0.92, 4.18), angles=(26, -18, 8),
              lf=(0.62, -0.48, 0), rf=(-0.62, 0.58, 0), left_hand=(0.40, -0.34, -0.76))
 CLIPS = [
     dict(name="CombatIdle", duration=2.0, loop=True, priority="Idle", markers={},
-         keys=[(0, NEUTRAL), (0.5, pose(body=(7, 0, -8), p=(-0.35, -0.65, 3.70))),
-               (1, pose(body=(6, 0, -8), p=(-0.35, -0.65, 3.68))),
-               (1.5, pose(body=(5, 0, -8), p=(-0.35, -0.65, 3.66))), (2, NEUTRAL)]),
+         keys=[(0, NEUTRAL), (0.5, pose(body=(4.6, 0, -5), p=(-1.15, -0.65, 3.172))),
+               (1, NEUTRAL),
+               (1.5, pose(body=(3.4, 0, -5), p=(-1.15, -0.65, 3.148))), (2, NEUTRAL)]),
     dict(name="SwordR1_1", duration=28/30, loop=False, priority="Action",
          markers={"AttackStart": 0, "HitStart": 9/30, "HitEnd": 14/30,
                   "ComboOpen": 16/30, "ComboClose": 22/30, "RecoveryEnd": 28/30},
@@ -260,7 +260,9 @@ def two_bone_joint(a, target, length1, length2, pole):
     delta = target-a
     distance = delta.length
     direction = delta.normalized()
-    clamped = min(max(distance, 0.03), length1+length2-0.002)
+    # A target inside the two-segment minimum reach otherwise produces a
+    # collinear elbow and a singular anatomical frame during a tucked roll.
+    clamped = min(max(distance, abs(length1-length2)+0.002), length1+length2-0.002)
     pole = Vector(pole)
     lateral = pole - direction*pole.dot(direction)
     if lateral.length < 0.01:
@@ -299,9 +301,13 @@ def pose_at(p):
     sword_matrix = transform(sword_rotation, grip)
     shoulders = {side: desired["UpperTorso"] @ REST["UpperTorso"].inverted() @ HEAD[side+"UpperArm"]
                  for side in ("Right", "Left")}
-    sword_basis = sword_rotation.to_matrix()
+    # Pose the actual hand PART around its native palm grip. The imported
+    # donor hand bone has a diagonal rest frame; using its rotation as the palm
+    # frame leaves the hilt skewed across the fingers on standard R15 avatars.
+    hand_part = converted(sword_matrix) @ weapon_hilt.inverted()
+    right_hand_bone = converted(hand_part @ rests["RightHand"].inverted() @ bones["RightHand"])
     for side, sign in (("Right", -1), ("Left", 1)):
-        wrist = grip+sword_basis @ Vector((0, 0.20, 0 if side == "Right" else -0.53))
+        wrist = right_hand_bone.translation.copy()
         if side == "Left":
             wrist = shoulders[side]+Vector(p["left_hand"])
         a = shoulders[side]
@@ -317,12 +323,13 @@ def pose_at(p):
                 arm_plane_sign[bone_name] = 1 if normal.dot(neutral_x) >= 0 else -1
             anatomical = orient_bone(bone_name, start, end, normal * arm_plane_sign[bone_name])
             desired[bone_name] = anatomical
-        hand_rotation = sword_basis @ Matrix.Diagonal((1, -1, -1))
-        desired[hand] = transform(hand_rotation, wrist) if side == "Right" else orient_bone(
-            hand, wrist, wrist+Vector((0, -0.25, -0.1)))
+        desired[hand] = right_hand_bone if side == "Right" else orient_bone(
+            hand, wrist, wrist+(wrist-elbow).normalized() * .25)
         if side == "Right":
+            posed_hand = converted(desired[hand]) @ bones[hand].inverted() @ rests[hand]
+            reconstructed_grip = (posed_hand @ weapon_hilt).translation
             max_grip_error = max(max_grip_error,
-                                 (desired[hand] @ Vector((0, 0.20, 0))-grip).length)
+                                 (reconstructed_grip-converted(sword_matrix).translation).length)
     for side, key, index in (("Left", "lf", 0), ("Right", "rf", 1)):
         upper, lower, foot_name = side+"UpperLeg", side+"LowerLeg", side+"Foot"
         hip = desired["LowerTorso"] @ REST["LowerTorso"].inverted() @ HEAD[upper]
@@ -339,6 +346,8 @@ def pose_at(p):
         desired[foot_name] = transform(foot_rotation, foot)
     for name in ORDER:
         parent = PARENT[name]
+        if parent and abs(desired[parent].determinant()) < .001:
+            raise ValueError(f"Degenerate joint frame {parent} at {current_pose_label}")
         local = desired[parent].inverted() @ desired[name] if parent else desired[name]
         rig.pose.bones[name].matrix_basis = LOCAL[name].inverted() @ local
     prop.matrix_world = sword_matrix
@@ -404,12 +413,39 @@ def box_floor(matrix, size):
 
 target_floor = min(box_floor(target_rests[name], target_joints[name]["size"]) for name in target_joints)
 
+# Imported donor limbs are already splayed in their mesh rest pose. Canonical
+# Roblox limbs rest vertically. Transfer the anatomical shoulder/elbow axes,
+# rather than preserving a donor mesh's rest bend as an extra target bend.
+arm_reference = {}
+for side in ("Right", "Left"):
+    for segment, child in (("UpperArm", "LowerArm"), ("LowerArm", "Hand")):
+        name, child_name = side + segment, side + child
+        joint, child_joint = target_joints[name], target_joints[child_name]
+        start = (target_rests[joint["parent"]] @ matrix_of(joint["c0"])).translation
+        end = (target_rests[name] @ matrix_of(child_joint["c0"])).translation
+        target_direction = (end-start).normalized()
+        donor_direction = bones[name].to_3x3() @ Vector((0, 0, 1))
+        alignment = donor_direction.normalized().rotation_difference(target_direction)
+        arm_reference[name] = alignment.to_matrix().to_4x4() @ rotation_matrix(bones[name])
+    if side == "Left":
+        name = "LeftHand"
+        # The free hand follows the forearm; remove the donor glove's splayed
+        # rest axis too, otherwise standard R15 fingers turn sideways at idle.
+        donor_direction = bones[name].to_3x3() @ Vector((0, 0, 1))
+        target_direction = target_rests[name].to_3x3() @ Vector((0, -1, 0))
+        alignment = donor_direction.normalized().rotation_difference(target_direction)
+        arm_reference[name] = alignment.to_matrix().to_4x4() @ rotation_matrix(bones[name])
+
 
 def retarget_standard(posed, ground_clearance):
     # Donor C0/C1 frames have imported FBX rotations. Exporting their Transform
     # directly rotates a standard R15 joint around the wrong axes. Preserve the
     # posed part-relative rotation, then express it in the target joint frame.
     transforms = {}
+    desired_world = {name: rotation_matrix(frame) for name, frame in posed.items()}
+    for name, reference in arm_reference.items():
+        posed_bone = rotation_matrix(posed[name]) @ rotation_matrix(rests[name]).inverted() @ rotation_matrix(bones[name])
+        desired_world[name] = posed_bone @ reference.inverted() @ rotation_matrix(target_rests[name])
     target_posed = {"HumanoidRootPart": target_rests["HumanoidRootPart"]}
     for joint in joints:
         name, parent = joint["name"], joint["parent"]
@@ -418,7 +454,7 @@ def retarget_standard(posed, ground_clearance):
         c0, c1 = matrix_of(target["c0"]), matrix_of(target["c1"])
         source_rest_local = rotation_matrix(rests[parent]).inverted() @ rotation_matrix(rests[name])
         target_rest_local = rotation_matrix(target_rests[parent]).inverted() @ rotation_matrix(target_rests[name])
-        source_local = rotation_matrix(posed[parent]).inverted() @ rotation_matrix(posed[name])
+        source_local = desired_world[parent].inverted() @ desired_world[name]
         desired_local = target_rest_local @ source_rest_local.inverted() @ source_local
         value = rotation_matrix(c0).inverted() @ desired_local @ rotation_matrix(c1)
         if name == "LowerTorso":
@@ -516,10 +552,11 @@ def clamp_location_curves(animated_action):
 
 
 rig.matrix_world = Matrix.Identity(4)
+# Measured on Studio's default HumanoidDescription R15. The runtime substitutes
+# the equipped avatar's RightGripAttachment, keeping the hilt in its own palm.
+weapon_hilt = matrix_of(json.loads((HERE / "assets/weapon/r15_hand_grip.json").read_text())["handToHilt"])
 pose_at(NEUTRAL)
 bpy.context.view_layer.update()
-neutral_hand = converted(rig.matrix_world @ rig.pose.bones["RightHand"].matrix) @ bones["RightHand"].inverted() @ rests["RightHand"]
-weapon_hilt = neutral_hand.inverted() @ converted(prop.matrix_world)
 anchor = bpy.data.objects.new("Sword grip / rigid hand anchor", None)
 scene.collection.objects.link(anchor)
 anchor.parent = rig
@@ -543,11 +580,16 @@ weapon_config = {
 (HERE / "assets/weapon/weapon_grip.json").write_text(json.dumps(weapon_config, indent=2))
 grip_values = ", ".join(str(value) for value in weapon_config["handToHilt"])
 (HERE / "src/shared/WeaponVisualConfig.luau").write_text(
-    "-- Generated from the Blender hand part frame, not the bone frame.\n"
-    "return {\n    MeshId = \"rbxassetid://139047510233988\",\n"
+    "-- Authored against the measured standard R15 palm attachment.\n"
+    "local Visual = {\n    MeshId = \"rbxassetid://139047510233988\",\n"
     "    MeshScale = Vector3.new(0.62, 0.68, 0.86),\n"
     f"    HandToHilt = CFrame.new({grip_values}),\n"
-    "    SourceGrip = CFrame.new(0, -1.195, 0),\n}\n")
+    "    SourceGrip = CFrame.new(0, -1.195, 0),\n}\n"
+    "function Visual.forCharacter(character: Model): CFrame\n"
+    "    local hand = character:FindFirstChild(\"RightHand\")\n"
+    "    local palm = hand and hand:FindFirstChild(\"RightGripAttachment\")\n"
+    "    return if palm and palm:IsA(\"Attachment\") then palm.CFrame else Visual.HandToHilt\n"
+    "end\nreturn Visual\n")
 
 
 def match_prop_to_hand(frame_count):

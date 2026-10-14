@@ -13,6 +13,8 @@ local hand = character.RightHand
 local motor = hand:FindFirstChild("CombatTestSwordGrip")
 assert(motor and motor.Part1, "Rigid sword missing")
 local blade = motor.Part1
+local palm = assert(hand:FindFirstChild("RightGripAttachment"), "Avatar palm attachment missing")
+local hilt = assert(blade:FindFirstChild("RightGrip"), "Weapon hilt attachment missing")
 local params = RaycastParams.new()
 params.FilterType = Enum.RaycastFilterType.Exclude
 params.FilterDescendantsInstances = {character}
@@ -46,7 +48,8 @@ local ok, failure = pcall(function()
         local duration = 0
         for _, key in sequence:GetKeyframes() do duration = math.max(duration, key.Time) end
         track:Play(0, 1, 1)
-        local data = {samples = 0, bodyFloor = math.huge, swordFloor = math.huge, gripError = 0, unresolved = 0, markers = markers}
+        local data = {samples = 0, bodyFloor = math.huge, swordFloor = math.huge, gripError = 0,
+            palmHiltError = 0, palmHiltAngleDegrees = 0, unresolved = 0, markers = markers}
         local deadline = os.clock() + duration + .1
         while os.clock() < deadline do
             RunService.Heartbeat:Wait()
@@ -57,6 +60,10 @@ local ok, failure = pcall(function()
                 end
                 data.swordFloor = math.min(data.swordFloor, minimum(blade))
                 data.gripError = math.max(data.gripError, ((hand.CFrame * motor.C0).Position - blade.Position).Magnitude)
+                local delta = palm.WorldCFrame:ToObjectSpace(hilt.WorldCFrame)
+                local _, angle = delta:ToAxisAngle()
+                data.palmHiltError = math.max(data.palmHiltError, delta.Position.Magnitude)
+                data.palmHiltAngleDegrees = math.max(data.palmHiltAngleDegrees, math.deg(angle))
                 data.unresolved = math.max(data.unresolved, character:GetAttribute("VisualBladeUnresolved") or 0)
             end
         end
