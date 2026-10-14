@@ -1,0 +1,63 @@
+{
+  "initialDistance": 3.200016498565674,
+  "healthEnd": 100,
+  "damageEvents": [
+    {
+      "health": 78,
+      "sample": {
+        "contact": true,
+        "time": 0.5666667222976685,
+        "animation": "SwordR1_1",
+        "speed": 1,
+        "distance": 2.4935781955718994,
+        "stamina": 82,
+        "state": "AttackActive"
+      }
+    },
+    {
+      "health": 54,
+      "sample": {
+        "contact": true,
+        "time": 0.4666668176651001,
+        "animation": "SwordR1_2",
+        "speed": 1,
+        "distance": 1.406280755996704,
+        "stamina": 62,
+        "state": "AttackStartup"
+      }
+    },
+    {
+      "health": 100,
+      "sample": {
+        "contact": true,
+        "distance": 1.4531302452087402,
+        "stamina": 76.4,
+        "state": "Idle"
+      }
+    },
+    {
+      "health": 57,
+      "sample": {
+        "contact": true,
+        "time": 0.9999996423721313,
+        "animation": "SwordR2",
+        "speed": 1,
+        "distance": 1.605003833770752,
+        "stamina": 64,
+        "state": "AttackStartup"
+      }
+    },
+    {
+      "health": 100,
+      "sample": {
+        "contact": true,
+        "distance": 2.0096275806427,
+        "stamina": 74.4,
+        "state": "Idle"
+      }
+    }
+  ],
+  "visibleBladeContactFrames": 208,
+  "swingFrames": 273,
+  "healthStart": 100
+}

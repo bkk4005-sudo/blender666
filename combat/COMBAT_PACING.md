@@ -12,13 +12,13 @@ This is authored project tuning after playtest feedback that the actions feel ru
 
 Idle breath loop: 3.2 s. Block breath loop: 2.8 s. Stagger: 0.867 s. Guard break: 1.5 s.
 
-R1 input buffers from 0.667 through 0.967 s; its displayed combo window is 0.800–0.967 s. The server changes clips at 0.967 s, at the exact authored continuation pose. Hit-start cadence is about 0.933 s between the two swings, previously about 0.667 s. The second swing ends the combo. A miss retains recovery and stamina cost.
+R1 input buffers from 0.667 through 0.967 s; its displayed combo window is 0.800–0.967 s. The server changes clips at 0.967 s, at the exact authored continuation pose. Hit-start cadence is about 0.933 s between the two swings, previously about 0.667 s. The second swing ends the combo. A miss retains recovery and stamina cost. When an update crosses chainAt, the pending first swing's active interval is swept before changing actions. A parry during that sweep leaves the attacker staggered and cancels the queued continuation.
 
 ## Movement
 
 Forward roll distance is 8.4 studs; other directions are 7.8 studs. Movement occurs at 0.100–0.967 s, then the planar actuator holds zero horizontal velocity until recovery ends at 1.2 s. The normalized rise/plateau/fall velocity envelope has integral 0.8. Forward peak command speed is 12.115 studs/s (previously 18); lateral/back peak is 11.25 (previously 16.5). Gravity stays active. No HumanoidRootPart teleport is introduced.
 
-R1 advances 1.45 / 1.3 studs; R2 advances 1.8. Walk/sprint/block speeds are 10 / 15 / 5.5. Attack facing limits are 70°/s for R1 and 45°/s for R2, shared by server arc orientation and client lock-on facing.
+R1 advances 1.45 / 1.3 studs; R2 advances 1.8. Walk/sprint/block speeds are 10 / 15 / 5.5. Attack facing limits are 70°/s for R1 and 45°/s for R2, shared by server blade orientation and client lock-on facing.
 
 ## Editing
 
@@ -28,6 +28,6 @@ Regenerate the Blender sources/bakes, run `tools/package_rbxmx.py`, `tools/valid
 
 ## Verification and limits
 
-`tests/pacing_runtime_2026_10_14.json` verifies actual installed clip lengths/markers against server phases and integrates commanded motion. `tests/pacing_server_2026_10_14.json` exercises real CombatService methods with isolated synthetic characters: no startup damage, one hit, buffered combo, recovery rejection, longer R2 commitment and all four roll cleanups. `tests/native_input_pacing_2026_10_14.json` observes real mouse/keyboard input and unanchored travel at playback speed 1. Native server-state observation includes Studio event/simulation latency beyond the configured durations; those observations are not DS3 frame measurements.
+`tests/pacing_runtime_2026_10_14.json` verifies actual installed clip lengths/markers against server phases and integrates commanded motion. `tests/pacing_server_2026_10_14.json` records the earlier isolated synthetic-character pacing test: no startup damage, one hit, buffered combo, recovery rejection, longer R2 commitment and all four roll cleanups. `tests/native_input_pacing_2026_10_14.json` observes real mouse/keyboard input and unanchored travel at playback speed 1. These dated artifacts precede the current blade-contact implementation. The current `tools/qa_pacing_server.luau` uses generated R15 rigs and positions real hurtboxes on BladeTrajectory samples; it also checks an update crossing chainAt and parry stopping that queued chain. Current run outcomes are recorded in TEST_REPORT.md. Native server-state observation includes Studio event/simulation latency beyond the configured durations; those observations are not DS3 frame measurements.
 
-The hit query remains an approximate server arc. Two-player latency, moving foot contact on slopes and final competitive balance are NOT TESTED. Slower pacing does not by itself certify the PvP system.
+The current hit query compiles the avatar-adapted blade path from our real KeyframeSequences after appearance loading, with periodic yields before player attacks become available. Elapsed sweep intervals are clipped to HitStart/HitEnd, including a final interval when an update crosses HitEnd; an already processed activeEnd cannot be tested again in recovery. Contact uses body oriented boxes expanded by 0.18 studs and raycasts from the root through the sampled blade base to the box intersection entry point. This remains an approximate geometric test: it excludes clothing/accessories and does not supply latency rewind. See COMBAT_ARCHITECTURE.md and the current TEST_REPORT.md for contact/cover test evidence. Two-player latency, moving foot contact on slopes and final competitive balance are NOT TESTED. Slower pacing does not by itself certify the PvP system.

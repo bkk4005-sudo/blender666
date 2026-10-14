@@ -1,5 +1,5 @@
--- Studio-only preview bake. Published animations must be approved for their
--- intended RigProfile; this module never changes HumanoidRootPart at runtime.
+-- Avatar pose bake for preview and authoritative blade geometry. Published
+-- animations need their approved RigProfile; this never moves HumanoidRootPart.
 local RunService = game:GetService("RunService")
 local Visual = require(script.Parent.WeaponVisualConfig)
 local Clearance = require(script.Parent.BladeClearance)
@@ -46,8 +46,7 @@ local function skeleton(character: Model)
     return joints, ground
 end
 
-function Retarget.forCharacter(source: KeyframeSequence, character: Model): KeyframeSequence
-    assert(RunService:IsStudio(), "Avatar preview retarget is Studio-only")
+function Retarget.bakeForRig(source: KeyframeSequence, character: Model, yieldEvery: number?): KeyframeSequence
     local joints, ground = skeleton(character)
     local handToHilt = Visual.forCharacter(character)
     local sequence = source:Clone()
@@ -63,7 +62,7 @@ function Retarget.forCharacter(source: KeyframeSequence, character: Model): Keyf
     table.sort(keys, function(a, b) return a.Time < b.Time end)
     local duration = keys[#keys].Time
     local previous, unresolved, maxCorrection = nil, 0, 0
-    for _, key in keys do
+    for index, key in keys do
         local poses = {}
         for _, pose in key:GetDescendants() do
             if pose:IsA("Pose") then poses[pose.Name] = pose end
@@ -106,10 +105,16 @@ function Retarget.forCharacter(source: KeyframeSequence, character: Model): Keyf
         local rootPose = poses.LowerTorso
         local offset = joints.LowerTorso.c0.Rotation:VectorToObjectSpace(Vector3.new(0, adjustment, 0))
         rootPose.CFrame = CFrame.new((rootPose.CFrame.Position + offset) / translationScale) * rootPose.CFrame.Rotation
+        if yieldEvery and index % yieldEvery == 0 then task.wait() end
     end
     sequence:SetAttribute("UnresolvedBladeSamples", unresolved)
     sequence:SetAttribute("MaximumArmCorrectionDegrees", maxCorrection)
     return sequence
+end
+
+function Retarget.forCharacter(source: KeyframeSequence, character: Model): KeyframeSequence
+    assert(RunService:IsStudio(), "Avatar preview retarget is Studio-only")
+    return Retarget.bakeForRig(source, character)
 end
 
 return Retarget

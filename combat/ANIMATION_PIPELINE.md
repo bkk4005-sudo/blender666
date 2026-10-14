@@ -1,5 +1,13 @@
 # Animation pipeline
 
+## Current animation and server geometry integration
+
+The package contains nine shared modules, five server scripts/modules, three client LocalScripts and twelve animation sources. The same real KeyframeSequences feed Studio preview tracks and `BladeTrajectory` server geometry. `R15PreviewRetarget.bakeForRig` is shared by both paths; only its `forCharacter` playback helper is Studio-only. The source Blender file and baked joint/marker data remain editable and contain no invented AnimationIds.
+
+After final appearance loading, the server prewarms three avatar-specific attack paths with periodic yields. Forward kinematics use actual joint/attachment frames, proportions, native palm grip and HipHeight scaling compensation. `CombatHitReady` gates player sword attacks until all paths are available. The server samples authored blade base/tip positions from its action timeline and physical root observations; client Transforms, track time and markers cannot authorize contact.
+
+Sweep intervals are clipped to the active window, with activeEnd processed once before recovery. A pending first-attack sweep runs before queued SwordR1_2; parry cancels the chain. The geometric query returns `{part, origin, contact}` candidates, where contact is entry into a body box expanded by 0.18 studs. Obstruction rays travel from root to the appropriate blade base and then to that entry point; swept tip samples retain the blade base as origin. This approximation ignores clothing/accessories and does not provide two-player latency rewind. See COMBAT_ARCHITECTURE.md and current TEST_REPORT.md for verification and remaining limits.
+
 ## Current pacing pass — prototype 2.6
 
 `config/action_pacing.json` now retimes the semantic poses individually before they are keyed in Blender and generates `CombatPacing.luau`. Action playback remains at speed 1. Preparation, swing, follow-through and recovery have separate mappings; the roll's floor-contact correction uses the new authored contact interval. The generated source Actions, baked transforms, real markers and server windows use the same schedule. `tools/render_review.py` derives review frames from that schedule. See COMBAT_PACING.md for the current values; old frame tables and verification counts below remain historical.
@@ -26,7 +34,7 @@ The current iteration adds a low one-hand guard, visible steps in both R1 clips 
 
 ## Studio validation already performed
 
-The import script constructed eight real KeyframeSequences with marker instances in an existing Studio place. The updated eight clips were staged from baked JSON in the same place, with the prior sequences moved into an `AnimationBackup_*` folder. In Play Solo, a standard R15 `Animator` loaded the combat idle, R1 and backward roll tracks. The project sword mesh attached on spawn, and its `Motor6D` followed the right hand. The Blender donor body and the player's avatar body have different silhouettes, so the Studio view remains a separate visual QA gate. The standalone `.rbxmx` files have not been opened in a second project. No Roblox animation assets have been published.
+This paragraph records the earlier eight-clip iteration; the current installation has twelve sources. The import script constructed eight real KeyframeSequences with marker instances in an existing Studio place. The updated eight clips were staged from baked JSON in the same place, with the prior sequences moved into an `AnimationBackup_*` folder. In Play Solo, a standard R15 `Animator` loaded the combat idle, R1 and backward roll tracks. The project sword mesh attached on spawn, and its `Motor6D` followed the right hand. The Blender donor body and the player's avatar body have different silhouettes, so the Studio view remains a separate visual QA gate. The standalone `.rbxmx` files have not been opened in a second project. No Roblox animation assets have been published.
 
 ## Sword in hand for Studio review
 
@@ -36,11 +44,11 @@ The Studio test confirmed the mesh ID `rbxassetid://139047510233988` already pre
 
 ## Avatar preview and verification — 2026-10-14
 
-`R15PreviewRetarget` clones a source sequence once per character in Studio, reads its actual joint frames and body dimensions, then bakes root-pose height corrections. It accepts Motor6D and AnimationConstraint rigs. Roblox's current R15 joint system uses AnimationConstraint; see the [official class documentation](https://create.roblox.com/docs/reference/engine/classes/AnimationConstraint). This preview changes LowerTorso animation data, never teleports HumanoidRootPart. Canonical export and avatar preview use a 0.03-stud body bounding-box clearance to absorb interpolation/constraint settling, while preserving the source roll's larger contact clearance where needed. This is a project QA margin, not a DS3 value.
+`R15PreviewRetarget` clones a source sequence once per character in Studio, reads its actual joint frames and body dimensions, then bakes root-pose height corrections. It accepts Motor6D and AnimationConstraint rigs. Roblox's current R15 joint system uses AnimationConstraint; see the [official class documentation](https://create.roblox.com/docs/reference/engine/classes/AnimationConstraint). This preview changes LowerTorso animation data, never teleports HumanoidRootPart. Canonical export uses a 0.03-stud body bounding-box clearance. The current avatar bake uses a 0.07-stud floor guard, adds up to 0.17 studs smoothly during rolls and preserves larger source contact clearance where needed. These are project QA margins, not DS3 values.
 
 The client waits for appearance loading before caching tracks, starts CombatIdle at Movement priority while standing, and yields to default locomotion when moving. Repeated identical marker signals at the same track time are gated before visual cue dispatch. The server action timeline still owns damage and invulnerability.
 
-Run `blender -b --python-exit-code 1 --python combat/tools/validate_blender.py` to inspect source mesh clearance and rigid grip at 60 FPS, plus target skeleton forward kinematics. Run `python combat/tools/validate_assets.py` after packaging. The final Play Solo test played all eight clips at normal speed on the current avatar, with positive sampled body and sword clearance. These results do not certify other avatar proportions, slopes, moving-root foot contact or published animation playback. Published clips require approval for their intended RigProfile; the per-avatar bake here is Studio-only.
+Run `blender -b --python-exit-code 1 --python combat/tools/validate_blender.py` to inspect source mesh clearance and rigid grip at 60 FPS, plus target skeleton forward kinematics. Run `python combat/tools/validate_assets.py` after packaging. The earlier Play Solo test played all eight then-existing clips at normal speed on the current avatar, with positive sampled body and sword clearance; current twelve-clip results are in TEST_REPORT.md. These results do not certify other avatar proportions, slopes, moving-root foot contact or published animation playback. Published clips require approval for their intended RigProfile. Avatar baking is also used on the server for authored blade geometry; preview track registration remains Studio-only.
 
 ## Required next animation pass
 
@@ -48,7 +56,7 @@ The donor `AshenOath_R15.blend` contains older `WalkForward`, `WalkBackward`, `S
 
 1. Find unobstructed movement references and document precise visible key poses. The supplied longsword clip is partly obscured; see [ANIMATION_REFERENCE_BREAKDOWN.md](ANIMATION_REFERENCE_BREAKDOWN.md).
 2. Review the current clips from back and gameplay camera views at full and reduced speed, then refine foot planting, elbow continuity and sword alignment where the live R15 view disagrees with the Blender donor.
-3. Continue refining the four roll variants, then author combat locomotion, block, parry and reactions as real Actions before enabling their visuals in production.
+3. Continue refining the four roll variants and the existing block/parry/reaction Actions, then author dedicated combat locomotion from unobstructed references.
 4. Export/bake, reimport into a clean R15 place, check markers and priority, then publish approved clips under the owning Roblox account/group. Put only verified IDs in `AnimationRegistry`.
 
 The current `CombatConfig` and Blender clip lengths/markers are aligned to authored frames at 30 FPS. These numbers are project prototypes, not measured Dark Souls III parameters. Roblox root movement is driven separately by the server action controller.

@@ -1,0 +1,50 @@
+{
+  "started": [
+    "SwordR1_1",
+    "SwordR1_2",
+    "SwordR2",
+    "RollForward",
+    "RollBackward",
+    "RollLeft",
+    "RollRight",
+    "SwordR1_1",
+    "SwordR1_2",
+    "SwordR1_1",
+    "Parry",
+    "Stagger"
+  ],
+  "hitPlacement": {
+    "SwordR2": {
+      "part": "UpperTorso",
+      "targetRootDistance": 3.353621244430542,
+      "time": 1.1166666666665,
+      "bladeFraction": 0.7
+    },
+    "SwordR1_1": {
+      "part": "UpperTorso",
+      "targetRootDistance": 2.935896396636963,
+      "time": 0.6,
+      "bladeFraction": 0.7
+    },
+    "QueuedR1ParryTail": {
+      "part": "RightHand",
+      "targetRootDistance": 1.5403763055801392,
+      "time": 0.723333333333,
+      "bladeFraction": 0.7
+    },
+    "QueuedR1Tail": {
+      "part": "RightHand",
+      "targetRootDistance": 1.5403754711151123,
+      "time": 0.723333333333,
+      "bladeFraction": 0.7
+    }
+  },
+  "rejectedBusyRequests": 5,
+  "checks": {
+    "r2LongStartupAndRecovery": true,
+    "queuedComboJumpParryStopsChainAndKeepsStagger": true,
+    "queuedComboJumpProcessesFirstAttackTail": true,
+    "allRollRecoveryAndCleanup": true,
+    "r1StartupDamageComboRecovery": true
+  }
+}

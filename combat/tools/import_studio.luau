@@ -102,6 +102,7 @@ local ok, outcome = pcall(function()
     remote.Name = "CombatRemote"
     remote.Parent = root
     scriptOf("ModuleScript", "CombatService", "src/server/CombatService.luau", server)
+    scriptOf("ModuleScript", "BladeTrajectory", "src/server/BladeTrajectory.luau", server)
     scriptOf("Script", "CombatBootstrap", "src/server/CombatBootstrap.server.luau", server)
     scriptOf("Script", "CombatSettings", "src/server/CombatSettings.server.luau", server)
     scriptOf("Script", "WeaponVisual", "src/server/WeaponVisual.server.luau", server)

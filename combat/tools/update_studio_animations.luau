@@ -83,8 +83,8 @@ local ok, result = pcall(function()
     settings.Name, settings.Source = "CombatSettings", Http:GetAsync(host .. "src/client/CombatSettings.client.luau")
     table.insert(extras, {item = settings, parent = game.StarterPlayer.StarterPlayerScripts})
     local serverFolder = assert(game.ServerScriptService:FindFirstChild("CombatFoundation"))
-    for _, name in {"CombatService", "CombatSettings.server", "WeaponVisual.server"} do
-        local item = Instance.new(name == "CombatService" and "ModuleScript" or "Script")
+    for _, name in {"CombatService", "BladeTrajectory", "CombatSettings.server", "WeaponVisual.server"} do
+        local item = Instance.new((name == "CombatService" or name == "BladeTrajectory") and "ModuleScript" or "Script")
         item.Name = name:gsub("%.server$", "")
         item.Source = Http:GetAsync(host .. "src/server/" .. name .. ".luau")
         table.insert(extras, {item = item, parent = serverFolder})

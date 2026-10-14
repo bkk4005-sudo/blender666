@@ -1,0 +1,220 @@
+{
+  "restored": true,
+  "inputs": [
+    {
+      "input": "CombatRoll:Begin"
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollLeft",
+      "elapsed": 0.02628803253173828
+    },
+    {
+      "input": "CombatR1:Begin",
+      "action": "RollLeft",
+      "elapsed": 0.4918041229248047
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "RollLeft",
+      "elapsed": 0.5593791007995605
+    },
+    {
+      "input": "CombatR2:Begin",
+      "action": "RollLeft",
+      "elapsed": 0.6927790641784668
+    },
+    {
+      "input": "CombatR2:End",
+      "action": "RollLeft",
+      "elapsed": 0.8258991241455078
+    },
+    {
+      "input": "CombatRoll:Begin"
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollRight",
+      "elapsed": 0.02827000617980957
+    },
+    {
+      "input": "CombatRoll:Begin",
+      "action": "RollRight",
+      "elapsed": 0.22588491439819336
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollRight",
+      "elapsed": 0.3596079349517822
+    },
+    {
+      "input": "CombatR1:Begin",
+      "action": "RollRight",
+      "elapsed": 0.49358105659484863
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "RollRight",
+      "elapsed": 0.6276488304138184
+    },
+    {
+      "input": "CombatR2:Begin",
+      "action": "RollRight",
+      "elapsed": 0.6934709548950195
+    },
+    {
+      "input": "CombatR2:End",
+      "action": "RollRight",
+      "elapsed": 0.8257889747619629
+    },
+    {
+      "input": "CombatRoll:Begin"
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollBackward",
+      "elapsed": 0.09215211868286133
+    },
+    {
+      "input": "CombatParry:Begin",
+      "action": "RollBackward",
+      "elapsed": 0.22514605522155762
+    },
+    {
+      "input": "CombatParry:End",
+      "action": "RollBackward",
+      "elapsed": 0.35917115211486816
+    },
+    {
+      "input": "CombatR1:Begin",
+      "action": "RollBackward",
+      "elapsed": 0.4915761947631836
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "RollBackward",
+      "elapsed": 0.6257619857788086
+    },
+    {
+      "input": "CombatR2:Begin",
+      "action": "RollBackward",
+      "elapsed": 0.6933581829071045
+    },
+    {
+      "input": "CombatR2:End",
+      "action": "RollBackward",
+      "elapsed": 0.8256001472473145
+    },
+    {
+      "input": "CombatRoll:Begin"
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollForward",
+      "elapsed": 0.1022799015045166
+    },
+    {
+      "input": "CombatRoll:Begin",
+      "action": "RollForward",
+      "elapsed": 0.23538994789123535
+    },
+    {
+      "input": "CombatRoll:End",
+      "action": "RollForward",
+      "elapsed": 0.373729944229126
+    },
+    {
+      "input": "CombatR1:Begin",
+      "action": "RollForward",
+      "elapsed": 0.505681037902832
+    },
+    {
+      "input": "CombatR1:End",
+      "action": "RollForward",
+      "elapsed": 0.6383359432220459
+    },
+    {
+      "input": "CombatR2:Begin",
+      "action": "RollForward",
+      "elapsed": 0.7719969749450684
+    },
+    {
+      "input": "CombatR2:End",
+      "action": "RollForward",
+      "elapsed": 0.8388228416442871
+    }
+  ],
+  "scope": "Native input; fixed test camera/default AutoRotate disabled for directional selection; unanchored root",
+  "competingRollFrames": 0,
+  "actions": [
+    {
+      "peakHorizontalVelocity": 11.299532890319824,
+      "expectedDuration": 1.2,
+      "frames": 73,
+      "endedBy": "Idle",
+      "delta": [
+        7.794349193572998,
+        -0.000003814697265625,
+        0.0010423660278320312
+      ],
+      "observedDuration": 1.2416040897369385,
+      "name": "RollLeft",
+      "speed": 1,
+      "priority": "Action4",
+      "maximumTime": 1.2000000476837158,
+      "displacement": 7.794349193572998
+    },
+    {
+      "peakHorizontalVelocity": 11.297977447509766,
+      "expectedDuration": 1.2,
+      "frames": 73,
+      "endedBy": "Idle",
+      "delta": [
+        -7.825362205505371,
+        0.000003814697265625,
+        -0.000194549560546875
+      ],
+      "observedDuration": 1.2440898418426514,
+      "name": "RollRight",
+      "speed": 1,
+      "priority": "Action4",
+      "maximumTime": 1.2000000476837158,
+      "displacement": 7.825362205505371
+    },
+    {
+      "peakHorizontalVelocity": 11.325679779052734,
+      "expectedDuration": 1.2,
+      "frames": 73,
+      "endedBy": "Idle",
+      "delta": [
+        0.0010411273688077927,
+        0,
+        -7.819267272949219
+      ],
+      "observedDuration": 1.2420830726623535,
+      "name": "RollBackward",
+      "speed": 1,
+      "priority": "Action4",
+      "maximumTime": 1.2000000476837158,
+      "displacement": 7.819267272949219
+    },
+    {
+      "peakHorizontalVelocity": 12.164780616760254,
+      "expectedDuration": 1.2,
+      "frames": 73,
+      "endedBy": "Idle",
+      "delta": [
+        -0.0011199414730072021,
+        -0.000003814697265625,
+        8.40779972076416
+      ],
+      "observedDuration": 1.2548198699951172,
+      "name": "RollForward",
+      "speed": 1,
+      "priority": "Action4",
+      "maximumTime": 1.2000000476837158,
+      "displacement": 8.40779972076416
+    }
+  ],
+  "missingRollFrames": 0
+}

@@ -1,4 +1,38 @@
-# Test report — latest verification 2026-10-14
+# Test report — latest verification 2026-10-15
+
+## Blade contact, cover, misses and rolls — 2026-10-15
+
+Scope: the user's open `blender666_Studio.rbxl`, Studio Play Solo, actual production modules, generated standard R15 fixtures and native mouse/keyboard input. The installed CombatService, BladeTrajectory and R15PreviewRetarget sources were compared with the workspace before testing. No map geometry was replaced. Temporary fixtures, camera overrides and player anchoring were removed/restored; the existing dirty place file remains excluded from combat commits.
+
+### Defects fixed
+
+- Replaced the previous broad yaw boxes after a native test on 2026-10-14 dealt 22 damage at 8.2 studs without any visible blade contact. Server contact now follows our real KeyframeSequence poses baked for the completed avatar's joints and palm grip. Paths are prepared with periodic yields before player attacks become available.
+- Obstruction now follows the blade base and the actual segment/body-box entry point. Tracing to a body-part centre could clear low cover while the blade crossed that cover. Both root-to-origin and origin-to-contact are checked; swept tip contacts retain their blade-base origin. All intersected parts remain candidates.
+- Every pending active interval is processed before a queued R1 continuation. A frame hitch cannot discard the first attack's tail, and a successful parry stops the queued chain and retains Staggered.
+- An already processed exact activeEnd cannot be sampled again after a defender's i-frames end. Invulnerability continues to be bounded by server time rather than AnimationTrack completion.
+- Request checks reject nonfinite values and dead/absent characters before spending stamina. Insufficient combo stamina cannot shorten recovery. Held block/sprint can be released after a rate-limited burst. Guard break consumes remaining stamina; block chip cannot permanently kill a training dummy, and its heal delay is debounced per hit.
+
+### Executed checks
+
+| Check | Result | Evidence and scope |
+| --- | --- | --- |
+| Blade geometry | PASS, 24 cases | All three authored attacks hit real R15 hurtboxes once; startup/recovery, far-forward 8.2-stud, rear and lateral fixtures miss. Active-window tail, whole-window hitch, exact endpoint after i-frames, both independent obstruction legs, low cover with a visible torso centre, root/accessory/weapon exclusion, discontinuous root displacement and missing-rig rejection all pass. `tests/blade_geometry_2026_10_15.json`. This is server geometry on isolated fixtures, not rendered multiplayer collision. |
+| Defense and lifecycle | PASS, 15 cases | Frontal/backside block, stamina/chip, guard break, parry before/inside/after/from behind, all four roll windows, explicit interruption, death/respawn and connection cleanup. `tests/combat_defenses_2026_10_15.json`. The swept-parry control-flow case deliberately supplies a synthetic bladeCache; it is not visual-contact evidence. |
+| Request validation | PASS, 25 cases | Malformed/nonfinite requests, replay/order/rate limiting, held releases, invalid roll vectors, insufficient stamina, combo/recovery gates, action exclusion, real R15 death/respawn and player removal. `tests/combat_security_2026_10_15.json`. Real production methods are invoked on isolated profiles; this is not hostile two-client traffic. |
+| Pacing and interrupted combo | PASS, 5 scenario groups | Real R15 contact/one-hit, R1 chain/recovery, R2 startup/recovery, four roll cleanups, a queued chainAt jump processing the first hit, and a parry on that pending hit suppressing R1_2. `tests/pacing_server_2026_10_15.json`. |
+| Native hits on a mannequin | PASS | Starting at 3.2 studs, normal mouse input produced R1_1/R1_2/R2 health drops of 22/24/43, with visible blade contact at each damage event, playback speed 1 and normal attack advance. Healing restores the dummy after 1.5 seconds from the last hit. `tests/native_hits_2026_10_15.json`. Replicated CombatState can lag a health update; its sampled label is not the authoritative hit time. |
+| Native wall obstruction | PASS | R1 and R2 produced no health drop with an owned collidable wall between player and mannequin at 3.2 studs, despite 110 sampled visual blade/body overlaps. Root temporarily anchored to isolate the contact test, then restored. `tests/native_wall_hits_2026_10_15.json`. Environment collision response of the visual sword is not certified by this test. |
+| Native distant miss | PASS | At 8.2 studs, R1/R2 produced no damage events and no visible blade contact across 208 attack samples. Root temporarily anchored, then restored. `tests/native_misses_2026_10_15.json`. |
+| Native roll interruption | PASS | With ordinary camera/control, forward roll retained its full 1.2-second track after E, repeated Space, LMB at 0.894 s and RMB at 1.159 s. Zero missing/competing roll frames. Unanchored displacement 8.437 studs. `tests/native_forward_roll_2026_10_15.json`. |
+| Four native roll directions | PASS | All four Action4 tracks reach 1.2 s at speed 1; real LMB/RMB inputs during each do not replace the roll. No missing or competing roll frames. Displacements: left 7.794, right 7.825, back 7.819, forward 8.408 studs. A fixed test camera and disabled default AutoRotate make directional selection deterministic; root remains unanchored. Both restore automatically. `tests/native_rolls_2026_10_15.json`. |
+| Portable package | PASS offline | Embedded source matches all 17 production Luau files, including BladeTrajectory. All twelve standalone animation files remain byte-for-byte unchanged. Asset/marker/timing/seam validation and git diff --check pass. `tools/validate_assets.py`, `tools/package_rbxmx.py`. Independent Studio XML reimport remains unverified. |
+| Cleanup | PASS | Player Idle, AutoRotate true, root unanchored, no remaining test areas or motion actuator. Owned mannequin/wall removed; test camera restored to Custom. `tests/cleanup_2026_10_15.json`. Console contained Roblox CorePackages UI warnings and the Assistant camera-reset notice; no foundation script exception appeared in the final session. |
+
+An initial specialized playtest reported no rolls but its 45-second observer contained no roll action and it sampled state after inputs. That report is inconclusive; the event-timed native observations above establish actual roll starts, full tracks and input times. No production fix was made based only on that report.
+
+NOT TESTED: real two-player latency/observer playback, network rewind, published AnimationIds, moving target exchanges under latency, low-end performance, slopes/stairs and arbitrary marketplace clothing/body combinations. Contact uses sampled blade centreline segments and body oriented boxes expanded by 0.18 studs, not exact mesh collision. This is a tested foundation pass, not release certification or an ideal-animation guarantee.
+
+The sections below record earlier dated passes. Statements about the former broad hit query or missing defensive clips describe those historical versions, not the current implementation.
 
 ## Deliberate pacing — current prototype 2.6
 

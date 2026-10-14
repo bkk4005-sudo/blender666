@@ -1,0 +1,9 @@
+{
+  "state": "Idle",
+  "autoRotate": true,
+  "anchored": false,
+  "leftoverTestAreas": [],
+  "removed": [
+    "CombatQA_Dummy"
+  ]
+}

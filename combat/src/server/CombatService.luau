@@ -5,6 +5,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Shared = ReplicatedStorage:WaitForChild("CombatFoundation"):WaitForChild("Shared")
 local Config = require(Shared:WaitForChild("CombatConfig"))
 local Timeline = require(Shared:WaitForChild("ActionTimeline"))
+local BladeTrajectory = require(script.Parent:WaitForChild("BladeTrajectory"))
 
 local CombatService = {}
 CombatService.__index = CombatService
@@ -16,16 +17,6 @@ local function living(character)
     local humanoid = character and character:FindFirstChildOfClass("Humanoid")
     local root = character and character:FindFirstChild("HumanoidRootPart")
     return humanoid and humanoid.Health > 0 and root and humanoid, root
-end
-
-local function clamp01(x)
-    return math.clamp(x, 0, 1)
-end
-
-local function yawFor(name, u)
-    if name == "SwordR1_1" then return math.rad(-52 + 104 * u) end
-    if name == "SwordR1_2" then return math.rad(52 - 104 * u) end
-    return math.rad(-10 + 20 * u)
 end
 
 local function horizontalUnit(vector)
@@ -93,12 +84,16 @@ function CombatService:bindPlayer(player)
     profile.playerConnection = player.CharacterAdded:Connect(function(character)
         self:bindCharacter(profile, character)
     end)
+    profile.appearanceConnection = player.CharacterAppearanceLoaded:Connect(function(character)
+        if profile.character == character then self:prepareBladePaths(profile, character) end
+    end)
     if player.Character then self:bindCharacter(profile, player.Character) end
 end
 
 function CombatService:bindCharacter(profile, character)
     self:clearCharacter(profile)
     profile.character = character
+    profile.bladeCache = {}
     local humanoid = character:WaitForChild("Humanoid", 5)
     local root = character:WaitForChild("HumanoidRootPart", 5)
     if not humanoid or not root then return end
@@ -118,9 +113,32 @@ function CombatService:bindCharacter(profile, character)
         self:finish(profile)
         character:SetAttribute("CombatState", "Dead")
     end))
+    if typeof(profile.player) == "Instance" and profile.player:IsA("Player") and profile.player:HasAppearanceLoaded() then
+        self:prepareBladePaths(profile, character)
+    end
+end
+
+function CombatService:prepareBladePaths(profile, character)
+    profile.bladeGeneration = (profile.bladeGeneration or 0) + 1
+    local generation = profile.bladeGeneration
+    profile.bladeCache = {}
+    character:SetAttribute("CombatHitReady", false)
+    task.spawn(function()
+        for _, name in {"SwordR1_1", "SwordR1_2", "SwordR2"} do
+            if profile.character ~= character or profile.bladeGeneration ~= generation or not profile.alive then return end
+            local source = ReplicatedStorage.CombatFoundation.Animations:FindFirstChild(name)
+            local ok, path = pcall(BladeTrajectory.build, character, source, 8)
+            if profile.character ~= character or profile.bladeGeneration ~= generation or not profile.alive then return end
+            if not ok then character:SetAttribute("CombatHitRigError", tostring(path)); return end
+            profile.bladeCache[name] = path
+        end
+        character:SetAttribute("CombatHitRigError", nil)
+        character:SetAttribute("CombatHitReady", true)
+    end)
 end
 
 function CombatService:clearCharacter(profile)
+    profile.bladeGeneration = (profile.bladeGeneration or 0) + 1
     for _, connection in profile.characterConnections do connection:Disconnect() end
     table.clear(profile.characterConnections)
     self:finish(profile)
@@ -132,6 +150,7 @@ function CombatService:removePlayer(player)
     if not profile then return end
     self:clearCharacter(profile)
     if profile.playerConnection then profile.playerConnection:Disconnect() end
+    if profile.appearanceConnection then profile.appearanceConnection:Disconnect() end
     self.profiles[player] = nil
 end
 
@@ -158,6 +177,7 @@ function CombatService:finish(profile)
     profile.action = nil
     profile.comboQueued = false
     profile.sweepTime = nil
+    profile.sweepRoot = nil
     profile.hit = {}
     local humanoid = profile.character and profile.character:FindFirstChildOfClass("Humanoid")
     if humanoid and humanoid.Health > 0 then
@@ -169,9 +189,22 @@ end
 
 function CombatService:start(profile, actionName, now, rollVector)
     local action = Config.Actions[actionName]
-    if not action or not self:spend(profile, action.cost or 0, now) then return false end
+    if not action or not profile.alive or profile.action then return false end
+    if type(now) ~= "number" or now ~= now or math.abs(now) == math.huge then return false end
     local humanoid, root = living(profile.character)
-    if not humanoid then return false end
+    if not humanoid or not root:IsA("BasePart") then return false end
+    if ATTACKS[actionName] and typeof(profile.player) == "Instance" and profile.player:IsA("Player")
+        and profile.character:GetAttribute("CombatHitReady") ~= true then return false end
+    if rollVector ~= nil then
+        if not ROLL_DIRECTIONS[actionName] or typeof(rollVector) ~= "Vector3" then return false end
+        for _, component in {rollVector.X, rollVector.Y, rollVector.Z} do
+            if component ~= component or math.abs(component) == math.huge then return false end
+        end
+        local flat = Vector3.new(rollVector.X, 0, rollVector.Z)
+        if flat.Magnitude < 0.8 or flat.Magnitude > 1.2 then return false end
+        rollVector = flat.Unit
+    end
+    if not self:spend(profile, action.cost or 0, now) then return false end
     profile.action = actionName
     profile.started = now
     profile.comboQueued = false
@@ -184,6 +217,8 @@ function CombatService:start(profile, actionName, now, rollVector)
     self:setState(profile, Timeline.phase(actionName, 0))
     if ATTACKS[actionName] then
         profile.facing = horizontalUnit(root.CFrame.LookVector)
+        profile.sweepTime = 0
+        profile.sweepRoot = CFrame.lookAt(root.Position, root.Position + profile.facing)
         profile.motionDirection = profile.facing
         profile.motionAttachment, profile.motionVelocity = planarMotion(root, "CombatAdvance", 22000)
     end
@@ -204,20 +239,25 @@ function CombatService:request(player, request)
     local profile = self.profiles[player]
     if not profile or not profile.alive or type(request) ~= "table" then return end
     local sequence = request.sequence
-    if type(sequence) ~= "number" or sequence % 1 ~= 0 or sequence <= profile.lastSequence then return end
+    if type(sequence) ~= "number" or sequence ~= sequence or math.abs(sequence) == math.huge
+        or sequence % 1 ~= 0 or sequence <= profile.lastSequence then return end
     if sequence > profile.lastSequence + 100 then return end
     profile.lastSequence = sequence
     local now = workspace:GetServerTimeNow()
     if now - profile.rateWindow >= 1 then profile.rateWindow, profile.rateCount = now, 0 end
     profile.rateCount += 1
-    if profile.rateCount > Config.MaxRequestRate then return end
+    -- Releasing a held control must remain possible after a burst. These two
+    -- idempotent requests cannot start actions, deal damage or spend stamina.
+    local release = request.kind == "BlockEnd" or request.kind == "SprintEnd"
+    if profile.rateCount > Config.MaxRequestRate and not release then return end
     local humanoid, root = living(profile.character)
-    if not humanoid then return end
+    if not humanoid or not root:IsA("BasePart") then return end
     local kind = request.kind
     if type(kind) ~= "string" then return end
     local function rejected() self.remote:FireClient(player, "Rejected", sequence) end
     if kind == "R1" then
         if profile.action == "SwordR1_1" and now - profile.started >= Config.Actions.SwordR1_1.bufferOpen and now - profile.started <= Config.Actions.SwordR1_1.combo[2] then
+            if profile.stamina + 1e-4 < Config.Actions.SwordR1_2.cost then rejected(); return end
             profile.comboQueued = true
             return
         end
@@ -230,6 +270,9 @@ function CombatService:request(player, request)
             local vector = request.moveDirection
             if vector ~= nil then
                 if typeof(vector) ~= "Vector3" then return end
+                for _, component in {vector.X, vector.Y, vector.Z} do
+                    if component ~= component or math.abs(component) == math.huge then return end
+                end
                 local flat = Vector3.new(vector.X, 0, vector.Z)
                 if flat.Magnitude < 0.8 or flat.Magnitude > 1.2 then return end
                 local expected
@@ -253,22 +296,47 @@ function CombatService:request(player, request)
         end
     elseif kind == "BlockEnd" then
         profile.blocking = false
-        if not profile.action then humanoid.WalkSpeed = Config.WalkSpeed; self:setState(profile, "Idle") end
+        if not profile.action then
+            humanoid.WalkSpeed = profile.sprinting and Config.SprintSpeed or Config.WalkSpeed
+            self:setState(profile, profile.sprinting and "Sprinting" or "Idle")
+        end
     elseif kind == "Parry" then
         if profile.action or profile.blocking or not self:start(profile, "Parry", now) then rejected() end
     elseif kind == "SprintStart" then
         if not profile.action and not profile.blocking and profile.stamina > 0 then profile.sprinting = true; humanoid.WalkSpeed = Config.SprintSpeed end
     elseif kind == "SprintEnd" then
         profile.sprinting = false
-        if not profile.action then humanoid.WalkSpeed = Config.WalkSpeed end
+        if not profile.action then humanoid.WalkSpeed = profile.blocking and Config.BlockWalkSpeed or Config.WalkSpeed end
+    end
+end
+
+function CombatService:profileForCharacter(character)
+    local player = Players:GetPlayerFromCharacter(character)
+    return player and self.profiles[player]
+end
+
+local function applyHealthDamage(targetHumanoid, damage)
+    local character = targetHumanoid.Parent
+    if character:GetAttribute("CombatDummy") == true then
+        damage = math.min(damage, math.max(0, targetHumanoid.Health - 1))
+    end
+    targetHumanoid:TakeDamage(damage)
+    if character:GetAttribute("CombatDummy") == true then
+        local serial = (character:GetAttribute("CombatDummyHitSerial") or 0) + 1
+        character:SetAttribute("CombatDummyHitSerial", serial)
+        task.delay(1.5, function()
+            if targetHumanoid.Parent == character and targetHumanoid.Health > 0
+                and character:GetAttribute("CombatDummyHitSerial") == serial then
+                targetHumanoid.Health = targetHumanoid.MaxHealth
+            end
+        end)
     end
 end
 
 function CombatService:damage(attacker, targetHumanoid, actionName, now)
     local character = targetHumanoid.Parent
     if character == attacker.character or targetHumanoid.Health <= 0 then return false end
-    local targetPlayer = Players:GetPlayerFromCharacter(character)
-    local defender = targetPlayer and self.profiles[targetPlayer]
+    local defender = self:profileForCharacter(character)
     if defender and defender.alive then
         local elapsed = now - defender.started
         if defender.action and Timeline.inWindow(defender.action, "iframes", elapsed) then return false end
@@ -294,10 +362,13 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             local drain = action.damage * Config.Block.staminaPerDamage
             local paid = self:spend(defender, drain, now)
             if paid then
-                targetHumanoid:TakeDamage(action.damage * (1 - Config.Block.absorb))
+                applyHealthDamage(targetHumanoid, action.damage * (1 - Config.Block.absorb))
                 return true
             end
             defender.blocking = false
+            defender.stamina = 0
+            defender.lastSpend = now
+            character:SetAttribute("Stamina", 0)
             self:finish(defender)
             defender.action = "GuardBroken"
             defender.started = now
@@ -306,63 +377,72 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             self.remote:FireAllClients("Started", defender.player, "GuardBroken", now)
         end
     end
-    local damage = Config.Actions[actionName].damage
-    if character:GetAttribute("CombatDummy") == true then
-        damage = math.min(damage, math.max(0, targetHumanoid.Health - 1))
-    end
-    targetHumanoid:TakeDamage(damage)
-    if character:GetAttribute("CombatDummy") == true then
-        task.delay(1.5, function()
-            if targetHumanoid.Parent == character and targetHumanoid.Health > 0 then
-                targetHumanoid.Health = targetHumanoid.MaxHealth
-            end
-        end)
-    end
+    applyHealthDamage(targetHumanoid, Config.Actions[actionName].damage)
     return true
+end
+
+function CombatService:bladePath(profile, actionName)
+    profile.bladeCache = profile.bladeCache or {}
+    if profile.bladeCache[actionName] then return profile.bladeCache[actionName] end
+    local source = ReplicatedStorage.CombatFoundation.Animations:FindFirstChild(actionName)
+    if not source then return nil end
+    local ok, path = pcall(BladeTrajectory.build, profile.character, source)
+    if not ok then
+        profile.character:SetAttribute("CombatHitRigError", tostring(path))
+        return nil -- Unsupported/missing joints fail closed, never use a broad fallback.
+    end
+    profile.bladeCache[actionName] = path
+    return path
 end
 
 function CombatService:sweep(profile, actionName, elapsed, now)
     local action = Config.Actions[actionName]
     local humanoid, root = living(profile.character)
     if not humanoid then return end
-    local active = action.active
-    local u = clamp01((elapsed - active[1]) / (active[2] - active[1]))
-    local old = profile.sweepTime or math.max(active[1], elapsed - 1 / Config.HitSampleRate)
-    local oldU = clamp01((old - active[1]) / (active[2] - active[1]))
-    profile.sweepTime = elapsed
-    local params = OverlapParams.new()
-    params.FilterType = Enum.RaycastFilterType.Exclude
-    params.FilterDescendantsInstances = {profile.character}
-    params.MaxParts = 100
-    -- Three boxes bridge the previous and current authored arc sample. Server root
-    -- position and action time define the query; client never supplies hit targets.
-    for i = 0, 2 do
-        local sampleU = oldU + (u - oldU) * i / 2
-        local facing = profile.facing or horizontalUnit(root.CFrame.LookVector)
-        local frame = CFrame.lookAt(root.Position, root.Position + facing) * CFrame.Angles(0, yawFor(actionName, sampleU), 0)
-        local center = frame * CFrame.new(0, 0, -action.reach * 0.52)
-        for _, part in workspace:GetPartBoundsInBox(center, Vector3.new(action.width, 4.5, action.reach), params) do
-            local model = part:FindFirstAncestorOfClass("Model")
-            while model and not model:FindFirstChildOfClass("Humanoid") do
-                local parent = model.Parent
-                model = parent and (parent:IsA("Model") and parent or parent:FindFirstAncestorOfClass("Model"))
-            end
-            local target = model and model:FindFirstChildOfClass("Humanoid")
-            if target and not profile.hit[target] then
-                local targetRoot = model:FindFirstChild("HumanoidRootPart")
-                if targetRoot and (targetRoot.Position - root.Position).Magnitude <= action.reach + 2 then
-                    local rayParams = RaycastParams.new()
-                    rayParams.FilterType = Enum.RaycastFilterType.Exclude
-                    rayParams.FilterDescendantsInstances = {profile.character}
-                    local displacement = targetRoot.Position - root.Position
-                    local obstruction = workspace:Raycast(root.Position, displacement, rayParams)
-                    if (not obstruction or obstruction.Instance:IsDescendantOf(model))
-                        and self:damage(profile, target, actionName, now) then
-                        profile.hit[target] = true
-                    end
+    if profile.action ~= actionName then return end
+    local old = profile.sweepTime or 0
+    if elapsed <= old or old >= action.active[2] then return end
+    local facing = profile.facing or horizontalUnit(root.CFrame.LookVector)
+    local currentRoot = CFrame.lookAt(root.Position,root.Position+facing)
+    local previousRoot = profile.sweepRoot or currentRoot
+    -- A discontinuous root jump must not produce a damage ribbon through the map.
+    if (currentRoot.Position-previousRoot.Position).Magnitude>2 then previousRoot=currentRoot end
+    profile.sweepTime,profile.sweepRoot=elapsed,currentRoot
+    local from,to=math.max(old,action.active[1]),math.min(elapsed,action.active[2])
+    if from>to then return end
+    local path = self:bladePath(profile, actionName)
+    if not path then return end
+    local count = math.clamp(math.ceil((to-from)*60),1,32)
+    local previousA,previousB
+    for index=0,count do
+        local alpha=index/count
+        local time=from+(to-from)*alpha
+        local frame=previousRoot:Lerp(currentRoot,(time-old)/(elapsed-old))
+        local localA,localB=BladeTrajectory.sample(path,time)
+        local a,b=frame:PointToWorldSpace(localA),frame:PointToWorldSpace(localB)
+        for target, contacts in BladeTrajectory.query(profile.character,a,b,previousA,previousB,.18) do
+            if profile.hit[target] then continue end
+            local model=target.Parent
+            local targetRoot=model:FindFirstChild("HumanoidRootPart")
+            if not targetRoot or (targetRoot.Position-root.Position).Magnitude>action.reach+2 then continue end
+            local ray=RaycastParams.new()
+            ray.FilterType=Enum.RaycastFilterType.Exclude
+            ray.FilterDescendantsInstances={profile.character,model}
+            ray.RespectCanCollide=true
+            for _, candidate in contacts do
+                -- Use the actual segment/box intersection. A ray to a torso's
+                -- centre can clear low cover while the blade hits through it.
+                local origin,contact=candidate.origin,candidate.contact
+                local bodyObstruction=workspace:Raycast(frame.Position,origin-frame.Position,ray)
+                local bladeObstruction=workspace:Raycast(origin,contact-origin,ray)
+                if not bodyObstruction and not bladeObstruction and self:damage(profile,target,actionName,now) then
+                    profile.hit[target]=true
+                    if profile.action~=actionName then return end
+                    break
                 end
             end
         end
+        previousA,previousB=a,b
     end
 end
 
@@ -413,13 +493,14 @@ function CombatService:update(dt)
                     profile.motionVelocity.PlaneVelocity = Vector2.new(horizontal.X, horizontal.Z)
                 end
             end
+            if ATTACKS[actionName] then
+                self:sweep(profile, actionName, elapsed, now)
+                if profile.action ~= actionName then continue end
+            end
             if actionName == "SwordR1_1" and profile.comboQueued and elapsed >= action.chainAt then
                 self:finish(profile)
                 self:start(profile, "SwordR1_2", now)
                 continue
-            end
-            if ATTACKS[actionName] and Timeline.inWindow(actionName, "active", elapsed) then
-                self:sweep(profile, actionName, elapsed, now)
             end
             if action then
                 self:setState(profile, Timeline.phase(actionName, elapsed))
