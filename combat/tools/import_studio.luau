@@ -92,7 +92,7 @@ local ok, outcome = pcall(function()
     table.insert(staged, client)
     local shared = folder("Shared", root)
     local animations = folder("Animations", root)
-    for _, name in {"CombatPacing", "CombatConfig", "ActionTimeline", "AnimationRegistry", "WeaponVisualConfig", "R15PreviewRetarget", "BladeClearance", "AvatarGroundClearance", "InputBindings"} do
+    for _, name in {"CombatPacing", "CombatConfig", "ActionTimeline", "AnimationRegistry", "WeaponVisualConfig", "R15PreviewRetarget", "BladeClearance", "AvatarGroundClearance", "InputBindings", "CombatObserver"} do
         scriptOf("ModuleScript", name, "src/shared/" .. name .. ".luau", shared)
     end
     for _, name in {"CombatIdle", "SwordR1_1", "SwordR1_2", "SwordR2", "RollForward", "RollBackward", "RollLeft", "RollRight", "Block", "Parry", "Stagger", "GuardBroken"} do

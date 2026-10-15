@@ -1,4 +1,45 @@
-# Test report — latest verification 2026-10-15
+# Test report — latest verification 2026-10-16
+
+## Two real clients, delayed PvP and regression — 2026-10-16
+
+Executed in the user's open `blender666_Studio.rbxl` with `StudioTestService:ExecuteMultiplayerTestAsync(2, args)`: two actual Players (-1/-2), separate client DataModels, native VirtualInput through the production bindings, actual server acceptance and health changes. The QA RemoteEvent carries schedules/observations only. Contact cases anchor the real roots 3.2 studs apart; free-roll cases use normal client network ownership. These are controlled network contact tests, not free-moving duel certification.
+
+### Final-source results
+
+| Added delay, inbound / outbound | Measured QA echo RTT | Recorded attempts | Coverage |
+| --- | --- | --- | --- |
+| 0 / 0 ms | 33.590–50.521 ms | 5 PASS | R2, R1 combo, mixed simultaneous attacks, roll under actual contact with LMB/RMB, unanchored backward roll |
+| 150 / 150 ms | 332.594–333.579 ms | 5 PASS | Same focused regression after the final fixes |
+| 300 / 300 ms | 631.194–651.637 ms | 15 PASS, 3 INCONCLUSIVE | R1/R2 in both directions, combo, R1↔R1/R2↔R2/mixed exchanges, protected/early/late rolls, roll input exclusion, free forward/backward motion, lethal trades with positions swapped and actual respawn |
+
+Total: **28 attempts, 25 PASS, 3 INCONCLUSIVE, zero final failures**. All seven simulation settings were read back; jitter/loss and legacy IncomingReplicationLag were zero. RTT is an actual QA echo including scheduling, not claimed pure transport latency. Evidence: `tests/pvp_2026_10_16.json` and six `tests/final*_20261016_summary.json` reports. The complete frame traces, including selected pre-fix records, are retained in the 191 KB `tests/pvp_raw_2026_10_16.zip`; its SHA256/member hashes are in the index. `tools/analyse_pvp.py` and `tools/archive_pvp_evidence.py` reproduce summaries/archive from extracted raw files under `review/`.
+
+The three inconclusive high-delay attempts had approved-start skews of 50.819, 50.461 and 49.387 ms, above one 30 Hz hit step. They all produced two-way damage and valid animation playback, but cannot establish simultaneous starts. A repeat R2↔R2 passed with a 0.604 ms skew. Exact mixed-start coincidence at this highest delay remains unconfirmed; baseline and 150 ms mixed tests passed. No inconclusive attempt was silently changed into PASS.
+
+### Defects found and fixed
+
+- **Invisible opponent previews, then duplicate blending:** before local registration the peer had no weighted combat clip. Registering its avatar-adapted KFS also resolved Roblox's native replica, while the presenter played a second track with the same ID. Generic native name `Animation` hid the duplicate from the earlier semantic-name check. `CombatObserver` now suppresses only extra known Studio preview IDs on the non-owned character before animation evaluation. Final counters show **zero same-ID duplicates in 11,168 client PreSimulation observations**, for both own and peer Action/Action4 groups. Published entries retain their native replication path, which remains untested.
+- **Delayed acknowledgement cut/replay:** a genuine 300/300 ms pre-fix trace stopped the predicted R1 around the former 0.38-second timeout, left a sampled gap and started it again around 699 ms. The owner now retains the track, holds unconfirmed sword anticipation and reconciles against the server action clock. Final accepted clips each have one recorded owner Play; no extra plays were found. A separate near-end R1_2 replay was fixed by recognizing natural completion within the last server step.
+- **Lost high-delay combo:** the pre-fix 300/300 ms report contained two native clicks but only one received server R1, because the first acknowledgement moved the client's combo clock backwards. A bounded 0.20-second input slot now schedules continuation from the interval since the first request send. Server window/stamina/sequence checks remain authoritative. Final combo passes at all three profiles; at highest delay it delivers distinct 22 + 24 damage. A continuation rejection releases only its own latch and preserves the first swing.
+- **Order-sensitive lethal resolution:** production updates now collect eligible contacts for all living actors before applying health damage. Only already captured contacts from an actor killed in that same update may finish a trade. Changed action/character, parry and previous-frame death invalidate stale contacts. Both high-delay lethal role setups proved two living actors with visible, active, unconsumed lethal contacts before the same update, followed by two damage applications and two deaths in that update. Actual replacement avatars became Idle/HP100/stamina100/HitReady with 12 owner and 12 observer tracks; old connections and combat motion were cleared.
+
+High delay still has a presentation cost: a predicted R2 initially led server phase by up to 291 ms, then settled to at most 28.3 ms after acknowledgement +500 ms in the five-attack trace. Peer phase stayed within about 20.4 ms there. Phase/gap measurements use 50–67 ms telemetry after Started delivery; they do not certify every rendered pose. The separate duplicate counters run on every PreSimulation. The R1 anticipation hold before acknowledgement is intentional and is not a missing AnimationTrack.
+
+### Rolls and server regression
+
+- Real geometric contacts inside server i-frames caused no health loss. Too-early rolls were hit after protection ended; late rolls were accepted after actual damage and did not undo it.
+- LMB/RMB reached both production CAS Begin bindings during protected and unanchored backward rolls at every profile. No attacker action was accepted for the rolling player; sampled owner/peer intervals contained no missing roll, competing action or backwards time jump. Free motion was observed. Forward rolls were constrained by the nearby opponent; distance is not an unobstructed travel calibration. Backward case displacement includes its preparatory movement and physics settling.
+- Fresh Server Play with final modules passed **24 geometry, 25 request/lifecycle, 15 defense, 5 pacing scenario groups and 6 frame-resolution regressions**. See the corresponding `tests/*_2026_10_16.json`. The six frame tests use real R15 hurtboxes with synthetic bladeCache to isolate order, deduplication, post-iframe retry, immediate direct sweeps, next-frame revenge prevention and parry of a dying actor. They supplement the actual two-client tests. Their initial HP==0 assertion was corrected after the engine exposed -2 HP immediately after TakeDamage; lethal assertions now require HP<=0 rather than assuming synchronous engine clamping. No production health rule was changed for this test correction.
+
+### Source, package and cleanup
+
+All **18 installed production sources** match the workspace; all 18 XML sources match after normal newline normalization. All twelve standalone editable animation files remain unchanged. Offline package/asset validation passed. See `tests/installed_pvp_sources_2026_10_16.json` and `tests/package_pvp_2026_10_16.json`. Independent XML reimport was not performed.
+
+Studio is back in Edit. Original seven network settings are restored to zero; temporary QA scripts, remote and output folders are removed. Dated production source backups remain. The server folder's eight children comprise five production objects and three preserved earlier code-backup folders. Before stopping Solo, the real local player was Idle/HP100, unanchored, AutoRotate=true, with no remaining QA fixture. See `tests/pvp_cleanup_2026_10_16.json`. Map geometry and the existing dirty place file were not saved/replaced by this pass.
+
+**NOT TESTED:** free-moving competitive exchanges under latency, jitter/packet loss, lag rewind, published AnimationIds/permissions, persistent settings round trips, low-end performance and universal avatar/clothing clearance. Request abuse tests are isolated production-method tests, not hostile real-client traffic. This is a verified foundation improvement, not release certification or an ideal-animation guarantee.
+
+The dated sections below describe earlier versions and their then-current limitations.
 
 ## Blade contact, cover, misses and rolls — 2026-10-15
 
@@ -30,7 +71,7 @@ Scope: the user's open `blender666_Studio.rbxl`, Studio Play Solo, actual produc
 
 An initial specialized playtest reported no rolls but its 45-second observer contained no roll action and it sampled state after inputs. That report is inconclusive; the event-timed native observations above establish actual roll starts, full tracks and input times. No production fix was made based only on that report.
 
-NOT TESTED: real two-player latency/observer playback, network rewind, published AnimationIds, moving target exchanges under latency, low-end performance, slopes/stairs and arbitrary marketplace clothing/body combinations. Contact uses sampled blade centreline segments and body oriented boxes expanded by 0.18 studs, not exact mesh collision. This is a tested foundation pass, not release certification or an ideal-animation guarantee.
+At this earlier pass, real two-player latency/observer playback was NOT TESTED; the 2026-10-16 section records the later controlled tests. Network rewind, published AnimationIds, moving target exchanges under latency, low-end performance, slopes/stairs and arbitrary marketplace clothing/body combinations remain unverified. Contact uses sampled blade centreline segments and body oriented boxes expanded by 0.18 studs, not exact mesh collision. This is a tested foundation pass, not release certification or an ideal-animation guarantee.
 
 The sections below record earlier dated passes. Statements about the former broad hit query or missing defensive clips describe those historical versions, not the current implementation.
 

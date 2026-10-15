@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-16",
+  "scope": "Original Edit production sources compared after multiplayer sessions; source snapshot contains no test wrappers. New multiplayer DataModels clone these sources.",
+  "encoding": "UTF-8; source newlines normalized",
+  "count": 18,
+  "allMatch": true,
+  "sources": [
+    {
+      "file": "src/shared/InputBindings.luau",
+      "sourceTextSha256": "8fca7dff3af02508ef199cc057597c3aff3e7701d07f1808b80cf1c680883b77",
+      "matches": true
+    },
+    {
+      "file": "src/shared/CombatObserver.luau",
+      "sourceTextSha256": "a9c796c5247bdf484527c36e646aeb75382b72dcf3046a2d11e22b1aa11431b9",
+      "matches": true
+    },
+    {
+      "file": "src/shared/ActionTimeline.luau",
+      "sourceTextSha256": "463edfa55ba8f23e8170eabfecc88e6247c1d92e7a8da6d116dffe14545f96a5",
+      "matches": true
+    },
+    {
+      "file": "src/shared/AvatarGroundClearance.luau",
+      "sourceTextSha256": "520689c17e3efd2ac40f155d229797e40cd363063cb24d0a4ad37daa7f7ba459",
+      "matches": true
+    },
+    {
+      "file": "src/shared/R15PreviewRetarget.luau",
+      "sourceTextSha256": "890b59d8aae7e672185abd993fd881365e4f9d653afcc2cfe98a3e47a11afd09",
+      "matches": true
+    },
+    {
+      "file": "src/shared/BladeClearance.luau",
+      "sourceTextSha256": "62c9824b0394b9aeb4fe504026fcd6674f8f4e1255ad45c242e1726e30e15d2b",
+      "matches": true
+    },
+    {
+      "file": "src/shared/CombatPacing.luau",
+      "sourceTextSha256": "9c8ad42e062a27a6e069b2160a538c897613f4eb0a7572e8bd98e1b003d0db0c",
+      "matches": true
+    },
+    {
+      "file": "src/shared/WeaponVisualConfig.luau",
+      "sourceTextSha256": "e1ed3d297e8a18d96d7b2c5ca4d3360b47a7b5f8ac0afad97542a17280f17d0b",
+      "matches": true
+    },
+    {
+      "file": "src/shared/CombatConfig.luau",
+      "sourceTextSha256": "6c956d361168f7c335146c4496a1caa45248ef358f278f2b577099becadf8697",
+      "matches": true
+    },
+    {
+      "file": "src/shared/AnimationRegistry.luau",
+      "sourceTextSha256": "5ce94b5a2212d929ca86e2475180472037a39d11be7a0563c3d74d7ab8080031",
+      "matches": true
+    },
+    {
+      "file": "src/server/CombatBootstrap.server.luau",
+      "sourceTextSha256": "e1358cf72043394588cf1af6954cf3b730397292689b3625d08751c86c413190",
+      "matches": true
+    },
+    {
+      "file": "src/server/CombatService.luau",
+      "sourceTextSha256": "c933b4a1b8c3ff69b4308e415ab44420b8a41340b62d9ca7b85f2f38a0e82417",
+      "matches": true
+    },
+    {
+      "file": "src/server/WeaponVisual.server.luau",
+      "sourceTextSha256": "9a77d876f0a302bb8c34880f7fb72386ccf9f7294a1df5cf8f97e13c5c1e6c5b",
+      "matches": true
+    },
+    {
+      "file": "src/server/CombatSettings.server.luau",
+      "sourceTextSha256": "58b68df72be6d71645a943a06156171c280b6e6eecbf6ce4d8a729830cae8a95",
+      "matches": true
+    },
+    {
+      "file": "src/server/BladeTrajectory.luau",
+      "sourceTextSha256": "eb902d44b3a7e875aeb514de554092269e678d213129dc99f171b33986b87f6f",
+      "matches": true
+    },
+    {
+      "file": "src/client/AvatarWeaponClearance.client.luau",
+      "sourceTextSha256": "33a1b40e5d1a7935c9fad5d8239b440ceee26dcb005671b61c2d536358e694e5",
+      "matches": true
+    },
+    {
+      "file": "src/client/CombatClient.client.luau",
+      "sourceTextSha256": "dc21de791c1e0c8e25d073dbd1cc35790c4d38784f74a334aea2e673242f060c",
+      "matches": true
+    },
+    {
+      "file": "src/client/CombatSettings.client.luau",
+      "sourceTextSha256": "6c89db1e9cfe94f158fb80385f9db70640cf2306db1adae6c1191e5e80cfeec9",
+      "matches": true
+    }
+  ]
+}

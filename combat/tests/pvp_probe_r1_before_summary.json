@@ -1,0 +1,295 @@
+{
+  "scope": "Two real Players/native VirtualInput; roots anchored for baseline contact",
+  "network": "baseline",
+  "requests": [
+    {
+      "request": {
+        "sequence": 1,
+        "kind": "BlockEnd"
+      },
+      "player": "Player2",
+      "at": 1792021439.629057
+    },
+    {
+      "request": {
+        "sequence": 2,
+        "kind": "SprintEnd"
+      },
+      "player": "Player2",
+      "at": 1792021439.629306
+    },
+    {
+      "request": {
+        "sequence": 1,
+        "kind": "BlockEnd"
+      },
+      "player": "Player1",
+      "at": 1792021440.430426
+    },
+    {
+      "request": {
+        "sequence": 2,
+        "kind": "SprintEnd"
+      },
+      "player": "Player1",
+      "at": 1792021440.430454
+    },
+    {
+      "request": {
+        "sequence": 3,
+        "kind": "R1"
+      },
+      "player": "Player1",
+      "at": 1792021446.812008
+    },
+    {
+      "request": {
+        "sequence": 3,
+        "kind": "BlockEnd"
+      },
+      "player": "Player2",
+      "at": 1792021449.777902
+    },
+    {
+      "request": {
+        "sequence": 4,
+        "kind": "SprintEnd"
+      },
+      "player": "Player2",
+      "at": 1792021449.77793
+    },
+    {
+      "request": {
+        "sequence": 4,
+        "kind": "BlockEnd"
+      },
+      "player": "Player1",
+      "at": 1792021449.812295
+    },
+    {
+      "request": {
+        "sequence": 5,
+        "kind": "SprintEnd"
+      },
+      "player": "Player1",
+      "at": 1792021449.812336
+    }
+  ],
+  "health": {
+    "Player1": 100,
+    "Player2": 80.0331802368164
+  },
+  "analysis": {
+    "rawFile": "D:\\project\\blender666\\combat\\review\\pvp_probe_r1_before.json",
+    "rawSha256": "41aef37382a697ad97fa54ac389636c5dd514c1efae9bfd4ed2a8936522cab7e",
+    "timingReference": "combat/config/action_pacing.json",
+    "timingReferenceVersion": "deliberate-1",
+    "timingVersionMatchesRaw": "UNRECORDED",
+    "testedRevision": "UNRECORDED",
+    "scope": "Analysis of recorded real telemetry. Original test statuses retained; analysis does not create new PASS claims.",
+    "phaseDefinition": "Visible track (weight >0.05) TimePosition minus sample server-clock elapsed, at/after that client's Started receipt and within the accepted action interval; positive means visual lead. Multiple visible tracks are reported individually, not averaged by weight.",
+    "settlingScope": "Separate metrics after received Started +500ms; empty windows do not prove settling.",
+    "missingTrackScope": "Missing-track counts begin at Started receipt +50ms. Zero does not claim that the observer rendered the action before its delayed Started packet arrived, or that owner prediction had no anticipation hold.",
+    "samplingLimit": "Phase/continuity telemetry is normally 50-67ms; gaps count samples, not every rendered frame. When present, animationFrames independently checks same-ID duplicates at each PreSimulation after animation evaluation; it does not contain per-frame poses. Client playEvents record the owner's Animator unless peerPlayEvents is explicitly present.",
+    "deathScope": "Intervals stop at actual HP0/death or newer accepted action; early death is not a missing full-length clip failure."
+  },
+  "echoRoundTrip": {
+    "count": 0
+  },
+  "cases": [
+    {
+      "positiveDamage": [],
+      "rejectedContacts": [],
+      "acceptedNoHealthLoss": [],
+      "acceptedActionAnalysis": [
+        {
+          "actor": "-1",
+          "name": "SwordR1_1",
+          "started": 1792021446.812018,
+          "evidence": "server Started payload observed on real client; no start wrapper record",
+          "deliveries": {
+            "-2": {
+              "at": 1792021446.849389,
+              "name": "SwordR1_1",
+              "started": 1792021446.812018,
+              "owner": "Player1",
+              "event": "Started"
+            },
+            "-1": {
+              "at": 1792021446.835859,
+              "name": "SwordR1_1",
+              "started": 1792021446.812018,
+              "owner": "Player1",
+              "event": "Started"
+            }
+          },
+          "windowEnd": 1792021448.1120179,
+          "endReason": "natural_duration",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792021446.789313,
+              "name": "SwordR1_1",
+              "id": "090d5e4fc1e743622e387d0c32e3a08c"
+            }
+          ],
+          "ownerPlayCount": 1,
+          "additionalOwnerPlays": 0,
+          "ownerPlaybackClassification": "single_play",
+          "inputToFirstPlayMs": 33.729,
+          "presentation": [
+            {
+              "client": "-2",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 22,
+              "weightedSampleCount": 0,
+              "phaseTrackMinusServer": {
+                "count": 0
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 0
+              },
+              "maxConcurrentWeightedSameClip": 0,
+              "missingSamplesAfterReceiptPlus50ms": 20,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 0,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 37.371,
+              "missingSampleAtRange": [
+                1792021446.950029,
+                1792021448.06556
+              ]
+            },
+            {
+              "client": "-1",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 21,
+              "weightedSampleCount": 21,
+              "phaseTrackMinusServer": {
+                "count": 21,
+                "minMs": 22.853,
+                "medianMs": 24.691,
+                "maxMs": 28.826,
+                "p95AbsMs": 26.78,
+                "maxAbsMs": 28.826
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 13,
+                "minMs": 23.803,
+                "medianMs": 24.941,
+                "maxMs": 28.826,
+                "p95AbsMs": 26.888,
+                "maxAbsMs": 28.826
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 23.841,
+              "firstWeightedSampleAfterServerMs": 41.008,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unassignedOwnerPlayEvents": {},
+      "clients": {
+        "-2": {
+          "userId": -2,
+          "player": "Player2",
+          "received": 1792021444.917272,
+          "t0": 1792021446.744998,
+          "inputs": [],
+          "playEvents": [],
+          "events": [
+            {
+              "at": 1792021446.849389,
+              "name": "SwordR1_1",
+              "started": 1792021446.812018,
+              "owner": "Player1",
+              "event": "Started"
+            }
+          ],
+          "healthEvents": [
+            {
+              "at": 1792021447.364856,
+              "health": 78
+            },
+            {
+              "at": 1792021448.364693,
+              "health": 79.01551818847656
+            },
+            {
+              "at": 1792021449.398967,
+              "health": 80.0331802368164
+            }
+          ],
+          "startPosition": [
+            0,
+            35.18408203125,
+            -18.399999618530273
+          ],
+          "endPosition": [
+            0,
+            35.18408203125,
+            -18.399999618530273
+          ],
+          "finalState": "Idle",
+          "restored": true
+        },
+        "-1": {
+          "userId": -1,
+          "player": "Player1",
+          "received": 1792021445.047927,
+          "t0": 1792021446.744998,
+          "inputs": [
+            {
+              "at": 1792021446.755584,
+              "action": "R1",
+              "ok": true
+            }
+          ],
+          "playEvents": [
+            {
+              "at": 1792021446.789313,
+              "name": "SwordR1_1",
+              "id": "090d5e4fc1e743622e387d0c32e3a08c"
+            }
+          ],
+          "events": [
+            {
+              "at": 1792021446.835859,
+              "name": "SwordR1_1",
+              "started": 1792021446.812018,
+              "owner": "Player1",
+              "event": "Started"
+            }
+          ],
+          "healthEvents": [],
+          "startPosition": [
+            0,
+            35.18408203125,
+            -21.600000381469727
+          ],
+          "endPosition": [
+            0,
+            35.18408203125,
+            -21.600000381469727
+          ],
+          "finalState": "Idle",
+          "restored": true
+        }
+      }
+    }
+  ]
+}

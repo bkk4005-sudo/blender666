@@ -176,6 +176,7 @@ function CombatService:finish(profile)
     profile.facing = nil
     profile.action = nil
     profile.comboQueued = false
+    profile.comboSequence = nil
     profile.sweepTime = nil
     profile.sweepRoot = nil
     profile.hit = {}
@@ -187,7 +188,13 @@ function CombatService:finish(profile)
     end
 end
 
-function CombatService:start(profile, actionName, now, rollVector)
+function CombatService:broadcastStarted(profile, actionName, now, requestSequence)
+    profile.actionSerial = (profile.actionSerial or 0) + 1
+    self.remote:FireAllClients("Started", profile.player, actionName, now,
+        {character = profile.character, serial = profile.actionSerial, sequence = requestSequence})
+end
+
+function CombatService:start(profile, actionName, now, rollVector, requestSequence)
     local action = Config.Actions[actionName]
     if not action or not profile.alive or profile.action then return false end
     if type(now) ~= "number" or now ~= now or math.abs(now) == math.huge then return false end
@@ -231,7 +238,7 @@ function CombatService:start(profile, actionName, now, rollVector)
         profile.motionAttachment, profile.motionVelocity = planarMotion(root, "CombatRoll", 35000)
         profile.motionDirection = horizontalUnit(rollVector or direction)
     end
-    self.remote:FireAllClients("Started", profile.player, actionName, now)
+    self:broadcastStarted(profile, actionName, now, requestSequence)
     return true
 end
 
@@ -249,7 +256,13 @@ function CombatService:request(player, request)
     -- Releasing a held control must remain possible after a burst. These two
     -- idempotent requests cannot start actions, deal damage or spend stamina.
     local release = request.kind == "BlockEnd" or request.kind == "SprintEnd"
-    if profile.rateCount > Config.MaxRequestRate and not release then return end
+    if profile.rateCount > Config.MaxRequestRate and not release then
+        if request.kind == "R1" or request.kind == "R2" or request.kind == "Roll" or request.kind == "Parry"
+            or request.kind == "BlockStart" or request.kind == "SprintStart" then
+            self.remote:FireClient(player, "Rejected", sequence)
+        end
+        return
+    end
     local humanoid, root = living(profile.character)
     if not humanoid or not root:IsA("BasePart") then return end
     local kind = request.kind
@@ -259,11 +272,12 @@ function CombatService:request(player, request)
         if profile.action == "SwordR1_1" and now - profile.started >= Config.Actions.SwordR1_1.bufferOpen and now - profile.started <= Config.Actions.SwordR1_1.combo[2] then
             if profile.stamina + 1e-4 < Config.Actions.SwordR1_2.cost then rejected(); return end
             profile.comboQueued = true
+            profile.comboSequence = sequence
             return
         end
-        if profile.action or profile.blocking or not self:start(profile, "SwordR1_1", now) then rejected() end
+        if profile.action or profile.blocking or not self:start(profile, "SwordR1_1", now, nil, sequence) then rejected() end
     elseif kind == "R2" then
-        if profile.action or profile.blocking or not self:start(profile, "SwordR2", now) then rejected() end
+        if profile.action or profile.blocking or not self:start(profile, "SwordR2", now, nil, sequence) then rejected() end
     elseif kind == "Roll" then
         local name = request.direction
         if not profile.action and not profile.blocking and ROLL_DIRECTIONS[name] then
@@ -283,7 +297,7 @@ function CombatService:request(player, request)
                 if horizontalUnit(expected):Dot(flat.Unit) < 0.5 then return end
                 vector = flat.Unit
             end
-            if not self:start(profile, name, now, vector) then rejected() end
+            if not self:start(profile, name, now, vector, sequence) then rejected() end
         else
             rejected()
         end
@@ -301,7 +315,7 @@ function CombatService:request(player, request)
             self:setState(profile, profile.sprinting and "Sprinting" or "Idle")
         end
     elseif kind == "Parry" then
-        if profile.action or profile.blocking or not self:start(profile, "Parry", now) then rejected() end
+        if profile.action or profile.blocking or not self:start(profile, "Parry", now, nil, sequence) then rejected() end
     elseif kind == "SprintStart" then
         if not profile.action and not profile.blocking and profile.stamina > 0 then profile.sprinting = true; humanoid.WalkSpeed = Config.SprintSpeed end
     elseif kind == "SprintEnd" then
@@ -349,12 +363,18 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
         end
         if defender.action == "Parry" and Timeline.inWindow("Parry", "parry", elapsed) and facing then
             self:finish(attacker)
-            attacker.action = "Stagger"
-            attacker.started = now
             local staggerHumanoid = attacker.character and attacker.character:FindFirstChildOfClass("Humanoid")
-            if staggerHumanoid then staggerHumanoid.WalkSpeed = 0 end
-            self:setState(attacker, "Staggered")
-            self.remote:FireAllClients("Started", attacker.player, "Stagger", now)
+            if staggerHumanoid and staggerHumanoid.Health > 0 then
+                attacker.action = "Stagger"
+                attacker.started = now
+                staggerHumanoid.WalkSpeed = 0
+                self:setState(attacker, "Staggered")
+                self:broadcastStarted(attacker, "Stagger", now)
+            else
+                -- A validated same-frame trade can be parried after its actor
+                -- died. Deny that hit without resurrecting a reaction state.
+                self:setState(attacker, "Dead")
+            end
             return true
         end
         if defender.blocking and facing then
@@ -374,7 +394,7 @@ function CombatService:damage(attacker, targetHumanoid, actionName, now)
             defender.started = now
             targetHumanoid.WalkSpeed = 0
             self:setState(defender, "GuardBroken")
-            self.remote:FireAllClients("Started", defender.player, "GuardBroken", now)
+            self:broadcastStarted(defender, "GuardBroken", now)
         end
     end
     applyHealthDamage(targetHumanoid, Config.Actions[actionName].damage)
@@ -395,7 +415,7 @@ function CombatService:bladePath(profile, actionName)
     return path
 end
 
-function CombatService:sweep(profile, actionName, elapsed, now)
+function CombatService:sweep(profile, actionName, elapsed, now, frameHits)
     local action = Config.Actions[actionName]
     local humanoid, root = living(profile.character)
     if not humanoid then return end
@@ -412,6 +432,15 @@ function CombatService:sweep(profile, actionName, elapsed, now)
     if from>to then return end
     local path = self:bladePath(profile, actionName)
     if not path then return end
+    local hitSet = profile.hit
+    local pendingTargets
+    if frameHits then
+        pendingTargets = frameHits.pendingTargets[hitSet]
+        if not pendingTargets then
+            pendingTargets = {}
+            frameHits.pendingTargets[hitSet] = pendingTargets
+        end
+    end
     local count = math.clamp(math.ceil((to-from)*60),1,32)
     local previousA,previousB
     for index=0,count do
@@ -421,7 +450,7 @@ function CombatService:sweep(profile, actionName, elapsed, now)
         local localA,localB=BladeTrajectory.sample(path,time)
         local a,b=frame:PointToWorldSpace(localA),frame:PointToWorldSpace(localB)
         for target, contacts in BladeTrajectory.query(profile.character,a,b,previousA,previousB,.18) do
-            if profile.hit[target] then continue end
+            if hitSet[target] or (pendingTargets and pendingTargets[target]) then continue end
             local model=target.Parent
             local targetRoot=model:FindFirstChild("HumanoidRootPart")
             if not targetRoot or (targetRoot.Position-root.Position).Magnitude>action.reach+2 then continue end
@@ -435,10 +464,21 @@ function CombatService:sweep(profile, actionName, elapsed, now)
                 local origin,contact=candidate.origin,candidate.contact
                 local bodyObstruction=workspace:Raycast(frame.Position,origin-frame.Position,ray)
                 local bladeObstruction=workspace:Raycast(origin,contact-origin,ray)
-                if not bodyObstruction and not bladeObstruction and self:damage(profile,target,actionName,now) then
-                    profile.hit[target]=true
-                    if profile.action~=actionName then return end
-                    break
+                if not bodyObstruction and not bladeObstruction then
+                    if frameHits then
+                        -- Geometry for this action was validated while its actor
+                        -- was alive. Defer damage until every actor has swept.
+                        pendingTargets[target] = true
+                        table.insert(frameHits.pendingHits, {profile = profile,
+                            character = profile.character, action = actionName,
+                            started = profile.started, hitSet = hitSet,
+                            target = target, targetCharacter = model})
+                        break
+                    elseif self:damage(profile,target,actionName,now) then
+                        hitSet[target] = true
+                        if profile.action~=actionName then return end
+                        break
+                    end
                 end
             end
         end
@@ -446,8 +486,45 @@ function CombatService:sweep(profile, actionName, elapsed, now)
     end
 end
 
+local function resolveFrameHits(service, frameHits, now)
+    local killedCharacters, cancelledActions = {}, {}
+    for _, intent in frameHits.pendingHits do
+        local profile, character, hitSet = intent.profile, intent.character, intent.hitSet
+        if cancelledActions[hitSet] or hitSet[intent.target]
+            or profile.character ~= character or not character.Parent
+            or intent.target.Parent ~= intent.targetCharacter or not intent.targetCharacter.Parent then continue end
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        local alive = profile.alive and humanoid and humanoid.Health > 0
+        local killedHere = killedCharacters[character] == true
+        -- Died may have already called finish() and replaced the live hitSet.
+        -- Only a death caused by this resolution permits that captured trade;
+        -- parry/guard break or a different action never permit stale intents.
+        local unchanged = profile.action == intent.action and profile.hit == hitSet
+        local finishedByDeath = killedHere and profile.action == nil
+        if not humanoid or (not alive and not killedHere)
+            or profile.started ~= intent.started or (not unchanged and not finishedByDeath) then continue end
+        local actionBefore, hitsBefore, startedBefore = profile.action, profile.hit, profile.started
+        local healthBefore = intent.target.Health
+        if service:damage(profile, intent.target, intent.action, now) then
+            hitSet[intent.target] = true
+        end
+        if healthBefore > 0 and intent.target.Health <= 0 then
+            killedCharacters[intent.targetCharacter] = true
+        end
+        -- A parry can invalidate every remaining contact from the same sweep.
+        -- Mark the captured action even if another hit subsequently kills it.
+        if profile.action ~= actionBefore or profile.hit ~= hitsBefore or profile.started ~= startedBefore then
+            cancelledActions[hitSet] = true
+        end
+    end
+end
+
 function CombatService:update(dt)
     local now = workspace:GetServerTimeNow()
+    local frameHits = {pendingHits = {}, pendingTargets = {}}
+    local frameActors = {}
+    -- First collect contacts for all living actors, before any of their hits
+    -- can kill the actor visited next in the profiles table.
     for _, profile in self.profiles do
         if not profile.alive then continue end
         local humanoid = living(profile.character)
@@ -465,10 +542,15 @@ function CombatService:update(dt)
             profile.stamina = math.min(Config.MaxStamina, profile.stamina + Config.StaminaRegenPerSecond * dt)
         end
         profile.character:SetAttribute("Stamina", math.floor(profile.stamina * 10 + 0.5) / 10)
+        local actor = {profile = profile, character = profile.character,
+            action = profile.action, started = profile.started}
+        table.insert(frameActors, actor)
         if profile.action then
             local actionName = profile.action
             local action = Config.Actions[actionName]
             local elapsed = now - profile.started
+            actor.elapsed = elapsed
+            if not action then continue end
             if ATTACKS[actionName] and profile.facing then
                 local _, root = living(profile.character)
                 if root then
@@ -494,12 +576,26 @@ function CombatService:update(dt)
                 end
             end
             if ATTACKS[actionName] then
-                self:sweep(profile, actionName, elapsed, now)
-                if profile.action ~= actionName then continue end
+                self:sweep(profile, actionName, elapsed, now, frameHits)
             end
+        end
+    end
+    resolveFrameHits(self, frameHits, now)
+    -- Resolve contacts before advancing combos or ending recovery. Reactions
+    -- raised by resolution retain their state and cannot chain the old attack.
+    for _, actor in frameActors do
+        local profile = actor.profile
+        if profile.character ~= actor.character or not profile.alive then continue end
+        local humanoid = living(profile.character)
+        if not humanoid then continue end
+        if profile.action ~= actor.action or profile.started ~= actor.started then continue end
+        if profile.action then
+            local actionName, elapsed = actor.action, actor.elapsed
+            local action = Config.Actions[actionName]
             if actionName == "SwordR1_1" and profile.comboQueued and elapsed >= action.chainAt then
+                local comboSequence = profile.comboSequence
                 self:finish(profile)
-                self:start(profile, "SwordR1_2", now)
+                self:start(profile, "SwordR1_2", now, nil, comboSequence)
                 continue
             end
             if action then

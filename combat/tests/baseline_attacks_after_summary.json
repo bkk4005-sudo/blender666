@@ -1,0 +1,2521 @@
+{
+  "kind": "RealTwoClientCombatQA",
+  "completed": true,
+  "summary": {
+    "inconclusive": 0,
+    "passed": 5,
+    "failed": 0
+  },
+  "errors": [],
+  "scope": "Two actual Players. Native client input, actual server acceptance/damage and owner/observer Animator telemetry. Anchored contact fixtures explicitly labelled; free-roll case uses normal character motion.",
+  "authority": "Production methods delegate without changing returns; setup alone resets HP/stamina/position. No fake Player, combat FireServer or defender-profile override.",
+  "realPlayers": [
+    {
+      "name": "Player1",
+      "userId": -1
+    },
+    {
+      "name": "Player2",
+      "userId": -2
+    }
+  ],
+  "lagLabel": "baseline_attacks_after",
+  "configuredNetwork": [],
+  "pacingVersion": "deliberate-1",
+  "ready": {
+    "-1": {
+      "observerTracks": 12,
+      "player": "Player1",
+      "tracks": 12,
+      "virtualInput": true,
+      "count": 12,
+      "userId": -1,
+      "virtualInputAvailable": true
+    },
+    "-2": {
+      "observerTracks": 12,
+      "player": "Player2",
+      "tracks": 12,
+      "virtualInput": true,
+      "count": 12,
+      "userId": -2,
+      "virtualInputAvailable": true
+    }
+  },
+  "pings": [
+    {
+      "roundTripSeconds": 0.03315401077270508,
+      "caseId": "r1_from_a",
+      "returned": 1792023257.188457,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023257.155303,
+      "userId": -2,
+      "clientReceived": 1792023257.185852
+    },
+    {
+      "roundTripSeconds": 0.033251047134399414,
+      "caseId": "r1_from_a",
+      "returned": 1792023257.188468,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023257.155217,
+      "userId": -1,
+      "clientReceived": 1792023257.175706
+    },
+    {
+      "roundTripSeconds": 0.032327890396118164,
+      "caseId": "r1_from_b",
+      "returned": 1792023262.621877,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023262.589549,
+      "userId": -2,
+      "clientReceived": 1792023262.61918
+    },
+    {
+      "roundTripSeconds": 0.049302101135253906,
+      "caseId": "r1_from_b",
+      "returned": 1792023262.638807,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023262.589505,
+      "userId": -1,
+      "clientReceived": 1792023262.627648
+    },
+    {
+      "roundTripSeconds": 0.03413891792297363,
+      "caseId": "r2_from_a",
+      "returned": 1792023268.055882,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023268.021743,
+      "userId": -2,
+      "clientReceived": 1792023268.051925
+    },
+    {
+      "roundTripSeconds": 0.03418993949890137,
+      "caseId": "r2_from_a",
+      "returned": 1792023268.055893,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023268.021703,
+      "userId": -1,
+      "clientReceived": 1792023268.042419
+    },
+    {
+      "roundTripSeconds": 0.02594304084777832,
+      "caseId": "r2_from_b",
+      "returned": 1792023273.488639,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023273.462696,
+      "userId": -2,
+      "clientReceived": 1792023273.483499
+    },
+    {
+      "roundTripSeconds": 0.04360795021057129,
+      "caseId": "r2_from_b",
+      "returned": 1792023273.506252,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023273.462644,
+      "userId": -1,
+      "clientReceived": 1792023273.49193
+    },
+    {
+      "roundTripSeconds": 0.032731056213378906,
+      "caseId": "r1_combo_a",
+      "returned": 1792023278.938666,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023278.905935,
+      "userId": -2,
+      "clientReceived": 1792023278.932063
+    },
+    {
+      "roundTripSeconds": 0.049317121505737305,
+      "caseId": "r1_combo_a",
+      "returned": 1792023278.955204,
+      "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+      "sent": 1792023278.905887,
+      "userId": -1,
+      "clientReceived": 1792023278.943186
+    }
+  ],
+  "finishedAt": 1792023284.122882,
+  "analysis": {
+    "rawFile": "D:\\project\\blender666\\combat\\review\\baseline_attacks_after.json",
+    "rawSha256": "b2b66134b7e4e9f95a7223744e95aee927c7a20f50dde3c75d688658fdcded46",
+    "timingReference": "combat/config/action_pacing.json",
+    "timingReferenceVersion": "deliberate-1",
+    "timingVersionMatchesRaw": true,
+    "testedRevision": "UNRECORDED",
+    "scope": "Analysis of recorded real telemetry. Original test statuses retained; analysis does not create new PASS claims.",
+    "phaseDefinition": "Visible track (weight >0.05) TimePosition minus sample server-clock elapsed, at/after that client's Started receipt and within the accepted action interval; positive means visual lead. Multiple visible tracks are reported individually, not averaged by weight.",
+    "settlingScope": "Separate metrics after received Started +500ms; empty windows do not prove settling.",
+    "missingTrackScope": "Missing-track counts begin at Started receipt +50ms. Zero does not claim that the observer rendered the action before its delayed Started packet arrived, or that owner prediction had no anticipation hold.",
+    "samplingLimit": "Phase/continuity telemetry is normally 50-67ms; gaps count samples, not every rendered frame. When present, animationFrames independently checks same-ID duplicates at each PreSimulation after animation evaluation; it does not contain per-frame poses. Client playEvents record the owner's Animator unless peerPlayEvents is explicitly present.",
+    "deathScope": "Intervals stop at actual HP0/death or newer accepted action; early death is not a missing full-length clip failure."
+  },
+  "echoRoundTrip": {
+    "count": 10,
+    "minMs": 25.943,
+    "medianMs": 33.695,
+    "maxMs": 49.317,
+    "p95AbsMs": 49.31,
+    "maxAbsMs": 49.317
+  },
+  "cases": [
+    {
+      "id": "r1_from_a",
+      "label": "r1_from_a",
+      "status": "PASS",
+      "expect": "a_hits_b",
+      "checks": {
+        "damageOncePerAction": true,
+        "ownerNativeTracks": true,
+        "actualEchoReplies": 2,
+        "observerNativeTracks": true,
+        "actualPlayerDamage": true
+      },
+      "failures": [],
+      "inconclusive": [],
+      "instrumentationErrors": [],
+      "setup": {
+        "rootDistance": 3.2,
+        "health": 100,
+        "-2": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0006699999794363976,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player2",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -2,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            2.0995121002197266,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "-1": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0008340000058524311,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player1",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -1,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -1.1004886627197266,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "anchored": true,
+        "resets": "Real profile finish + stamina100/lastSpend; HP/pose test fixture reset, no action or damage override",
+        "floor": [
+          0.49951171875,
+          32.189998626708984,
+          -21.64453125
+        ]
+      },
+      "t0": 1792023259.155202,
+      "duration": 3.2,
+      "inputs": {
+        "-1": [
+          {
+            "action": "R1",
+            "at": 0
+          }
+        ],
+        "-2": []
+      },
+      "received": [
+        {
+          "at": 1792023259.223252,
+          "sequence": 3,
+          "kind": "R1",
+          "userId": -1
+        }
+      ],
+      "started": [
+        {
+          "at": 1792023259.223624,
+          "action": "SwordR1_1",
+          "userId": -1,
+          "started": 1792023259.22326
+        }
+      ],
+      "pings": [
+        {
+          "roundTripSeconds": 0.03315401077270508,
+          "caseId": "r1_from_a",
+          "returned": 1792023257.188457,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023257.155303,
+          "userId": -2,
+          "clientReceived": 1792023257.185852
+        },
+        {
+          "roundTripSeconds": 0.033251047134399414,
+          "caseId": "r1_from_a",
+          "returned": 1792023257.188468,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023257.155217,
+          "userId": -1,
+          "clientReceived": 1792023257.175706
+        }
+      ],
+      "finalHealth": {
+        "-1": 100,
+        "-2": 80.03209686279297
+      },
+      "healthEvents": [
+        {
+          "at": 1792023259.739898,
+          "after": 78,
+          "userId": -2,
+          "before": 100
+        },
+        {
+          "at": 1792023260.755239,
+          "after": 79.01526641845703,
+          "userId": -2,
+          "before": 78
+        },
+        {
+          "at": 1792023261.772162,
+          "after": 80.03209686279297,
+          "userId": -2,
+          "before": 79.01526641845703
+        }
+      ],
+      "deaths": [],
+      "lethalFrames": [],
+      "positiveDamage": [
+        {
+          "defenderElapsed": 1792023259.739277,
+          "action": "SwordR1_1",
+          "started": 1792023259.22326,
+          "attackerUserId": -1,
+          "at": 1792023259.739851,
+          "targetUserId": -2,
+          "targetKey": "-2",
+          "preFrame": {
+            "-1": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023259.22326,
+              "elapsed": 0.5159931182861328,
+              "action": "SwordR1_1",
+              "userId": -1,
+              "rootPosition": [
+                -1.1004886627197266,
+                35.21802520751953,
+                -21.64453125
+              ]
+            },
+            "-2": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 0,
+              "userId": -2,
+              "rootPosition": [
+                2.0995121002197266,
+                35.21802520751953,
+                -21.64453125
+              ]
+            }
+          },
+          "returned": true,
+          "frameNumber": 937,
+          "after": 78,
+          "before": 100
+        }
+      ],
+      "rejectedContacts": [],
+      "acceptedNoHealthLoss": [],
+      "acceptedActionAnalysis": [
+        {
+          "actor": "-1",
+          "name": "SwordR1_1",
+          "started": 1792023259.22326,
+          "serverRecord": {
+            "at": 1792023259.223624,
+            "action": "SwordR1_1",
+            "userId": -1,
+            "started": 1792023259.22326
+          },
+          "evidence": "server start instrumentation",
+          "deliveries": {
+            "-1": {
+              "at": 1792023259.260265,
+              "character": "Player1",
+              "sequence": 3,
+              "started": 1792023259.22326,
+              "serial": 1,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            },
+            "-2": {
+              "at": 1792023259.252835,
+              "character": "Player1",
+              "sequence": 3,
+              "started": 1792023259.22326,
+              "serial": 1,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          },
+          "serial": 1,
+          "sequence": 3,
+          "character": "Player1",
+          "windowEnd": 1792023260.5232599,
+          "endReason": "natural_duration",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792023259.196604,
+              "name": "SwordR1_1",
+              "id": "83f990bbb5bcb308f5b01b1ab76426a4"
+            }
+          ],
+          "ownerPlayCount": 1,
+          "additionalOwnerPlays": 0,
+          "ownerPlaybackClassification": "single_play",
+          "inputToFirstPlayMs": 35.818,
+          "presentation": [
+            {
+              "client": "-1",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 22,
+              "weightedSampleCount": 22,
+              "phaseTrackMinusServer": {
+                "count": 22,
+                "minMs": 16.595,
+                "medianMs": 18.115,
+                "maxMs": 28.431,
+                "p95AbsMs": 21.612,
+                "maxAbsMs": 28.431
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 13,
+                "minMs": 17.316,
+                "medianMs": 18.331,
+                "maxMs": 21.106,
+                "p95AbsMs": 21.105,
+                "maxAbsMs": 21.106
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 37.005,
+              "firstWeightedSampleAfterServerMs": 38.236,
+              "observedSpeedRange": [
+                0.8327041268348694,
+                1
+              ]
+            },
+            {
+              "client": "-2",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 21,
+              "weightedSampleCount": 21,
+              "phaseTrackMinusServer": {
+                "count": 42,
+                "minMs": -24.29,
+                "medianMs": 1.257,
+                "maxMs": 20.359,
+                "p95AbsMs": 23.711,
+                "maxAbsMs": 24.29
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 26,
+                "minMs": -24.29,
+                "medianMs": -3.855,
+                "maxMs": 20.359,
+                "p95AbsMs": 23.798,
+                "maxAbsMs": 24.29
+              },
+              "maxConcurrentWeightedSameClip": 2,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 2,
+              "exactAssetIdDuplicateSampleCount": 21,
+              "exactAssetIdDuplicates": [
+                {
+                  "id": "83f990bbb5bcb308f5b01b1ab76426a4",
+                  "sampleCount": 21,
+                  "maximumConcurrent": 2,
+                  "names": {
+                    "Animation": 21,
+                    "SwordR1_1": 21
+                  },
+                  "firstAt": 1792023259.27022,
+                  "lastAt": 1792023260.486738
+                }
+              ],
+              "nativeAliasTrackNames": {
+                "Animation": 21
+              },
+              "startedDeliveryMs": 29.575,
+              "firstWeightedSampleAfterServerMs": 46.96,
+              "observedSpeedRange": [
+                0.8327041268348694,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unassignedOwnerPlayEvents": {},
+      "clients": {
+        "-1": {
+          "userId": -1,
+          "player": "Player1",
+          "received": 1792023257.175743,
+          "t0": 1792023259.155202,
+          "inputs": [
+            {
+              "at": 1792023259.160786,
+              "action": "R1",
+              "ok": true
+            }
+          ],
+          "playEvents": [
+            {
+              "at": 1792023259.196604,
+              "name": "SwordR1_1",
+              "id": "83f990bbb5bcb308f5b01b1ab76426a4"
+            }
+          ],
+          "events": [
+            {
+              "at": 1792023259.260265,
+              "character": "Player1",
+              "sequence": 3,
+              "started": 1792023259.22326,
+              "serial": 1,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [],
+          "startPosition": [
+            -1.1004886627197266,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -1.1004886627197266,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        },
+        "-2": {
+          "userId": -2,
+          "player": "Player2",
+          "received": 1792023257.185889,
+          "t0": 1792023259.155202,
+          "inputs": [],
+          "playEvents": [],
+          "events": [
+            {
+              "at": 1792023259.252835,
+              "character": "Player1",
+              "sequence": 3,
+              "started": 1792023259.22326,
+              "serial": 1,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [
+            {
+              "at": 1792023259.769264,
+              "health": 78
+            },
+            {
+              "at": 1792023260.769438,
+              "health": 79.01526641845703
+            },
+            {
+              "at": 1792023261.803419,
+              "health": 80.03209686279297
+            }
+          ],
+          "startPosition": [
+            2.0995121002197266,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            2.0995121002197266,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        }
+      }
+    },
+    {
+      "id": "r1_from_b",
+      "label": "r1_from_b",
+      "status": "PASS",
+      "expect": "b_hits_a",
+      "checks": {
+        "damageOncePerAction": true,
+        "ownerNativeTracks": true,
+        "actualEchoReplies": 2,
+        "observerNativeTracks": true,
+        "actualPlayerDamage": true
+      },
+      "failures": [],
+      "inconclusive": [],
+      "instrumentationErrors": [],
+      "setup": {
+        "rootDistance": 3.2,
+        "health": 100,
+        "-2": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0008430000161752105,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player2",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -2,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            0.49951136112213135,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "-1": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0009769999887794256,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player1",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -1,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -2.700488567352295,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "anchored": true,
+        "resets": "Real profile finish + stamina100/lastSpend; HP/pose test fixture reset, no action or damage override",
+        "floor": [
+          -1.1004886627197266,
+          32.189998626708984,
+          -21.64453125
+        ]
+      },
+      "t0": 1792023264.589489,
+      "duration": 3.2,
+      "inputs": {
+        "-1": [],
+        "-2": [
+          {
+            "action": "R1",
+            "at": 0
+          }
+        ]
+      },
+      "received": [
+        {
+          "at": 1792023264.672325,
+          "sequence": 5,
+          "kind": "R1",
+          "userId": -2
+        }
+      ],
+      "started": [
+        {
+          "at": 1792023264.672538,
+          "action": "SwordR1_1",
+          "userId": -2,
+          "started": 1792023264.672334
+        }
+      ],
+      "pings": [
+        {
+          "roundTripSeconds": 0.032327890396118164,
+          "caseId": "r1_from_b",
+          "returned": 1792023262.621877,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023262.589549,
+          "userId": -2,
+          "clientReceived": 1792023262.61918
+        },
+        {
+          "roundTripSeconds": 0.049302101135253906,
+          "caseId": "r1_from_b",
+          "returned": 1792023262.638807,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023262.589505,
+          "userId": -1,
+          "clientReceived": 1792023262.627648
+        }
+      ],
+      "finalHealth": {
+        "-1": 80.01617431640625,
+        "-2": 100
+      },
+      "healthEvents": [
+        {
+          "at": 1792023265.173246,
+          "after": 78,
+          "userId": -1,
+          "before": 100
+        },
+        {
+          "at": 1792023266.188595,
+          "after": 79.0152587890625,
+          "userId": -1,
+          "before": 78
+        },
+        {
+          "at": 1792023267.189591,
+          "after": 80.01617431640625,
+          "userId": -1,
+          "before": 79.0152587890625
+        }
+      ],
+      "deaths": [],
+      "lethalFrames": [],
+      "positiveDamage": [
+        {
+          "defenderElapsed": 5.949592113494873,
+          "action": "SwordR1_1",
+          "started": 1792023264.672334,
+          "attackerUserId": -2,
+          "at": 1792023265.173178,
+          "targetUserId": -1,
+          "targetKey": "-1",
+          "preFrame": {
+            "-1": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023259.22326,
+              "userId": -1,
+              "rootPosition": [
+                -2.700488567352295,
+                35.21802520751953,
+                -21.64453125
+              ]
+            },
+            "-2": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023264.672334,
+              "elapsed": 0.5004990100860596,
+              "action": "SwordR1_1",
+              "userId": -2,
+              "rootPosition": [
+                0.49951136112213135,
+                35.21802520751953,
+                -21.64453125
+              ]
+            }
+          },
+          "returned": true,
+          "frameNumber": 1100,
+          "after": 78,
+          "before": 100
+        }
+      ],
+      "rejectedContacts": [],
+      "acceptedNoHealthLoss": [],
+      "acceptedActionAnalysis": [
+        {
+          "actor": "-2",
+          "name": "SwordR1_1",
+          "started": 1792023264.672334,
+          "serverRecord": {
+            "at": 1792023264.672538,
+            "action": "SwordR1_1",
+            "userId": -2,
+            "started": 1792023264.672334
+          },
+          "evidence": "server start instrumentation",
+          "deliveries": {
+            "-1": {
+              "at": 1792023264.710288,
+              "character": "Player2",
+              "sequence": 5,
+              "started": 1792023264.672334,
+              "serial": 1,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR1_1"
+            },
+            "-2": {
+              "at": 1792023264.703464,
+              "character": "Player2",
+              "sequence": 5,
+              "started": 1792023264.672334,
+              "serial": 1,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          },
+          "serial": 1,
+          "sequence": 5,
+          "character": "Player2",
+          "windowEnd": 1792023265.972334,
+          "endReason": "natural_duration",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792023264.653524,
+              "name": "SwordR1_1",
+              "id": "fbc7afcc0dd91e07cb7815a094d60a2d"
+            }
+          ],
+          "ownerPlayCount": 1,
+          "additionalOwnerPlays": 0,
+          "ownerPlaybackClassification": "single_play",
+          "inputToFirstPlayMs": 51.571,
+          "presentation": [
+            {
+              "client": "-1",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 22,
+              "weightedSampleCount": 21,
+              "phaseTrackMinusServer": {
+                "count": 42,
+                "minMs": -22.423,
+                "medianMs": -2.763,
+                "maxMs": 20.388,
+                "p95AbsMs": 22.061,
+                "maxAbsMs": 22.423
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 26,
+                "minMs": -22.423,
+                "medianMs": -2.763,
+                "maxMs": 20.388,
+                "p95AbsMs": 22.226,
+                "maxAbsMs": 22.423
+              },
+              "maxConcurrentWeightedSameClip": 2,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 2,
+              "exactAssetIdDuplicateSampleCount": 21,
+              "exactAssetIdDuplicates": [
+                {
+                  "id": "fbc7afcc0dd91e07cb7815a094d60a2d",
+                  "sampleCount": 21,
+                  "maximumConcurrent": 2,
+                  "names": {
+                    "Animation": 21,
+                    "SwordR1_1": 21
+                  },
+                  "firstAt": 1792023264.744397,
+                  "lastAt": 1792023265.943944
+                }
+              ],
+              "nativeAliasTrackNames": {
+                "Animation": 21
+              },
+              "startedDeliveryMs": 37.954,
+              "firstWeightedSampleAfterServerMs": 72.063,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            },
+            {
+              "client": "-2",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 21,
+              "weightedSampleCount": 21,
+              "phaseTrackMinusServer": {
+                "count": 21,
+                "minMs": 3.103,
+                "medianMs": 22.435,
+                "maxMs": 24.007,
+                "p95AbsMs": 23.955,
+                "maxAbsMs": 24.007
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 13,
+                "minMs": 3.103,
+                "medianMs": 22.636,
+                "maxMs": 24.007,
+                "p95AbsMs": 23.975,
+                "maxAbsMs": 24.007
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 31.13,
+              "firstWeightedSampleAfterServerMs": 63.925,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unassignedOwnerPlayEvents": {},
+      "clients": {
+        "-1": {
+          "userId": -1,
+          "player": "Player1",
+          "received": 1792023262.627686,
+          "t0": 1792023264.589489,
+          "inputs": [],
+          "playEvents": [],
+          "events": [
+            {
+              "at": 1792023264.710288,
+              "character": "Player2",
+              "sequence": 5,
+              "started": 1792023264.672334,
+              "serial": 1,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [
+            {
+              "at": 1792023265.210119,
+              "health": 78
+            },
+            {
+              "at": 1792023266.193744,
+              "health": 79.0152587890625
+            },
+            {
+              "at": 1792023267.226488,
+              "health": 80.01617431640625
+            }
+          ],
+          "startPosition": [
+            -2.700488567352295,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -2.700488567352295,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        },
+        "-2": {
+          "userId": -2,
+          "player": "Player2",
+          "received": 1792023262.619227,
+          "t0": 1792023264.589489,
+          "inputs": [
+            {
+              "at": 1792023264.601953,
+              "action": "R1",
+              "ok": true
+            }
+          ],
+          "playEvents": [
+            {
+              "at": 1792023264.653524,
+              "name": "SwordR1_1",
+              "id": "fbc7afcc0dd91e07cb7815a094d60a2d"
+            }
+          ],
+          "events": [
+            {
+              "at": 1792023264.703464,
+              "character": "Player2",
+              "sequence": 5,
+              "started": 1792023264.672334,
+              "serial": 1,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [],
+          "startPosition": [
+            0.49951136112213135,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            0.49951136112213135,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        }
+      }
+    },
+    {
+      "id": "r2_from_a",
+      "label": "r2_from_a",
+      "status": "PASS",
+      "expect": "a_hits_b",
+      "checks": {
+        "damageOncePerAction": true,
+        "ownerNativeTracks": true,
+        "actualEchoReplies": 2,
+        "observerNativeTracks": true,
+        "actualPlayerDamage": true
+      },
+      "failures": [],
+      "inconclusive": [],
+      "instrumentationErrors": [],
+      "setup": {
+        "rootDistance": 3.2,
+        "health": 100,
+        "-2": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0008970000199042261,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player2",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -2,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -1.100488543510437,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "-1": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0006370000191964209,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player1",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -1,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -4.300488471984863,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "anchored": true,
+        "resets": "Real profile finish + stamina100/lastSpend; HP/pose test fixture reset, no action or damage override",
+        "floor": [
+          -2.700488567352295,
+          32.189998626708984,
+          -21.64453125
+        ]
+      },
+      "t0": 1792023270.021691,
+      "duration": 3.2,
+      "inputs": {
+        "-1": [
+          {
+            "action": "R2",
+            "at": 0
+          }
+        ],
+        "-2": []
+      },
+      "received": [
+        {
+          "at": 1792023270.089034,
+          "sequence": 6,
+          "kind": "R2",
+          "userId": -1
+        }
+      ],
+      "started": [
+        {
+          "at": 1792023270.089324,
+          "action": "SwordR2",
+          "userId": -1,
+          "started": 1792023270.089043
+        }
+      ],
+      "pings": [
+        {
+          "roundTripSeconds": 0.03413891792297363,
+          "caseId": "r2_from_a",
+          "returned": 1792023268.055882,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023268.021743,
+          "userId": -2,
+          "clientReceived": 1792023268.051925
+        },
+        {
+          "roundTripSeconds": 0.03418993949890137,
+          "caseId": "r2_from_a",
+          "returned": 1792023268.055893,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023268.021703,
+          "userId": -1,
+          "clientReceived": 1792023268.042419
+        }
+      ],
+      "finalHealth": {
+        "-1": 100,
+        "-2": 59.01541519165039
+      },
+      "healthEvents": [
+        {
+          "at": 1792023271.106495,
+          "after": 57,
+          "userId": -2,
+          "before": 100
+        },
+        {
+          "at": 1792023272.121607,
+          "after": 58.01503372192383,
+          "userId": -2,
+          "before": 57
+        },
+        {
+          "at": 1792023273.122037,
+          "after": 59.01541519165039,
+          "userId": -2,
+          "before": 58.01503372192383
+        }
+      ],
+      "deaths": [],
+      "lethalFrames": [],
+      "positiveDamage": [
+        {
+          "defenderElapsed": 6.433674097061157,
+          "action": "SwordR2",
+          "started": 1792023270.089043,
+          "attackerUserId": -1,
+          "at": 1792023271.106468,
+          "targetUserId": -2,
+          "targetKey": "-2",
+          "preFrame": {
+            "-1": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023270.089043,
+              "elapsed": 1.0169341564178467,
+              "action": "SwordR2",
+              "userId": -1,
+              "rootPosition": [
+                -4.300488471984863,
+                35.21802520751953,
+                -21.64453125
+              ]
+            },
+            "-2": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023264.672334,
+              "userId": -2,
+              "rootPosition": [
+                -1.100488543510437,
+                35.21802520751953,
+                -21.64453125
+              ]
+            }
+          },
+          "returned": true,
+          "frameNumber": 1278,
+          "after": 57,
+          "before": 100
+        }
+      ],
+      "rejectedContacts": [],
+      "acceptedNoHealthLoss": [],
+      "acceptedActionAnalysis": [
+        {
+          "actor": "-1",
+          "name": "SwordR2",
+          "started": 1792023270.089043,
+          "serverRecord": {
+            "at": 1792023270.089324,
+            "action": "SwordR2",
+            "userId": -1,
+            "started": 1792023270.089043
+          },
+          "evidence": "server start instrumentation",
+          "deliveries": {
+            "-1": {
+              "at": 1792023270.125358,
+              "character": "Player1",
+              "sequence": 6,
+              "started": 1792023270.089043,
+              "serial": 2,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR2"
+            },
+            "-2": {
+              "at": 1792023270.116353,
+              "character": "Player1",
+              "sequence": 6,
+              "started": 1792023270.089043,
+              "serial": 2,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR2"
+            }
+          },
+          "serial": 2,
+          "sequence": 6,
+          "character": "Player1",
+          "windowEnd": 1792023272.0557096,
+          "endReason": "natural_duration",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792023270.06035,
+              "name": "SwordR2",
+              "id": "3d01177ca0aa68d34677813c6dc43680"
+            }
+          ],
+          "ownerPlayCount": 1,
+          "additionalOwnerPlays": 0,
+          "ownerPlaybackClassification": "single_play",
+          "inputToFirstPlayMs": 33.973,
+          "presentation": [
+            {
+              "client": "-1",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 34,
+              "weightedSampleCount": 34,
+              "phaseTrackMinusServer": {
+                "count": 33,
+                "minMs": 13.046,
+                "medianMs": 18.028,
+                "maxMs": 21.844,
+                "p95AbsMs": 21.204,
+                "maxAbsMs": 21.844
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 25,
+                "minMs": 13.046,
+                "medianMs": 18.022,
+                "maxMs": 21.159,
+                "p95AbsMs": 21.019,
+                "maxAbsMs": 21.159
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 36.315,
+              "firstWeightedSampleAfterServerMs": 21.353,
+              "observedSpeedRange": [
+                0.8270164132118225,
+                1
+              ]
+            },
+            {
+              "client": "-2",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 32,
+              "weightedSampleCount": 32,
+              "phaseTrackMinusServer": {
+                "count": 64,
+                "minMs": -32.292,
+                "medianMs": -0.427,
+                "maxMs": 20.414,
+                "p95AbsMs": 31.47,
+                "maxAbsMs": 32.292
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 46,
+                "minMs": -32.292,
+                "medianMs": -7.448,
+                "maxMs": 20.395,
+                "p95AbsMs": 31.711,
+                "maxAbsMs": 32.292
+              },
+              "maxConcurrentWeightedSameClip": 2,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 2,
+              "exactAssetIdDuplicateSampleCount": 32,
+              "exactAssetIdDuplicates": [
+                {
+                  "id": "3d01177ca0aa68d34677813c6dc43680",
+                  "sampleCount": 32,
+                  "maximumConcurrent": 2,
+                  "names": {
+                    "Animation": 32,
+                    "SwordR2": 32
+                  },
+                  "firstAt": 1792023270.11763,
+                  "lastAt": 1792023272.017077
+                }
+              ],
+              "nativeAliasTrackNames": {
+                "Animation": 32
+              },
+              "startedDeliveryMs": 27.31,
+              "firstWeightedSampleAfterServerMs": 28.587,
+              "observedSpeedRange": [
+                0.8270164132118225,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unassignedOwnerPlayEvents": {},
+      "clients": {
+        "-1": {
+          "userId": -1,
+          "player": "Player1",
+          "received": 1792023268.042542,
+          "t0": 1792023270.021691,
+          "inputs": [
+            {
+              "at": 1792023270.026377,
+              "action": "R2",
+              "ok": true
+            }
+          ],
+          "playEvents": [
+            {
+              "at": 1792023270.06035,
+              "name": "SwordR2",
+              "id": "3d01177ca0aa68d34677813c6dc43680"
+            }
+          ],
+          "events": [
+            {
+              "at": 1792023270.125358,
+              "character": "Player1",
+              "sequence": 6,
+              "started": 1792023270.089043,
+              "serial": 2,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR2"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [],
+          "startPosition": [
+            -4.300488471984863,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -4.300488471984863,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        },
+        "-2": {
+          "userId": -2,
+          "player": "Player2",
+          "received": 1792023268.051983,
+          "t0": 1792023270.021691,
+          "inputs": [],
+          "playEvents": [],
+          "events": [
+            {
+              "at": 1792023270.116353,
+              "character": "Player1",
+              "sequence": 6,
+              "started": 1792023270.089043,
+              "serial": 2,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR2"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [
+            {
+              "at": 1792023271.132751,
+              "health": 57
+            },
+            {
+              "at": 1792023272.134216,
+              "health": 58.01503372192383
+            },
+            {
+              "at": 1792023273.133017,
+              "health": 59.01541519165039
+            }
+          ],
+          "startPosition": [
+            -1.100488543510437,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -1.100488543510437,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        }
+      }
+    },
+    {
+      "id": "r2_from_b",
+      "label": "r2_from_b",
+      "status": "PASS",
+      "expect": "b_hits_a",
+      "checks": {
+        "damageOncePerAction": true,
+        "ownerNativeTracks": true,
+        "actualEchoReplies": 2,
+        "observerNativeTracks": true,
+        "actualPlayerDamage": true
+      },
+      "failures": [],
+      "inconclusive": [],
+      "instrumentationErrors": [],
+      "setup": {
+        "rootDistance": 3.2,
+        "health": 100,
+        "-2": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0008880000095814466,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player2",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -2,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -2.700488567352295,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "-1": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.00018400000408291817,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player1",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -1,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -5.900488376617432,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "anchored": true,
+        "resets": "Real profile finish + stamina100/lastSpend; HP/pose test fixture reset, no action or damage override",
+        "floor": [
+          -4.300488471984863,
+          32.189998626708984,
+          -21.64453125
+        ]
+      },
+      "t0": 1792023275.462624,
+      "duration": 3.2,
+      "inputs": {
+        "-1": [],
+        "-2": [
+          {
+            "action": "R2",
+            "at": 0
+          }
+        ]
+      },
+      "received": [
+        {
+          "at": 1792023275.538199,
+          "sequence": 6,
+          "kind": "R2",
+          "userId": -2
+        }
+      ],
+      "started": [
+        {
+          "at": 1792023275.538431,
+          "action": "SwordR2",
+          "userId": -2,
+          "started": 1792023275.538209
+        }
+      ],
+      "pings": [
+        {
+          "roundTripSeconds": 0.02594304084777832,
+          "caseId": "r2_from_b",
+          "returned": 1792023273.488639,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023273.462696,
+          "userId": -2,
+          "clientReceived": 1792023273.483499
+        },
+        {
+          "roundTripSeconds": 0.04360795021057129,
+          "caseId": "r2_from_b",
+          "returned": 1792023273.506252,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023273.462644,
+          "userId": -1,
+          "clientReceived": 1792023273.49193
+        }
+      ],
+      "finalHealth": {
+        "-1": 59.032588958740234,
+        "-2": 100
+      },
+      "healthEvents": [
+        {
+          "at": 1792023276.572312,
+          "after": 57,
+          "userId": -1,
+          "before": 100
+        },
+        {
+          "at": 1792023277.588484,
+          "after": 58.01608657836914,
+          "userId": -1,
+          "before": 57
+        },
+        {
+          "at": 1792023278.605124,
+          "after": 59.032588958740234,
+          "userId": -1,
+          "before": 58.01608657836914
+        }
+      ],
+      "deaths": [],
+      "lethalFrames": [],
+      "positiveDamage": [
+        {
+          "defenderElapsed": 6.483091115951538,
+          "action": "SwordR2",
+          "started": 1792023275.538209,
+          "attackerUserId": -2,
+          "at": 1792023276.572297,
+          "targetUserId": -1,
+          "targetKey": "-1",
+          "preFrame": {
+            "-1": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023270.089043,
+              "userId": -1,
+              "rootPosition": [
+                -5.900488376617432,
+                35.21802520751953,
+                -21.64453125
+              ]
+            },
+            "-2": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023275.538209,
+              "elapsed": 1.0339081287384033,
+              "action": "SwordR2",
+              "userId": -2,
+              "rootPosition": [
+                -2.700488567352295,
+                35.21802520751953,
+                -21.64453125
+              ]
+            }
+          },
+          "returned": true,
+          "frameNumber": 1442,
+          "after": 57,
+          "before": 100
+        }
+      ],
+      "rejectedContacts": [],
+      "acceptedNoHealthLoss": [],
+      "acceptedActionAnalysis": [
+        {
+          "actor": "-2",
+          "name": "SwordR2",
+          "started": 1792023275.538209,
+          "serverRecord": {
+            "at": 1792023275.538431,
+            "action": "SwordR2",
+            "userId": -2,
+            "started": 1792023275.538209
+          },
+          "evidence": "server start instrumentation",
+          "deliveries": {
+            "-1": {
+              "at": 1792023275.559153,
+              "character": "Player2",
+              "sequence": 6,
+              "started": 1792023275.538209,
+              "serial": 2,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR2"
+            },
+            "-2": {
+              "at": 1792023275.567353,
+              "character": "Player2",
+              "sequence": 6,
+              "started": 1792023275.538209,
+              "serial": 2,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR2"
+            }
+          },
+          "serial": 2,
+          "sequence": 6,
+          "character": "Player2",
+          "windowEnd": 1792023277.5048757,
+          "endReason": "natural_duration",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792023275.517672,
+              "name": "SwordR2",
+              "id": "b1184da5ca06c21cc31a92ab10bd0b7f"
+            }
+          ],
+          "ownerPlayCount": 1,
+          "additionalOwnerPlays": 0,
+          "ownerPlaybackClassification": "single_play",
+          "inputToFirstPlayMs": 51.025,
+          "presentation": [
+            {
+              "client": "-1",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 33,
+              "weightedSampleCount": 33,
+              "phaseTrackMinusServer": {
+                "count": 66,
+                "minMs": -4.76,
+                "medianMs": 5.911,
+                "maxMs": 20.259,
+                "p95AbsMs": 16.248,
+                "maxAbsMs": 20.259
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 50,
+                "minMs": -4.76,
+                "medianMs": 5.854,
+                "maxMs": 20.125,
+                "p95AbsMs": 16.235,
+                "maxAbsMs": 20.125
+              },
+              "maxConcurrentWeightedSameClip": 2,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 2,
+              "exactAssetIdDuplicateSampleCount": 33,
+              "exactAssetIdDuplicates": [
+                {
+                  "id": "b1184da5ca06c21cc31a92ab10bd0b7f",
+                  "sampleCount": 33,
+                  "maximumConcurrent": 2,
+                  "names": {
+                    "Animation": 33,
+                    "SwordR2": 33
+                  },
+                  "firstAt": 1792023275.560106,
+                  "lastAt": 1792023277.475754
+                }
+              ],
+              "nativeAliasTrackNames": {
+                "Animation": 33
+              },
+              "startedDeliveryMs": 20.944,
+              "firstWeightedSampleAfterServerMs": 21.897,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            },
+            {
+              "client": "-2",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 33,
+              "weightedSampleCount": 33,
+              "phaseTrackMinusServer": {
+                "count": 33,
+                "minMs": 4.802,
+                "medianMs": 16.908,
+                "maxMs": 21.276,
+                "p95AbsMs": 20.616,
+                "maxAbsMs": 21.276
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 25,
+                "minMs": 4.802,
+                "medianMs": 17.099,
+                "maxMs": 21.276,
+                "p95AbsMs": 20.847,
+                "maxAbsMs": 21.276
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 29.144,
+              "firstWeightedSampleAfterServerMs": 62.289,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unassignedOwnerPlayEvents": {},
+      "clients": {
+        "-1": {
+          "userId": -1,
+          "player": "Player1",
+          "received": 1792023273.491979,
+          "t0": 1792023275.462624,
+          "inputs": [],
+          "playEvents": [],
+          "events": [
+            {
+              "at": 1792023275.559153,
+              "character": "Player2",
+              "sequence": 6,
+              "started": 1792023275.538209,
+              "serial": 2,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR2"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [
+            {
+              "at": 1792023276.607401,
+              "health": 57
+            },
+            {
+              "at": 1792023277.607988,
+              "health": 58.01608657836914
+            },
+            {
+              "at": 1792023278.641237,
+              "health": 59.032588958740234
+            }
+          ],
+          "startPosition": [
+            -5.900488376617432,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -5.900488376617432,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        },
+        "-2": {
+          "userId": -2,
+          "player": "Player2",
+          "received": 1792023273.483586,
+          "t0": 1792023275.462624,
+          "inputs": [
+            {
+              "at": 1792023275.466647,
+              "action": "R2",
+              "ok": true
+            }
+          ],
+          "playEvents": [
+            {
+              "at": 1792023275.517672,
+              "name": "SwordR2",
+              "id": "b1184da5ca06c21cc31a92ab10bd0b7f"
+            }
+          ],
+          "events": [
+            {
+              "at": 1792023275.567353,
+              "character": "Player2",
+              "sequence": 6,
+              "started": 1792023275.538209,
+              "serial": 2,
+              "owner": "Player2",
+              "event": "Started",
+              "name": "SwordR2"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [],
+          "startPosition": [
+            -2.700488567352295,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -2.700488567352295,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        }
+      }
+    },
+    {
+      "id": "r1_combo_a",
+      "label": "r1_combo_a",
+      "status": "PASS",
+      "expect": "a_hits_b",
+      "checks": {
+        "damageOncePerAction": true,
+        "ownerNativeTracks": true,
+        "actualEchoReplies": 2,
+        "observerNativeTracks": true,
+        "realComboBothHits": true,
+        "actualPlayerDamage": true
+      },
+      "failures": [],
+      "inconclusive": [],
+      "instrumentationErrors": [],
+      "setup": {
+        "rootDistance": 3.2,
+        "health": 100,
+        "-2": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.0009590000263415277,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player2",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -2,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -4.300488471984863,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "-1": {
+          "health": 100,
+          "rootAnchored": true,
+          "networkPingSeconds": 0.000522000016644597,
+          "clientReady": {
+            "observerTracks": 12,
+            "player": "Player1",
+            "tracks": 12,
+            "virtualInput": true,
+            "count": 12,
+            "userId": -1,
+            "virtualInputAvailable": true
+          },
+          "avatarReady": true,
+          "rootPosition": [
+            -7.50048828125,
+            35.21802520751953,
+            -21.64453125
+          ]
+        },
+        "anchored": true,
+        "resets": "Real profile finish + stamina100/lastSpend; HP/pose test fixture reset, no action or damage override",
+        "floor": [
+          -5.900488376617432,
+          32.189998626708984,
+          -21.64453125
+        ]
+      },
+      "t0": 1792023280.905871,
+      "duration": 3.2,
+      "inputs": {
+        "-1": [
+          {
+            "action": "R1",
+            "at": 0
+          },
+          {
+            "action": "R1",
+            "at": 0.84
+          }
+        ],
+        "-2": []
+      },
+      "received": [
+        {
+          "at": 1792023280.953928,
+          "sequence": 7,
+          "kind": "R1",
+          "userId": -1
+        },
+        {
+          "at": 1792023281.821966,
+          "sequence": 8,
+          "kind": "R1",
+          "userId": -1
+        }
+      ],
+      "started": [
+        {
+          "at": 1792023280.954184,
+          "action": "SwordR1_1",
+          "userId": -1,
+          "started": 1792023280.953936
+        },
+        {
+          "at": 1792023281.938311,
+          "action": "SwordR1_2",
+          "userId": -1,
+          "started": 1792023281.938066
+        }
+      ],
+      "pings": [
+        {
+          "roundTripSeconds": 0.032731056213378906,
+          "caseId": "r1_combo_a",
+          "returned": 1792023278.938666,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023278.905935,
+          "userId": -2,
+          "clientReceived": 1792023278.932063
+        },
+        {
+          "roundTripSeconds": 0.049317121505737305,
+          "caseId": "r1_combo_a",
+          "returned": 1792023278.955204,
+          "scope": "Actual QA RemoteEvent echo; includes engine scheduling/simulation, not claimed pure transport delay",
+          "sent": 1792023278.905887,
+          "userId": -1,
+          "clientReceived": 1792023278.943186
+        }
+      ],
+      "finalHealth": {
+        "-1": 100,
+        "-2": 56.01700210571289
+      },
+      "healthEvents": [
+        {
+          "at": 1792023281.471725,
+          "after": 78,
+          "userId": -2,
+          "before": 100
+        },
+        {
+          "at": 1792023282.404368,
+          "after": 54,
+          "userId": -2,
+          "before": 78
+        },
+        {
+          "at": 1792023282.48809,
+          "after": 55.016292572021484,
+          "userId": -2,
+          "before": 54
+        },
+        {
+          "at": 1792023283.488971,
+          "after": 56.01700210571289,
+          "userId": -2,
+          "before": 55.016292572021484
+        }
+      ],
+      "deaths": [],
+      "lethalFrames": [],
+      "positiveDamage": [
+        {
+          "defenderElapsed": 5.9333319664001465,
+          "action": "SwordR1_1",
+          "started": 1792023280.953936,
+          "attackerUserId": -1,
+          "at": 1792023281.471712,
+          "targetUserId": -2,
+          "targetKey": "-2",
+          "preFrame": {
+            "-1": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023280.953936,
+              "elapsed": 0.5175859928131104,
+              "action": "SwordR1_1",
+              "userId": -1,
+              "rootPosition": [
+                -7.50048828125,
+                35.21802520751953,
+                -21.64453125
+              ]
+            },
+            "-2": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023275.538209,
+              "userId": -2,
+              "rootPosition": [
+                -4.300488471984863,
+                35.21802520751953,
+                -21.64453125
+              ]
+            }
+          },
+          "returned": true,
+          "frameNumber": 1589,
+          "after": 78,
+          "before": 100
+        },
+        {
+          "defenderElapsed": 6.865987062454224,
+          "action": "SwordR1_2",
+          "started": 1792023281.938066,
+          "attackerUserId": -1,
+          "at": 1792023282.404358,
+          "targetUserId": -2,
+          "targetKey": "-2",
+          "preFrame": {
+            "-1": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 100,
+              "started": 1792023281.938066,
+              "elapsed": 0.4661130905151367,
+              "action": "SwordR1_2",
+              "userId": -1,
+              "rootPosition": [
+                -7.50048828125,
+                35.21802520751953,
+                -21.64453125
+              ]
+            },
+            "-2": {
+              "visibleContact": false,
+              "alive": true,
+              "health": 78,
+              "started": 1792023275.538209,
+              "userId": -2,
+              "rootPosition": [
+                -4.300488471984863,
+                35.21802520751953,
+                -21.64453125
+              ]
+            }
+          },
+          "returned": true,
+          "frameNumber": 1617,
+          "after": 54,
+          "before": 78
+        }
+      ],
+      "rejectedContacts": [],
+      "acceptedNoHealthLoss": [],
+      "acceptedActionAnalysis": [
+        {
+          "actor": "-1",
+          "name": "SwordR1_1",
+          "started": 1792023280.953936,
+          "serverRecord": {
+            "at": 1792023280.954184,
+            "action": "SwordR1_1",
+            "userId": -1,
+            "started": 1792023280.953936
+          },
+          "evidence": "server start instrumentation",
+          "deliveries": {
+            "-1": {
+              "at": 1792023280.974771,
+              "character": "Player1",
+              "sequence": 7,
+              "started": 1792023280.953936,
+              "serial": 3,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            },
+            "-2": {
+              "at": 1792023280.981945,
+              "character": "Player1",
+              "sequence": 7,
+              "started": 1792023280.953936,
+              "serial": 3,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            }
+          },
+          "serial": 3,
+          "sequence": 7,
+          "character": "Player1",
+          "windowEnd": 1792023281.938066,
+          "endReason": "superseded_by_SwordR1_2",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792023280.926624,
+              "name": "SwordR1_1",
+              "id": "83f990bbb5bcb308f5b01b1ab76426a4"
+            }
+          ],
+          "ownerPlayCount": 1,
+          "additionalOwnerPlays": 0,
+          "ownerPlaybackClassification": "single_play",
+          "inputToFirstPlayMs": 18.05,
+          "presentation": [
+            {
+              "client": "-1",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 16,
+              "weightedSampleCount": 16,
+              "phaseTrackMinusServer": {
+                "count": 16,
+                "minMs": 16.562,
+                "medianMs": 17.092,
+                "maxMs": 28.162,
+                "p95AbsMs": 20.464,
+                "maxAbsMs": 28.162
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 8,
+                "minMs": 16.763,
+                "medianMs": 16.999,
+                "maxMs": 17.576,
+                "p95AbsMs": 17.543,
+                "maxAbsMs": 17.576
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 20.835,
+              "firstWeightedSampleAfterServerMs": 38.505,
+              "observedSpeedRange": [
+                0.8367295861244202,
+                1
+              ]
+            },
+            {
+              "client": "-2",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 15,
+              "weightedSampleCount": 15,
+              "phaseTrackMinusServer": {
+                "count": 30,
+                "minMs": -30.589,
+                "medianMs": -1.914,
+                "maxMs": 16.226,
+                "p95AbsMs": 30.48,
+                "maxAbsMs": 30.589
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 14,
+                "minMs": -30.471,
+                "medianMs": -8.805,
+                "maxMs": 16.226,
+                "p95AbsMs": 30.393,
+                "maxAbsMs": 30.471
+              },
+              "maxConcurrentWeightedSameClip": 2,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {},
+              "maxConcurrentWeightedSameAssetId": 2,
+              "exactAssetIdDuplicateSampleCount": 15,
+              "exactAssetIdDuplicates": [
+                {
+                  "id": "83f990bbb5bcb308f5b01b1ab76426a4",
+                  "sampleCount": 15,
+                  "maximumConcurrent": 2,
+                  "names": {
+                    "Animation": 15,
+                    "SwordR1_1": 15
+                  },
+                  "firstAt": 1792023281.015396,
+                  "lastAt": 1792023281.899309
+                }
+              ],
+              "nativeAliasTrackNames": {
+                "Animation": 15
+              },
+              "startedDeliveryMs": 28.009,
+              "firstWeightedSampleAfterServerMs": 61.46,
+              "observedSpeedRange": [
+                0.8367295861244202,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "actor": "-1",
+          "name": "SwordR1_2",
+          "started": 1792023281.938066,
+          "serverRecord": {
+            "at": 1792023281.938311,
+            "action": "SwordR1_2",
+            "userId": -1,
+            "started": 1792023281.938066
+          },
+          "evidence": "server start instrumentation",
+          "deliveries": {
+            "-1": {
+              "at": 1792023281.958495,
+              "character": "Player1",
+              "sequence": 8,
+              "started": 1792023281.938066,
+              "serial": 4,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_2"
+            },
+            "-2": {
+              "at": 1792023281.965933,
+              "character": "Player1",
+              "sequence": 8,
+              "started": 1792023281.938066,
+              "serial": 4,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_2"
+            }
+          },
+          "serial": 4,
+          "sequence": 8,
+          "character": "Player1",
+          "windowEnd": 1792023283.2713993,
+          "endReason": "natural_duration",
+          "windowCensored": false,
+          "ownerPlayEvents": [
+            {
+              "at": 1792023281.958577,
+              "name": "SwordR1_2",
+              "id": "6ba11a5bd69c07ef9217b15909ad919d"
+            },
+            {
+              "at": 1792023283.257722,
+              "name": "SwordR1_2",
+              "id": "6ba11a5bd69c07ef9217b15909ad919d"
+            }
+          ],
+          "ownerPlayCount": 2,
+          "additionalOwnerPlays": 1,
+          "ownerPlaybackClassification": "duplicate_plays",
+          "presentation": [
+            {
+              "client": "-1",
+              "role": "owner",
+              "sampleCountInAcceptedWindow": 22,
+              "weightedSampleCount": 22,
+              "phaseTrackMinusServer": {
+                "count": 22,
+                "minMs": 14.797,
+                "medianMs": 16.809,
+                "maxMs": 18.192,
+                "p95AbsMs": 17.887,
+                "maxAbsMs": 18.192
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 14,
+                "minMs": 16.354,
+                "medianMs": 17.008,
+                "maxMs": 18.192,
+                "p95AbsMs": 17.994,
+                "maxAbsMs": 18.192
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {
+                "SwordR1_1:Action": 2
+              },
+              "maxConcurrentWeightedSameAssetId": 1,
+              "exactAssetIdDuplicateSampleCount": 0,
+              "exactAssetIdDuplicates": [],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 20.429,
+              "firstWeightedSampleAfterServerMs": 21.511,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            },
+            {
+              "client": "-2",
+              "role": "observer",
+              "sampleCountInAcceptedWindow": 22,
+              "weightedSampleCount": 22,
+              "phaseTrackMinusServer": {
+                "count": 22,
+                "minMs": 11.829,
+                "medianMs": 16.135,
+                "maxMs": 28.492,
+                "p95AbsMs": 20.337,
+                "maxAbsMs": 28.492
+              },
+              "phaseAfterAckPlus500ms": {
+                "count": 13,
+                "minMs": 15.832,
+                "medianMs": 16.156,
+                "maxMs": 20.34,
+                "p95AbsMs": 20.263,
+                "maxAbsMs": 20.34
+              },
+              "maxConcurrentWeightedSameClip": 1,
+              "missingSamplesAfterReceiptPlus50ms": 0,
+              "timeBackstepsOver10ms": [],
+              "competingWeightedClips": {
+                "Animation:Action": 3,
+                "SwordR1_1:Action": 1
+              },
+              "maxConcurrentWeightedSameAssetId": 2,
+              "exactAssetIdDuplicateSampleCount": 1,
+              "exactAssetIdDuplicates": [
+                {
+                  "id": "83f990bbb5bcb308f5b01b1ab76426a4",
+                  "sampleCount": 1,
+                  "maximumConcurrent": 2,
+                  "names": {
+                    "Animation": 1,
+                    "SwordR1_1": 1
+                  },
+                  "firstAt": 1792023281.967284,
+                  "lastAt": 1792023281.967284
+                }
+              ],
+              "nativeAliasTrackNames": {},
+              "startedDeliveryMs": 27.867,
+              "firstWeightedSampleAfterServerMs": 29.218,
+              "observedSpeedRange": [
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unassignedOwnerPlayEvents": {},
+      "clients": {
+        "-1": {
+          "userId": -1,
+          "player": "Player1",
+          "received": 1792023278.94322,
+          "t0": 1792023280.905871,
+          "inputs": [
+            {
+              "at": 1792023280.908574,
+              "action": "R1",
+              "ok": true
+            },
+            {
+              "at": 1792023281.759089,
+              "action": "R1",
+              "ok": true
+            }
+          ],
+          "playEvents": [
+            {
+              "at": 1792023280.926624,
+              "name": "SwordR1_1",
+              "id": "83f990bbb5bcb308f5b01b1ab76426a4"
+            },
+            {
+              "at": 1792023281.958577,
+              "name": "SwordR1_2",
+              "id": "6ba11a5bd69c07ef9217b15909ad919d"
+            },
+            {
+              "at": 1792023283.257722,
+              "name": "SwordR1_2",
+              "id": "6ba11a5bd69c07ef9217b15909ad919d"
+            }
+          ],
+          "events": [
+            {
+              "at": 1792023280.974771,
+              "character": "Player1",
+              "sequence": 7,
+              "started": 1792023280.953936,
+              "serial": 3,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            },
+            {
+              "at": 1792023281.958495,
+              "character": "Player1",
+              "sequence": 8,
+              "started": 1792023281.938066,
+              "serial": 4,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_2"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [],
+          "startPosition": [
+            -7.50048828125,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -7.50048828125,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        },
+        "-2": {
+          "userId": -2,
+          "player": "Player2",
+          "received": 1792023278.932127,
+          "t0": 1792023280.905871,
+          "inputs": [],
+          "playEvents": [],
+          "events": [
+            {
+              "at": 1792023280.981945,
+              "character": "Player1",
+              "sequence": 7,
+              "started": 1792023280.953936,
+              "serial": 3,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_1"
+            },
+            {
+              "at": 1792023281.965933,
+              "character": "Player1",
+              "sequence": 8,
+              "started": 1792023281.938066,
+              "serial": 4,
+              "owner": "Player1",
+              "event": "Started",
+              "name": "SwordR1_2"
+            }
+          ],
+          "logs": [],
+          "healthEvents": [
+            {
+              "at": 1792023281.499976,
+              "health": 78
+            },
+            {
+              "at": 1792023282.431998,
+              "health": 54
+            },
+            {
+              "at": 1792023282.514984,
+              "health": 55.016292572021484
+            },
+            {
+              "at": 1792023283.498476,
+              "health": 56.01700210571289
+            }
+          ],
+          "startPosition": [
+            -4.300488471984863,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "endPosition": [
+            -4.300488471984863,
+            35.21802520751953,
+            -21.64453125
+          ],
+          "finalState": "Idle",
+          "restored": true
+        }
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## Current animation and server geometry integration
 
-The package contains nine shared modules, five server scripts/modules, three client LocalScripts and twelve animation sources. The same real KeyframeSequences feed Studio preview tracks and `BladeTrajectory` server geometry. `R15PreviewRetarget.bakeForRig` is shared by both paths; only its `forCharacter` playback helper is Studio-only. The source Blender file and baked joint/marker data remain editable and contain no invented AnimationIds.
+The package contains ten shared modules, five server scripts/modules, three client LocalScripts and twelve animation sources. The same real KeyframeSequences feed Studio preview tracks and `BladeTrajectory` server geometry. `R15PreviewRetarget.bakeForRig` is shared by both paths; only its `forCharacter` playback helper is Studio-only. `CombatObserver` registers local preview sources for the other player's actual avatar on each observing client. If registration also resolves a native replica, only extra tracks with an exact known preview ID are suppressed before evaluation. Server action metadata and clocks align owner/observer presentation while damage remains server-owned. The source Blender file and baked joint/marker data remain editable and contain no invented AnimationIds.
 
 After final appearance loading, the server prewarms three avatar-specific attack paths with periodic yields. Forward kinematics use actual joint/attachment frames, proportions, native palm grip and HipHeight scaling compensation. `CombatHitReady` gates player sword attacks until all paths are available. The server samples authored blade base/tip positions from its action timeline and physical root observations; client Transforms, track time and markers cannot authorize contact.
 

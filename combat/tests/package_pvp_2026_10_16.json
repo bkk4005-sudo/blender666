@@ -1,0 +1,264 @@
+{
+  "date": "2026-10-16",
+  "scope": "Offline packaging and structural asset consistency only. Does not assert Studio playback, native PvP behavior, published asset access, or network performance.",
+  "status": "PASS",
+  "sourceComparison": "Embedded UTF-8 Source text equals generator-read source text byte-for-byte after standard XML/universal newline normalization. Raw filesystem hashes are recorded separately; CRLF is preserved in the source files.",
+  "commands": [
+    {
+      "tool": "package_rbxmx.py",
+      "exitCode": 0
+    },
+    {
+      "tool": "validate_assets.py",
+      "exitCode": 0
+    }
+  ],
+  "productionSourceCount": 18,
+  "embeddedSourceMatchCount": 18,
+  "sources": [
+    {
+      "file": "src/shared/ActionTimeline.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "463edfa55ba8f23e8170eabfecc88e6247c1d92e7a8da6d116dffe14545f96a5",
+      "sourceTextSha256": "463edfa55ba8f23e8170eabfecc88e6247c1d92e7a8da6d116dffe14545f96a5",
+      "embeddedSourceTextSha256": "463edfa55ba8f23e8170eabfecc88e6247c1d92e7a8da6d116dffe14545f96a5",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/AnimationRegistry.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "5ce94b5a2212d929ca86e2475180472037a39d11be7a0563c3d74d7ab8080031",
+      "sourceTextSha256": "5ce94b5a2212d929ca86e2475180472037a39d11be7a0563c3d74d7ab8080031",
+      "embeddedSourceTextSha256": "5ce94b5a2212d929ca86e2475180472037a39d11be7a0563c3d74d7ab8080031",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/AvatarGroundClearance.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "520689c17e3efd2ac40f155d229797e40cd363063cb24d0a4ad37daa7f7ba459",
+      "sourceTextSha256": "520689c17e3efd2ac40f155d229797e40cd363063cb24d0a4ad37daa7f7ba459",
+      "embeddedSourceTextSha256": "520689c17e3efd2ac40f155d229797e40cd363063cb24d0a4ad37daa7f7ba459",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/BladeClearance.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "62c9824b0394b9aeb4fe504026fcd6674f8f4e1255ad45c242e1726e30e15d2b",
+      "sourceTextSha256": "62c9824b0394b9aeb4fe504026fcd6674f8f4e1255ad45c242e1726e30e15d2b",
+      "embeddedSourceTextSha256": "62c9824b0394b9aeb4fe504026fcd6674f8f4e1255ad45c242e1726e30e15d2b",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/CombatConfig.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "6c956d361168f7c335146c4496a1caa45248ef358f278f2b577099becadf8697",
+      "sourceTextSha256": "6c956d361168f7c335146c4496a1caa45248ef358f278f2b577099becadf8697",
+      "embeddedSourceTextSha256": "6c956d361168f7c335146c4496a1caa45248ef358f278f2b577099becadf8697",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/CombatObserver.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "8380a858d9e8571c6fe88b515d7a25fb04568a7f9be612e2524d7b92ddb45c51",
+      "sourceTextSha256": "8380a858d9e8571c6fe88b515d7a25fb04568a7f9be612e2524d7b92ddb45c51",
+      "embeddedSourceTextSha256": "8380a858d9e8571c6fe88b515d7a25fb04568a7f9be612e2524d7b92ddb45c51",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/CombatPacing.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "311dc9651fe5d78048ddc276edac5772b17471749a9b3594be2d206298f0e429",
+      "sourceTextSha256": "9c8ad42e062a27a6e069b2160a538c897613f4eb0a7572e8bd98e1b003d0db0c",
+      "embeddedSourceTextSha256": "9c8ad42e062a27a6e069b2160a538c897613f4eb0a7572e8bd98e1b003d0db0c",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/InputBindings.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "8fca7dff3af02508ef199cc057597c3aff3e7701d07f1808b80cf1c680883b77",
+      "sourceTextSha256": "8fca7dff3af02508ef199cc057597c3aff3e7701d07f1808b80cf1c680883b77",
+      "embeddedSourceTextSha256": "8fca7dff3af02508ef199cc057597c3aff3e7701d07f1808b80cf1c680883b77",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/R15PreviewRetarget.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "890b59d8aae7e672185abd993fd881365e4f9d653afcc2cfe98a3e47a11afd09",
+      "sourceTextSha256": "890b59d8aae7e672185abd993fd881365e4f9d653afcc2cfe98a3e47a11afd09",
+      "embeddedSourceTextSha256": "890b59d8aae7e672185abd993fd881365e4f9d653afcc2cfe98a3e47a11afd09",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/shared/WeaponVisualConfig.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "8e298aff1f372dcb85e7dee37c90f3c762c40062dc397b380835fe4d48c36ebb",
+      "sourceTextSha256": "e1ed3d297e8a18d96d7b2c5ca4d3360b47a7b5f8ac0afad97542a17280f17d0b",
+      "embeddedSourceTextSha256": "e1ed3d297e8a18d96d7b2c5ca4d3360b47a7b5f8ac0afad97542a17280f17d0b",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/server/BladeTrajectory.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "c52d79f55c492a1082b08006ea93ac249a1ea1047dc5527b23287a8c809d96f3",
+      "sourceTextSha256": "c52d79f55c492a1082b08006ea93ac249a1ea1047dc5527b23287a8c809d96f3",
+      "embeddedSourceTextSha256": "c52d79f55c492a1082b08006ea93ac249a1ea1047dc5527b23287a8c809d96f3",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/server/CombatBootstrap.server.luau",
+      "class": "Script",
+      "rawFileSha256": "e1358cf72043394588cf1af6954cf3b730397292689b3625d08751c86c413190",
+      "sourceTextSha256": "e1358cf72043394588cf1af6954cf3b730397292689b3625d08751c86c413190",
+      "embeddedSourceTextSha256": "e1358cf72043394588cf1af6954cf3b730397292689b3625d08751c86c413190",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/server/CombatService.luau",
+      "class": "ModuleScript",
+      "rawFileSha256": "49701392e5b35809fbca28714476c8f06b0e3cea61fdec5310713a9f664cf3c8",
+      "sourceTextSha256": "49701392e5b35809fbca28714476c8f06b0e3cea61fdec5310713a9f664cf3c8",
+      "embeddedSourceTextSha256": "49701392e5b35809fbca28714476c8f06b0e3cea61fdec5310713a9f664cf3c8",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/server/CombatSettings.server.luau",
+      "class": "Script",
+      "rawFileSha256": "58b68df72be6d71645a943a06156171c280b6e6eecbf6ce4d8a729830cae8a95",
+      "sourceTextSha256": "58b68df72be6d71645a943a06156171c280b6e6eecbf6ce4d8a729830cae8a95",
+      "embeddedSourceTextSha256": "58b68df72be6d71645a943a06156171c280b6e6eecbf6ce4d8a729830cae8a95",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/server/WeaponVisual.server.luau",
+      "class": "Script",
+      "rawFileSha256": "9a77d876f0a302bb8c34880f7fb72386ccf9f7294a1df5cf8f97e13c5c1e6c5b",
+      "sourceTextSha256": "9a77d876f0a302bb8c34880f7fb72386ccf9f7294a1df5cf8f97e13c5c1e6c5b",
+      "embeddedSourceTextSha256": "9a77d876f0a302bb8c34880f7fb72386ccf9f7294a1df5cf8f97e13c5c1e6c5b",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/client/AvatarWeaponClearance.client.luau",
+      "class": "LocalScript",
+      "rawFileSha256": "33a1b40e5d1a7935c9fad5d8239b440ceee26dcb005671b61c2d536358e694e5",
+      "sourceTextSha256": "33a1b40e5d1a7935c9fad5d8239b440ceee26dcb005671b61c2d536358e694e5",
+      "embeddedSourceTextSha256": "33a1b40e5d1a7935c9fad5d8239b440ceee26dcb005671b61c2d536358e694e5",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/client/CombatClient.client.luau",
+      "class": "LocalScript",
+      "rawFileSha256": "5e62b075ecec877fa8b141b2ef6ac0bd29da899092858c1739c37b92ca8b772c",
+      "sourceTextSha256": "5e62b075ecec877fa8b141b2ef6ac0bd29da899092858c1739c37b92ca8b772c",
+      "embeddedSourceTextSha256": "5e62b075ecec877fa8b141b2ef6ac0bd29da899092858c1739c37b92ca8b772c",
+      "sourceTextMatches": true
+    },
+    {
+      "file": "src/client/CombatSettings.client.luau",
+      "class": "LocalScript",
+      "rawFileSha256": "6c89db1e9cfe94f158fb80385f9db70640cf2306db1adae6c1191e5e80cfeec9",
+      "sourceTextSha256": "6c89db1e9cfe94f158fb80385f9db70640cf2306db1adae6c1191e5e80cfeec9",
+      "embeddedSourceTextSha256": "6c89db1e9cfe94f158fb80385f9db70640cf2306db1adae6c1191e5e80cfeec9",
+      "sourceTextMatches": true
+    }
+  ],
+  "standaloneAnimationCount": 12,
+  "unchangedStandaloneAnimationCount": 12,
+  "standaloneAnimations": [
+    {
+      "file": "assets/animations/r15/combat_idle/CombatIdle.rbxmx",
+      "sha256Before": "af928943c62206fb8a8a11e402318642f305121137456e6704c4d4de3f7158c3",
+      "sha256After": "af928943c62206fb8a8a11e402318642f305121137456e6704c4d4de3f7158c3",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/defensive/Block.rbxmx",
+      "sha256Before": "c0e7780ec0c7ba8892138502467a2d9b2bc380526707cc54ef7f34643677f231",
+      "sha256After": "c0e7780ec0c7ba8892138502467a2d9b2bc380526707cc54ef7f34643677f231",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/defensive/Parry.rbxmx",
+      "sha256Before": "f21001f4ac6411a27122b8605436302bea51ffe423774996597ffd412715c2ec",
+      "sha256After": "f21001f4ac6411a27122b8605436302bea51ffe423774996597ffd412715c2ec",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollBackward.rbxmx",
+      "sha256Before": "39ab40c3f2701669e1fa85a94a7d5c68164b2da9a240be6da868d19d44bc3a71",
+      "sha256After": "39ab40c3f2701669e1fa85a94a7d5c68164b2da9a240be6da868d19d44bc3a71",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollForward.rbxmx",
+      "sha256Before": "335eac2713ebef14e91001a599809c9a018d2c98995b233ca648cb9e62053090",
+      "sha256After": "335eac2713ebef14e91001a599809c9a018d2c98995b233ca648cb9e62053090",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollLeft.rbxmx",
+      "sha256Before": "87db6d553752b308225f302f8b7c48371b85e2c6c11fa5f35240c66579168100",
+      "sha256After": "87db6d553752b308225f302f8b7c48371b85e2c6c11fa5f35240c66579168100",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollRight.rbxmx",
+      "sha256Before": "0e351e8d674bab5fe466b8962ae0c3dca412489d328cab202b67b4d4037bece9",
+      "sha256After": "0e351e8d674bab5fe466b8962ae0c3dca412489d328cab202b67b4d4037bece9",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/reactions/GuardBroken.rbxmx",
+      "sha256Before": "2462b0c44c9513b9de5ab475713ee24ca1deadf33d1eb6bfa8e4913041b9efc7",
+      "sha256After": "2462b0c44c9513b9de5ab475713ee24ca1deadf33d1eb6bfa8e4913041b9efc7",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/reactions/Stagger.rbxmx",
+      "sha256Before": "3c0cd6b5c6439ce002caf2a5063a071bac1f971398d00758800dd03b08beed51",
+      "sha256After": "3c0cd6b5c6439ce002caf2a5063a071bac1f971398d00758800dd03b08beed51",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/straight_sword/SwordR1_1.rbxmx",
+      "sha256Before": "18b73b506d46f5f225c67df0f18c8574b4c70a2fa0a42b8bc0da8b9b9144fecb",
+      "sha256After": "18b73b506d46f5f225c67df0f18c8574b4c70a2fa0a42b8bc0da8b9b9144fecb",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/straight_sword/SwordR1_2.rbxmx",
+      "sha256Before": "48af526acc7cf4bf40841cda009f4f1604bfa59fb385e6ba74c458eabe7b9913",
+      "sha256After": "48af526acc7cf4bf40841cda009f4f1604bfa59fb385e6ba74c458eabe7b9913",
+      "unchanged": true
+    },
+    {
+      "file": "assets/animations/r15/straight_sword/SwordR2.rbxmx",
+      "sha256Before": "e8ae9b3b470eac90feb0a97d6ada47a79682911c0094eede3038129bf21000e3",
+      "sha256After": "e8ae9b3b470eac90feb0a97d6ada47a79682911c0094eede3038129bf21000e3",
+      "unchanged": true
+    }
+  ],
+  "package": {
+    "file": "CombatFoundation_Import.rbxmx",
+    "sizeBytes": 7258662,
+    "sha256": "bc35fb87e6bf6ee75bfeaefb016df3abf1b2f3638865b47ce30907f332edc174"
+  },
+  "assetValidatorOutput": [
+    "PASS Block: 169 frames, 0 markers",
+    "PASS CombatIdle: 193 frames, 0 markers",
+    "PASS GuardBroken: 91 frames, 1 markers",
+    "PASS Parry: 67 frames, 3 markers",
+    "PASS RollBackward: 73 frames, 3 markers",
+    "PASS RollForward: 73 frames, 3 markers",
+    "PASS RollLeft: 73 frames, 3 markers",
+    "PASS RollRight: 73 frames, 3 markers",
+    "PASS Stagger: 53 frames, 1 markers",
+    "PASS SwordR1_1: 79 frames, 6 markers",
+    "PASS SwordR1_2: 81 frames, 4 markers",
+    "PASS SwordR2: 119 frames, 4 markers",
+    "PASS portable package structure",
+    "PASS R1 chain and recovery seams: chain max component difference 0.0000000",
+    "PASS shared pacing phases, marker authority, combo gate and roll recovery",
+    "PASS test sword script package"
+  ],
+  "supersedes": "Untracked package_pvp_2026_10_15.json from this task was removed because it described an intermediate package; no tracked evidence was removed."
+}

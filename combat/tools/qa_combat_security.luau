@@ -146,11 +146,12 @@ end)
 check("rate limit blocks new actions and resets after server window", function(f)
     for _ = 1, Config.MaxRequestRate do send(f, "UnknownAction") end
     send(f, "R1")
-    unchanged(f, Config.MaxStamina, 0)
+    unchanged(f, Config.MaxStamina, 1)
+    assert(f.events[1].kind == "Rejected", "Rate-limited legitimate prediction needs a rejection")
     assert(f.profile.rateCount == Config.MaxRequestRate + 1)
     f.profile.rateWindow = workspace:GetServerTimeNow() - 1.01
     send(f, "R1")
-    assert(f.profile.action == "SwordR1_1" and f.profile.rateCount == 1 and #f.events == 1)
+    assert(f.profile.action == "SwordR1_1" and f.profile.rateCount == 1 and #f.events == 2)
 end)
 
 check("held controls can be released after rate-limited burst", function(f)
