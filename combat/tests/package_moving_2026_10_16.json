@@ -1,0 +1,193 @@
+{
+  "date": "2026-10-16",
+  "scope": "Offline XML packaging/source equality and asset/marker/timing validator; Studio XML reimport and Internet PvP are separate.",
+  "status": "PASS",
+  "commands": [
+    {
+      "tool": "package_rbxmx.py",
+      "exitCode": 0
+    },
+    {
+      "tool": "validate_assets.py",
+      "exitCode": 0
+    }
+  ],
+  "productionSourceCount": 18,
+  "sources": [
+    {
+      "file": "src/client/AvatarWeaponClearance.client.luau",
+      "class": "LocalScript",
+      "sourceTextSha256": "33a1b40e5d1a7935c9fad5d8239b440ceee26dcb005671b61c2d536358e694e5",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/client/CombatClient.client.luau",
+      "class": "LocalScript",
+      "sourceTextSha256": "14b00e532083361da5772af6021ce684109ff9d1d7c378716c8caf5647cf33d3",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/client/CombatSettings.client.luau",
+      "class": "LocalScript",
+      "sourceTextSha256": "6c89db1e9cfe94f158fb80385f9db70640cf2306db1adae6c1191e5e80cfeec9",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/server/BladeTrajectory.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "c52d79f55c492a1082b08006ea93ac249a1ea1047dc5527b23287a8c809d96f3",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/server/CombatBootstrap.server.luau",
+      "class": "Script",
+      "sourceTextSha256": "e1358cf72043394588cf1af6954cf3b730397292689b3625d08751c86c413190",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/server/CombatService.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "49701392e5b35809fbca28714476c8f06b0e3cea61fdec5310713a9f664cf3c8",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/server/CombatSettings.server.luau",
+      "class": "Script",
+      "sourceTextSha256": "58b68df72be6d71645a943a06156171c280b6e6eecbf6ce4d8a729830cae8a95",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/server/WeaponVisual.server.luau",
+      "class": "Script",
+      "sourceTextSha256": "9a77d876f0a302bb8c34880f7fb72386ccf9f7294a1df5cf8f97e13c5c1e6c5b",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/ActionTimeline.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "463edfa55ba8f23e8170eabfecc88e6247c1d92e7a8da6d116dffe14545f96a5",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/AnimationRegistry.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "5ce94b5a2212d929ca86e2475180472037a39d11be7a0563c3d74d7ab8080031",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/AvatarGroundClearance.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "520689c17e3efd2ac40f155d229797e40cd363063cb24d0a4ad37daa7f7ba459",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/BladeClearance.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "62c9824b0394b9aeb4fe504026fcd6674f8f4e1255ad45c242e1726e30e15d2b",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/CombatConfig.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "6c956d361168f7c335146c4496a1caa45248ef358f278f2b577099becadf8697",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/CombatObserver.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "8380a858d9e8571c6fe88b515d7a25fb04568a7f9be612e2524d7b92ddb45c51",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/CombatPacing.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "9c8ad42e062a27a6e069b2160a538c897613f4eb0a7572e8bd98e1b003d0db0c",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/InputBindings.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "8fca7dff3af02508ef199cc057597c3aff3e7701d07f1808b80cf1c680883b77",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/R15PreviewRetarget.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "890b59d8aae7e672185abd993fd881365e4f9d653afcc2cfe98a3e47a11afd09",
+      "embeddedSourceTextMatches": true
+    },
+    {
+      "file": "src/shared/WeaponVisualConfig.luau",
+      "class": "ModuleScript",
+      "sourceTextSha256": "e1ed3d297e8a18d96d7b2c5ca4d3360b47a7b5f8ac0afad97542a17280f17d0b",
+      "embeddedSourceTextMatches": true
+    }
+  ],
+  "unchangedStandaloneKFS": [
+    {
+      "file": "assets/animations/r15/combat_idle/CombatIdle.rbxmx",
+      "sha256": "af928943c62206fb8a8a11e402318642f305121137456e6704c4d4de3f7158c3",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/defensive/Block.rbxmx",
+      "sha256": "c0e7780ec0c7ba8892138502467a2d9b2bc380526707cc54ef7f34643677f231",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/defensive/Parry.rbxmx",
+      "sha256": "f21001f4ac6411a27122b8605436302bea51ffe423774996597ffd412715c2ec",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollBackward.rbxmx",
+      "sha256": "39ab40c3f2701669e1fa85a94a7d5c68164b2da9a240be6da868d19d44bc3a71",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollForward.rbxmx",
+      "sha256": "335eac2713ebef14e91001a599809c9a018d2c98995b233ca648cb9e62053090",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollLeft.rbxmx",
+      "sha256": "87db6d553752b308225f302f8b7c48371b85e2c6c11fa5f35240c66579168100",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/dodge/RollRight.rbxmx",
+      "sha256": "0e351e8d674bab5fe466b8962ae0c3dca412489d328cab202b67b4d4037bece9",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/reactions/GuardBroken.rbxmx",
+      "sha256": "2462b0c44c9513b9de5ab475713ee24ca1deadf33d1eb6bfa8e4913041b9efc7",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/reactions/Stagger.rbxmx",
+      "sha256": "3c0cd6b5c6439ce002caf2a5063a071bac1f971398d00758800dd03b08beed51",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/straight_sword/SwordR1_1.rbxmx",
+      "sha256": "18b73b506d46f5f225c67df0f18c8574b4c70a2fa0a42b8bc0da8b9b9144fecb",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/straight_sword/SwordR1_2.rbxmx",
+      "sha256": "48af526acc7cf4bf40841cda009f4f1604bfa59fb385e6ba74c458eabe7b9913",
+      "unchangedFromPreviousCommit": true
+    },
+    {
+      "file": "assets/animations/r15/straight_sword/SwordR2.rbxmx",
+      "sha256": "e8ae9b3b470eac90feb0a97d6ada47a79682911c0094eede3038129bf21000e3",
+      "unchangedFromPreviousCommit": true
+    }
+  ],
+  "package": {
+    "file": "CombatFoundation_Import.rbxmx",
+    "bytes": 7260694,
+    "sha256": "5ad6caa4ff9524f29fcb8c1c121715333fc9f737d77fc75146a6dd86a2639a80"
+  }
+}

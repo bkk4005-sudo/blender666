@@ -1,0 +1,121 @@
+{
+  "date": "2026-10-16",
+  "scope": "Original Edit production sources after rollback of rejected visual experiment. New multiplayer processes clone this DataModel.",
+  "encoding": "UTF-8; universal newlines and trailing empty lines normalized; raw trailing-newline differences retained per source.",
+  "count": 18,
+  "allMatch": true,
+  "sources": [
+    {
+      "file": "src/shared/InputBindings.luau",
+      "normalizedSourceTextSha256": "8fca7dff3af02508ef199cc057597c3aff3e7701d07f1808b80cf1c680883b77",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/BladeClearance.luau",
+      "normalizedSourceTextSha256": "62c9824b0394b9aeb4fe504026fcd6674f8f4e1255ad45c242e1726e30e15d2b",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/AvatarGroundClearance.luau",
+      "normalizedSourceTextSha256": "520689c17e3efd2ac40f155d229797e40cd363063cb24d0a4ad37daa7f7ba459",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/AnimationRegistry.luau",
+      "normalizedSourceTextSha256": "5ce94b5a2212d929ca86e2475180472037a39d11be7a0563c3d74d7ab8080031",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/CombatPacing.luau",
+      "normalizedSourceTextSha256": "9c8ad42e062a27a6e069b2160a538c897613f4eb0a7572e8bd98e1b003d0db0c",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/CombatConfig.luau",
+      "normalizedSourceTextSha256": "6c956d361168f7c335146c4496a1caa45248ef358f278f2b577099becadf8697",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/ActionTimeline.luau",
+      "normalizedSourceTextSha256": "463edfa55ba8f23e8170eabfecc88e6247c1d92e7a8da6d116dffe14545f96a5",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/WeaponVisualConfig.luau",
+      "normalizedSourceTextSha256": "e1ed3d297e8a18d96d7b2c5ca4d3360b47a7b5f8ac0afad97542a17280f17d0b",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/R15PreviewRetarget.luau",
+      "normalizedSourceTextSha256": "890b59d8aae7e672185abd993fd881365e4f9d653afcc2cfe98a3e47a11afd09",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/shared/CombatObserver.luau",
+      "normalizedSourceTextSha256": "8380a858d9e8571c6fe88b515d7a25fb04568a7f9be612e2524d7b92ddb45c51",
+      "matches": true,
+      "rawNewlineMatch": false
+    },
+    {
+      "file": "src/server/CombatBootstrap.server.luau",
+      "normalizedSourceTextSha256": "e1358cf72043394588cf1af6954cf3b730397292689b3625d08751c86c413190",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/server/CombatService.luau",
+      "normalizedSourceTextSha256": "49701392e5b35809fbca28714476c8f06b0e3cea61fdec5310713a9f664cf3c8",
+      "matches": true,
+      "rawNewlineMatch": false
+    },
+    {
+      "file": "src/server/BladeTrajectory.luau",
+      "normalizedSourceTextSha256": "c52d79f55c492a1082b08006ea93ac249a1ea1047dc5527b23287a8c809d96f3",
+      "matches": true,
+      "rawNewlineMatch": false
+    },
+    {
+      "file": "src/server/CombatSettings.server.luau",
+      "normalizedSourceTextSha256": "58b68df72be6d71645a943a06156171c280b6e6eecbf6ce4d8a729830cae8a95",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/server/WeaponVisual.server.luau",
+      "normalizedSourceTextSha256": "9a77d876f0a302bb8c34880f7fb72386ccf9f7294a1df5cf8f97e13c5c1e6c5b",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/client/CombatSettings.client.luau",
+      "normalizedSourceTextSha256": "6c89db1e9cfe94f158fb80385f9db70640cf2306db1adae6c1191e5e80cfeec9",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/client/AvatarWeaponClearance.client.luau",
+      "normalizedSourceTextSha256": "33a1b40e5d1a7935c9fad5d8239b440ceee26dcb005671b61c2d536358e694e5",
+      "matches": true,
+      "rawNewlineMatch": true
+    },
+    {
+      "file": "src/client/CombatClient.client.luau",
+      "normalizedSourceTextSha256": "14b00e532083361da5772af6021ce684109ff9d1d7c378716c8caf5647cf33d3",
+      "matches": true,
+      "rawNewlineMatch": true
+    }
+  ],
+  "nonCombatScriptsIgnored": [
+    "client/ArenaCamera",
+    "client/AshenMannequinPreview"
+  ]
+}

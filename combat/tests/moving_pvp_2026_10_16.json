@@ -1,0 +1,3674 @@
+{
+  "date": "2026-10-16",
+  "scope": "Two genuine moving clients with native movement/combat input; unanchored player-owned roots. All recorded attempts retained, including calibration failures and a rejected visual experiment.",
+  "status": "NOT_RELEASE_CERTIFIED",
+  "totalsByCategory": {
+    "before_fix_and_fixture_calibration": {
+      "FAIL": 4,
+      "PASS": 5
+    },
+    "final_movement_code_earlier_contact_gate": {
+      "PASS": 9
+    },
+    "final_movement_code_strict_contact_gate": {
+      "PASS": 23,
+      "FAIL": 5
+    },
+    "rejected_experiment_NOT_SHIPPED": {
+      "FAIL": 3
+    }
+  },
+  "sourceEvidence": "installed_moving_sources_2026_10_16.json",
+  "packageEvidence": "package_moving_2026_10_16.json",
+  "reports": [
+    {
+      "file": "moving0_probe_20261016.json",
+      "bytes": 710713,
+      "sha256": "b5d1b8b84accc9983efa708249789329c9caa77860cbdcbdc7834b5609553e9d",
+      "category": "before_fix_and_fixture_calibration",
+      "testedRevision": "e219b36 (production unchanged; moving QA added)",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 0,
+        "InboundNetworkMinDelayMs": 0,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 2,
+        "failed": 1
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 32.39297866821289,
+        "max": 34.71493721008301
+      },
+      "cases": [
+        {
+          "id": "moving_approach_r1",
+          "status": "FAIL",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [
+            "No server-confirmed hit on the other real player"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualPlayerDamage": false,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 75,
+                "clientFrames": 76,
+                "clientPath": 6.923264855943671,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 6.931953851085382
+              },
+              "-2": {
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 10.670634849123871,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 10.38925877183442
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 564,
+            "ownerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_retreat_miss",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 11.551876073273888,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 11.90225461369846
+              },
+              "-2": {
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 23.545794864495292,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 23.545699822538836
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_forward_roll",
+          "status": "PASS",
+          "expect": "iframe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792105278.5607412,
+              "from": 1792105277.557286,
+              "samples": 17,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792105278.0474489,
+              "from": 1792105277.547251,
+              "samples": 8,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 8.97331429272981,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 8.9754776801974
+              },
+              "-2": {
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 10.872109327698354,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 9.91245864668872
+              }
+            },
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "confirmedProtectedContacts": 8,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "fullAnimationFrameEvidence": true,
+            "duplicateTrackExamples": [],
+            "ownerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "observerNativeTracks": true
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving150_rolls_probe_20261016.json",
+      "bytes": 771742,
+      "sha256": "3bbcbec2d161f4fb0deb451ff2784771f500dabb8f7816db1ea185e4fcd50ac9",
+      "category": "before_fix_and_fixture_calibration",
+      "testedRevision": "e219b36 (production unchanged)",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 150,
+        "InboundNetworkMinDelayMs": 150,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 2,
+        "failed": 1
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 332.60202407836914,
+        "max": 351.18579864501953
+      },
+      "cases": [
+        {
+          "id": "moving_forward_roll",
+          "status": "PASS",
+          "expect": "iframe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792105539.2769792,
+              "from": 1792105538.468411,
+              "samples": 14,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792105538.6191578,
+              "from": 1792105538.1200688,
+              "samples": 8,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 9.365317911233888,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 8.956234854414106
+              },
+              "-2": {
+                "lockFrames": 79,
+                "clientFrames": 80,
+                "clientPath": 12.293340862672949,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 12.292296076141383
+              }
+            },
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "confirmedProtectedContacts": 2,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "fullAnimationFrameEvidence": true,
+            "duplicateTrackExamples": [],
+            "ownerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "observerNativeTracks": true
+          }
+        },
+        {
+          "id": "moving_backward_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792105546.4282331,
+              "from": 1792105545.5870368,
+              "samples": 15,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792105545.7527099,
+              "from": 1792105545.256497,
+              "samples": 8,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 8.551351193661958,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 8.698717062026844
+              },
+              "-2": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 8.112982252365327,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 8.199146315776716
+              }
+            },
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_strafe_exchange",
+          "status": "FAIL",
+          "expect": "both_hit",
+          "moving": true,
+          "failures": [
+            "Simultaneous fixture did not confirm hits in both directions"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 10.774680297237182,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 10.886920456165626
+              },
+              "-2": {
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 10.460659786228462,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 10.432200778103606
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "twoWayDamage": false,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving300_windup_before_20261016.json",
+      "bytes": 803500,
+      "sha256": "2e3919695810caeb4b2d4a4758031f954d4fe6fb731d5bb8161a1a14da7abe56",
+      "category": "before_fix_and_fixture_calibration",
+      "testedRevision": "e219b36 (production before movement prediction fix)",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 300,
+        "InboundNetworkMinDelayMs": 300,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 1,
+        "failed": 2
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 632.1048736572266,
+        "max": 651.1249542236328
+      },
+      "cases": [
+        {
+          "id": "moving_windup_stop",
+          "status": "FAIL",
+          "expect": "miss",
+          "moving": true,
+          "failures": [
+            "Predicted startup retained locomotion or the idle lock-on turn limit before acknowledgement"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "predictedStartupMovement": {
+              "walkingSamples": 11,
+              "samples": 11,
+              "fastFacingSamples": 11
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 12.151222005486488,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 12.304232717026025
+              },
+              "-2": {
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 19.57961082458496,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 19.57964324951172
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_r1",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 4.045182646315197,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 4.053763026378874
+              },
+              "-2": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 2.3098960786664975,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 2.3098154072649777
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 563,
+            "ownerAnimationFrames": 563,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_heavy_approach",
+          "status": "FAIL",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [
+            "No server-confirmed hit on the other real player"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualPlayerDamage": false,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 84,
+                "clientFrames": 84,
+                "clientPath": 15.593764215069541,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 83,
+                "anchoredFrames": 0,
+                "serverPath": 15.499115338325737
+              },
+              "-2": {
+                "lockFrames": 83,
+                "clientFrames": 83,
+                "clientPath": 20.084263046789374,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 83,
+                "anchoredFrames": 0,
+                "serverPath": 19.99659212316419
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 611,
+            "ownerAnimationFrames": 611,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving300_prediction_after_20261016.json",
+      "bytes": 792579,
+      "sha256": "ad7844921eeecf7735d9935f498d0d9381de647204c84d00b36dfd22fb5ccd8f",
+      "category": "final_movement_code_earlier_contact_gate",
+      "testedRevision": "e219b36 + immediate predicted movement and turn restrictions",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 300,
+        "InboundNetworkMinDelayMs": 300,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 3,
+        "failed": 0
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 632.4660778045654,
+        "max": 649.94215965271
+      },
+      "cases": [
+        {
+          "id": "moving_windup_stop",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "resumedLocomotionSamples": 20,
+            "predictedStartupMovement": {
+              "walkingSamples": 0,
+              "samples": 9,
+              "fastFacingSamples": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 13.506958484649658,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 13.562004566192627
+              },
+              "-2": {
+                "lockFrames": 75,
+                "clientFrames": 76,
+                "clientPath": 19.583202362060547,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 19.5860595703125
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_r1",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 4.654701883648386,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 4.812559537705511
+              },
+              "-2": {
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 1.6841977007029527,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 1.6840825080871582
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 562,
+            "ownerAnimationFrames": 562,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_forward_roll",
+          "status": "PASS",
+          "expect": "iframe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106121.5910373,
+              "from": 1792106120.89672,
+              "samples": 12,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106120.81004,
+              "from": 1792106120.3087728,
+              "samples": 8,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 10.795527336129908,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 10.835643774426899
+              },
+              "-2": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 11.351184281662427,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 11.275975481723435
+              }
+            },
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "confirmedProtectedContacts": 2,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "fullAnimationFrameEvidence": true,
+            "duplicateTrackExamples": [],
+            "ownerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "observerNativeTracks": true
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving300_hits_after_20261016.json",
+      "bytes": 898709,
+      "sha256": "b2e115a7f9d56cc60e54ebdd653d88ceca3bd4abc748548b53dea63253a57b77",
+      "category": "final_movement_code_earlier_contact_gate",
+      "testedRevision": "e219b36 + predicted movement restrictions",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 300,
+        "InboundNetworkMinDelayMs": 300,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 3,
+        "failed": 0
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 633.0320835113525,
+        "max": 649.7468948364258
+      },
+      "cases": [
+        {
+          "id": "moving_retreat_miss",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 4.886778988425476,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 84,
+                "anchoredFrames": 0,
+                "serverPath": 4.724585449323058
+              },
+              "-2": {
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 23.578183178789914,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 84,
+                "anchoredFrames": 0,
+                "serverPath": 23.57812443392754
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_strafe_exchange",
+          "status": "PASS",
+          "expect": "both_hit",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 568,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 6.343796796329798,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 6.3433363390536215
+              },
+              "-2": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 6.944163361431265,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 6.970339752509972
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "twoWayDamage": true,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 568,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_heavy_approach",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 86,
+                "clientFrames": 86,
+                "clientPath": 3.8601906887240602,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 84,
+                "anchoredFrames": 0,
+                "serverPath": 3.85185270011425
+              },
+              "-2": {
+                "lockFrames": 83,
+                "clientFrames": 83,
+                "clientPath": 2.3062693511574253,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 84,
+                "anchoredFrames": 0,
+                "serverPath": 2.3167219754311645
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 612,
+            "ownerAnimationFrames": 612,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving300_sides_reject_20261016.json",
+      "bytes": 833518,
+      "sha256": "daf116540176cb967d68306fdf8f235a7b71a97870bb7af048459726cb2b632d",
+      "category": "final_movement_code_earlier_contact_gate",
+      "testedRevision": "e219b36 + predicted movement restrictions",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 300,
+        "InboundNetworkMinDelayMs": 300,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 3,
+        "failed": 0
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 631.7369937896729,
+        "max": 650.8378982543945
+      },
+      "cases": [
+        {
+          "id": "moving_left_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106429.5522733,
+              "from": 1792106428.891548,
+              "samples": 11,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106428.7244349,
+              "from": 1792106428.224634,
+              "samples": 10,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 7.463033225755225,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 7.3650151174417715
+              },
+              "-2": {
+                "lockFrames": 78,
+                "clientFrames": 79,
+                "clientPath": 12.022454849416931,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 12.0225311142608
+              }
+            },
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_right_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106436.9518552,
+              "from": 1792106436.291213,
+              "samples": 11,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106436.1094909,
+              "from": 1792106435.621229,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 9.485347873317778,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 9.449403763871487
+              },
+              "-2": {
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 13.333803726543692,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 13.309965245215153
+              }
+            },
+            "ownerAnimationFrames": 561,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 561,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_rejected_attack",
+          "status": "PASS",
+          "expect": "reject",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "movementResumedAfterRejection": 41,
+            "fullAnimationFrameEvidence": true,
+            "movingActors": {
+              "-1": {
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 23.196198463905603,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 23.218008995056152
+              },
+              "-2": {
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 19.586759567726403,
+                "wrongOwnerFrames": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 19.590648651123047
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "actualAttackRejected": true,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving300_entry_cross_20261016.json",
+      "bytes": 886298,
+      "sha256": "e92cb37a99776b4d8964858adeff699000581698924b7726ebd8b6be72d5296a",
+      "category": "final_movement_code_strict_contact_gate",
+      "testedRevision": "e219b36 + predicted movement restrictions",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 300,
+        "InboundNetworkMinDelayMs": 300,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 1,
+        "failed": 2
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 632.2410106658936,
+        "max": 650.2330303192139
+      },
+      "cases": [
+        {
+          "id": "moving_backward_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106647.9848192,
+              "from": 1792106647.308353,
+              "samples": 12,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 9.119302946731068,
+                "maxRootRise": 0,
+                "serverFrames": 78,
+                "anchoredFrames": 0,
+                "serverPath": 9.053865036745265
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 12.142017915212136,
+                "maxRootRise": 0,
+                "serverFrames": 78,
+                "anchoredFrames": 0,
+                "serverPath": 12.1861842116341
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792106647.122032,
+              "from": 1792106646.6214259,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 562,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 562,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_target_entry",
+          "status": "FAIL",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [
+            "Moving server damage had no nearby rendered blade/body-box contact on own view"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792106654.421803,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "contacts": 0,
+                    "userId": -1,
+                    "frames": 18
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.014091968536376953,
+                    "contacts": 9,
+                    "frames": 13,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 4.95338299096079,
+                "maxRootRise": 0.34838104248046875,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 4.953434836115775
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 6.250559484228461,
+                "maxRootRise": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 6.220484030529178
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 562,
+            "ownerAnimationFrames": 562,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_crossing",
+          "status": "FAIL",
+          "expect": "observe",
+          "moving": true,
+          "failures": [
+            "Moving server damage had no nearby rendered blade/body-box contact on own view"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792106662.421275,
+                "action": "SwordR1_1",
+                "target": -1,
+                "attacker": -2,
+                "views": [
+                  {
+                    "view": "own",
+                    "contacts": 0,
+                    "userId": -2,
+                    "frames": 8
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.017911911010742188,
+                    "contacts": 8,
+                    "frames": 8,
+                    "userId": -1
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 14.503262264758177,
+                "maxRootRise": 0.4286766052246094,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 14.345782960450151
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 15.064196064446605,
+                "maxRootRise": 0.40746307373046875,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 14.989404542560806
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving300_visual_after_20261016.json",
+      "bytes": 910833,
+      "sha256": "db9a0773f7995dea657afda4bfafe5be2c8aa21124b0b45dea96d5ac24831561",
+      "category": "rejected_experiment_NOT_SHIPPED",
+      "testedRevision": "e219b36 + movement restrictions + bounded remote presentation",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 300,
+        "InboundNetworkMinDelayMs": 300,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 0,
+        "failed": 3
+      },
+      "echoRoundTripMs": {
+        "count": 6,
+        "min": 631.8280696868896,
+        "max": 633.8000297546387
+      },
+      "cases": [
+        {
+          "id": "moving_strafe_exchange",
+          "status": "FAIL",
+          "expect": "both_hit",
+          "moving": true,
+          "failures": [
+            "Simultaneous fixture did not confirm hits in both directions"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 79,
+                "clientPath": 5.868393776517678,
+                "maxRootRise": 0,
+                "serverFrames": 83,
+                "anchoredFrames": 0,
+                "serverPath": 5.890503141545651
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 5.827466927203659,
+                "maxRootRise": 0,
+                "serverFrames": 83,
+                "anchoredFrames": 0,
+                "serverPath": 5.84564252638711
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "twoWayDamage": false,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_target_entry",
+          "status": "FAIL",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [
+            "Moving server damage had no nearby rendered blade/body-box contact on own view"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792107568.89668,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "contacts": 0,
+                    "userId": -1,
+                    "frames": 18
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.007749080657958984,
+                    "contacts": 8,
+                    "frames": 17,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 3.717568723150407,
+                "maxRootRise": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 3.718025110218605
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 5.457778394683146,
+                "maxRootRise": 0,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 5.4580940885689415
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 564,
+            "ownerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_crossing",
+          "status": "FAIL",
+          "expect": "observe",
+          "moving": true,
+          "failures": [
+            "Grounded close exchange lifted a root over two studs without jump input: Player1",
+            "Moving server damage had no nearby rendered blade/body-box contact on own view",
+            "Moving server damage had no nearby rendered blade/body-box contact on peer view"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792107576.629086,
+                "action": "SwordR1_1",
+                "target": -1,
+                "attacker": -2,
+                "views": [
+                  {
+                    "view": "own",
+                    "contacts": 0,
+                    "userId": -2,
+                    "frames": 17
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.005460023880004883,
+                    "contacts": 11,
+                    "frames": 13,
+                    "userId": -1
+                  }
+                ]
+              },
+              {
+                "at": 1792107576.629106,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.027920961380004883,
+                    "contacts": 4,
+                    "frames": 14,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "contacts": 0,
+                    "userId": -2,
+                    "frames": 15
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 15.134116485433651,
+                "maxRootRise": 4.267448425292969,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 15.160890139857656
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 9.477793149075978,
+                "maxRootRise": 0.3149223327636719,
+                "serverFrames": 77,
+                "anchoredFrames": 0,
+                "serverPath": 9.451577658255701
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving0_final_20261016.json",
+      "bytes": 3154666,
+      "sha256": "c89217f35979b93d17be93f355822b03a6d1848d79b34997115f9adf999d4b92",
+      "category": "final_movement_code_strict_contact_gate",
+      "testedRevision": "e219b36 + immediate predicted movement restriction; no remote visual offset",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 0,
+        "InboundNetworkMinDelayMs": 0,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 10,
+        "failed": 1
+      },
+      "echoRoundTripMs": {
+        "count": 22,
+        "min": 32.647132873535156,
+        "max": 50.315141677856445
+      },
+      "cases": [
+        {
+          "id": "moving_overshoot_miss",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 5.543206628010012,
+                "maxRootRise": 0.7803993225097656,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 4.887833056991894
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 10.534880989421026,
+                "maxRootRise": 1.1464881896972656,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 10.146373523878992
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_r1",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108064.261682,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.0004489421844482422,
+                    "contacts": 10,
+                    "frames": 13,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.0076100826263427734,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 75,
+                "clientFrames": 75,
+                "clientPath": 4.010057939682156,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 4.073556452873163
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 2.4257599290333474,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 2.4257885776169132
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 564,
+            "ownerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_retreat_miss",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 563,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 8.528213439253477,
+                "maxRootRise": 1.0259971618652344,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 8.531640400644392
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 80,
+                "clientFrames": 80,
+                "clientPath": 24.257123125717044,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 24.257091913372278
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 563,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_forward_roll",
+          "status": "PASS",
+          "expect": "iframe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108078.9913542,
+              "from": 1792108077.993665,
+              "samples": 17,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 7.102019633562122,
+                "maxRootRise": 0.6866455078125,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 7.038036305332753
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 8.654964634611133,
+                "maxRootRise": 1.2039566040039062,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 8.531886196229607
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108078.487242,
+              "from": 1792108077.986605,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "confirmedProtectedContacts": 6,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "fullAnimationFrameEvidence": true,
+            "duplicateTrackExamples": [],
+            "ownerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 565,
+            "observerNativeTracks": true
+          }
+        },
+        {
+          "id": "moving_backward_roll",
+          "status": "FAIL",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [
+            "The scheduled moving miss/dodge took actual damage; inspect geometry and timing"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108085.9240532,
+              "from": 1792108084.974684,
+              "samples": 16,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 6.546614315014722,
+                "maxRootRise": 0.4367332458496094,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 6.386263902983046
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 12.640864544627448,
+                "maxRootRise": 0.01116943359375,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 12.658074638689868
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108085.3712888,
+              "from": 1792108084.870576,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [
+              {
+                "at": 1792108085.026694,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.013134956359863281,
+                    "contacts": 8,
+                    "frames": 13,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.023200035095214844,
+                    "contacts": 5,
+                    "frames": 12,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 22,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_strafe_exchange",
+          "status": "PASS",
+          "expect": "both_hit",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108092.26105,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": -0.0020530223846435547,
+                    "contacts": 11,
+                    "frames": 15,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.005070924758911133,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -2
+                  }
+                ]
+              },
+              {
+                "at": 1792108092.294933,
+                "action": "SwordR1_1",
+                "target": -1,
+                "attacker": -2,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.00571894645690918,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -2
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.0025980472564697266,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -1
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 75,
+                "clientFrames": 75,
+                "clientPath": 6.649369770183512,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 6.644529549979779
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 6.356160070878559,
+                "maxRootRise": 1.1437568664550781,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 6.287310378098482
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "twoWayDamage": true,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_heavy_approach",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108099.16041,
+                "action": "SwordR2",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.0010170936584472656,
+                    "contacts": 10,
+                    "frames": 15,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0067369937896728516,
+                    "contacts": 10,
+                    "frames": 16,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 85,
+                "clientFrames": 85,
+                "clientPath": 4.081979237044379,
+                "maxRootRise": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 4.0429813736409415
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 85,
+                "clientFrames": 85,
+                "clientPath": 2.760061042471989,
+                "maxRootRise": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 2.7600347506813705
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 613,
+            "ownerAnimationFrames": 613,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_left_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108106.9232771,
+              "from": 1792108105.961099,
+              "samples": 17,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 6.9687012471736125,
+                "maxRootRise": 0.46405792236328125,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 7.059510986177429
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 12.9288542923058,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 12.928439828035152
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108106.424157,
+              "from": 1792108105.923337,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_right_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108113.8565772,
+              "from": 1792108112.909205,
+              "samples": 16,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 6.790903738848101,
+                "maxRootRise": 0.5784339904785156,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 6.660901341640965
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 12.889207716509645,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 12.855446564246904
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108113.303983,
+              "from": 1792108112.8043098,
+              "samples": 7,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_target_entry",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108119.792429,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": -0.0008990764617919922,
+                    "contacts": 4,
+                    "frames": 14,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.0066030025482177734,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 75,
+                "clientFrames": 75,
+                "clientPath": 4.971713893609376,
+                "maxRootRise": 0.012104034423828125,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 4.950867740204558
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 5.1740747934766205,
+                "maxRootRise": 0.04924774169921875,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 5.140532556761173
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 564,
+            "ownerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_crossing",
+          "status": "PASS",
+          "expect": "observe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108126.927983,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": -0.004266977310180664,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0035140514373779297,
+                    "contacts": 9,
+                    "frames": 13,
+                    "userId": -2
+                  }
+                ]
+              },
+              {
+                "at": 1792108127.059864,
+                "action": "SwordR1_1",
+                "target": -1,
+                "attacker": -2,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.0052759647369384766,
+                    "contacts": 10,
+                    "frames": 12,
+                    "userId": -2
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.0024149417877197266,
+                    "contacts": 11,
+                    "frames": 12,
+                    "userId": -1
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 563,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 9.194507248496848,
+                "maxRootRise": 0.12926483154296875,
+                "serverFrames": 69,
+                "anchoredFrames": 0,
+                "serverPath": 9.281302067451179
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 9.03988900984109,
+                "maxRootRise": 1.2866172790527344,
+                "serverFrames": 69,
+                "anchoredFrames": 0,
+                "serverPath": 9.045266766508576
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 563,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving0_backward_retry_20261016.json",
+      "bytes": 276359,
+      "sha256": "e0e59abde74b734286df86ee20293c85eb8bccd8a65e4ad9aed1a3ee37c84c93",
+      "category": "final_movement_code_strict_contact_gate",
+      "testedRevision": "e219b36 + immediate predicted movement restriction; backward roll schedule advanced 80ms",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 0,
+        "InboundNetworkMinDelayMs": 0,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 1,
+        "failed": 0
+      },
+      "echoRoundTripMs": {
+        "count": 2,
+        "min": 30.022144317626953,
+        "max": 30.22599220275879
+      },
+      "cases": [
+        {
+          "id": "moving_backward_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108445.0304782,
+              "from": 1792108444.025629,
+              "samples": 17,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 77,
+                "clientPath": 4.872708226207351,
+                "maxRootRise": 0.9024925231933594,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 4.76509174050625
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 11.558972544378548,
+                "maxRootRise": 0,
+                "serverFrames": 70,
+                "anchoredFrames": 0,
+                "serverPath": 11.559055328834802
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108444.6019719,
+              "from": 1792108444.0177639,
+              "samples": 10,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 563,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 563,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving150_final_20261016.json",
+      "bytes": 3130611,
+      "sha256": "ab4eeeda86c10eefbfde2573faf809bd2e10688b1ac7b30662156b9a8d1c7433",
+      "category": "final_movement_code_strict_contact_gate",
+      "testedRevision": "e219b36 + immediate predicted movement restriction; no remote visual offset",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 150,
+        "InboundNetworkMinDelayMs": 150,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 10,
+        "failed": 1
+      },
+      "echoRoundTripMs": {
+        "count": 22,
+        "min": 332.4239253997803,
+        "max": 351.4289855957031
+      },
+      "cases": [
+        {
+          "id": "moving_windup_stop",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 562,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "resumedLocomotionSamples": 19,
+            "predictedStartupMovement": {
+              "walkingSamples": 0,
+              "samples": 5,
+              "fastFacingSamples": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 75,
+                "clientFrames": 75,
+                "clientPath": 16.728971481323242,
+                "maxRootRise": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 16.797212600708008
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 79,
+                "clientPath": 19.57335090637207,
+                "maxRootRise": 0,
+                "serverFrames": 76,
+                "anchoredFrames": 0,
+                "serverPath": 19.573368072509766
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 562,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_r1",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108246.738141,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.007369041442871094,
+                    "contacts": 12,
+                    "frames": 15,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0031540393829345703,
+                    "contacts": 11,
+                    "frames": 14,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 4.192542639244948,
+                "maxRootRise": 0.11258697509765625,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 4.324499529437162
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 2.3014663506712623,
+                "maxRootRise": 0,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 2.3039281368255615
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 564,
+            "ownerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_retreat_miss",
+          "status": "PASS",
+          "expect": "miss",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 5.142654404044151,
+                "maxRootRise": 1.1474342346191406,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 5.239736378192902
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 24.25131344795227,
+                "maxRootRise": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 24.25127410888672
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_forward_roll",
+          "status": "PASS",
+          "expect": "iframe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108261.8847342,
+              "from": 1792108261.061836,
+              "samples": 14,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 10.666980572573493,
+                "maxRootRise": 0.02877044677734375,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 10.589645805444889
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 14.847178357703342,
+                "maxRootRise": 0.3150634765625,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 14.84317850892603
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108261.241576,
+              "from": 1792108260.741514,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "confirmedProtectedContacts": 3,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "fullAnimationFrameEvidence": true,
+            "duplicateTrackExamples": [],
+            "ownerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 564,
+            "observerNativeTracks": true
+          }
+        },
+        {
+          "id": "moving_backward_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108269.0845633,
+              "from": 1792108268.261455,
+              "samples": 14,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 9.771820155415753,
+                "maxRootRise": 0.31134033203125,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 9.832231700886041
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 13.42426459217404,
+                "maxRootRise": 0.032199859619140625,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 13.43682116502896
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108268.377205,
+              "from": 1792108267.8777988,
+              "samples": 8,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 563,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 563,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_strafe_exchange",
+          "status": "PASS",
+          "expect": "both_hit",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108275.67156,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.006571054458618164,
+                    "contacts": 11,
+                    "frames": 16,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.0007309913635253906,
+                    "contacts": 10,
+                    "frames": 14,
+                    "userId": -2
+                  }
+                ]
+              },
+              {
+                "at": 1792108275.704192,
+                "action": "SwordR1_1",
+                "target": -1,
+                "attacker": -2,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": -0.0007929801940917969,
+                    "contacts": 9,
+                    "frames": 16,
+                    "userId": -2
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.007851123809814453,
+                    "contacts": 10,
+                    "frames": 14,
+                    "userId": -1
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 6.159811426669876,
+                "maxRootRise": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 6.160160246404075
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 6.714349547014081,
+                "maxRootRise": 0,
+                "serverFrames": 74,
+                "anchoredFrames": 0,
+                "serverPath": 6.759772637445167
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "twoWayDamage": true,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "actualEchoReplies": 2,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_heavy_approach",
+          "status": "PASS",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108282.838477,
+                "action": "SwordR2",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.0020821094512939453,
+                    "contacts": 9,
+                    "frames": 16,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": -0.0013728141784667969,
+                    "contacts": 11,
+                    "frames": 16,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 84,
+                "clientFrames": 84,
+                "clientPath": 4.49288692905111,
+                "maxRootRise": 0,
+                "serverFrames": 80,
+                "anchoredFrames": 0,
+                "serverPath": 4.5184436889203425
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 83,
+                "clientFrames": 83,
+                "clientPath": 1.6759290277602759,
+                "maxRootRise": 0,
+                "serverFrames": 80,
+                "anchoredFrames": 0,
+                "serverPath": 1.6762747764587402
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 611,
+            "ownerAnimationFrames": 611,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_left_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108290.8167253,
+              "from": 1792108289.991919,
+              "samples": 14,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 9.625009148945537,
+                "maxRootRise": 0.25606536865234375,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 9.617882713945619
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 15.052932736707248,
+                "maxRootRise": 0.035816192626953125,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 15.080718526965484
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108290.143514,
+              "from": 1792108289.6425989,
+              "samples": 9,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_right_roll",
+          "status": "PASS",
+          "expect": "dodge",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "peerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108297.9498062,
+              "from": 1792108297.108253,
+              "samples": 15,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 10.03555308385421,
+                "maxRootRise": 0.33904266357421875,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 9.96309213650693
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 15.247546007700294,
+                "maxRootRise": 0,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 15.327848697539594
+              }
+            },
+            "ownerRollContinuity": {
+              "missingRoll": 0,
+              "to": 1792108297.2573428,
+              "from": 1792108296.75731,
+              "samples": 8,
+              "backwardsTimeJumps": 0,
+              "competingActions": 0
+            },
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "totalActualDamage": 0,
+            "realMovingRoll": true,
+            "attacksAcceptedDuringRoll": 0,
+            "rollInterruptBindingsDelivered": true,
+            "realRollInterruptInputs": 2,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_target_entry",
+          "status": "FAIL",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [
+            "Moving server damage had no nearby rendered blade/body-box contact on own view"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108304.136761,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "contacts": 0,
+                    "userId": -1,
+                    "frames": 15
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0013959407806396484,
+                    "contacts": 12,
+                    "frames": 13,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 5.215612122866787,
+                "maxRootRise": 0.09625625610351562,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 5.1938539121790654
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 5.685574975601185,
+                "maxRootRise": 0,
+                "serverFrames": 73,
+                "anchoredFrames": 0,
+                "serverPath": 5.543372614323744
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 564,
+            "ownerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_crossing",
+          "status": "PASS",
+          "expect": "observe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108311.569446,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 0.003990888595581055,
+                    "contacts": 15,
+                    "frames": 17,
+                    "userId": -1
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0009260177612304688,
+                    "contacts": 13,
+                    "frames": 15,
+                    "userId": -2
+                  }
+                ]
+              },
+              {
+                "at": 1792108311.603671,
+                "action": "SwordR1_1",
+                "target": -1,
+                "attacker": -2,
+                "views": [
+                  {
+                    "view": "own",
+                    "nearestDelta": 5.4836273193359375e-05,
+                    "contacts": 10,
+                    "frames": 14,
+                    "userId": -2
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0026848316192626953,
+                    "contacts": 8,
+                    "frames": 12,
+                    "userId": -1
+                  }
+                ]
+              }
+            ],
+            "ownerAnimationFrames": 565,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 76,
+                "clientFrames": 76,
+                "clientPath": 11.250759044139159,
+                "maxRootRise": 0.3451690673828125,
+                "serverFrames": 78,
+                "anchoredFrames": 0,
+                "serverPath": 11.232538755786663
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 11.940179794655023,
+                "maxRootRise": 0.5322151184082031,
+                "serverFrames": 78,
+                "anchoredFrames": 0,
+                "serverPath": 11.931000970881087
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 565,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    },
+    {
+      "file": "moving50_entry_cross_20261016.json",
+      "bytes": 566251,
+      "sha256": "f4d2007833f0a3ad1f1f2c6472541d32d9d63913dfcd0bc36dfac89b6510f2cc",
+      "category": "final_movement_code_strict_contact_gate",
+      "testedRevision": "e219b36 + immediate predicted movement restriction; no remote visual offset",
+      "appliedNetwork": {
+        "InboundNetworkJitterMs": 0,
+        "OutboundNetworkJitterMs": 0,
+        "IncomingReplicationLag": 0,
+        "OutboundNetworkMinDelayMs": 50,
+        "InboundNetworkMinDelayMs": 50,
+        "InboundNetworkLossPercent": 0,
+        "OutboundNetworkLossPercent": 0
+      },
+      "summary": {
+        "inconclusive": 0,
+        "passed": 1,
+        "failed": 1
+      },
+      "echoRoundTripMs": {
+        "count": 4,
+        "min": 132.5829029083252,
+        "max": 133.58712196350098
+      },
+      "cases": [
+        {
+          "id": "moving_target_entry",
+          "status": "FAIL",
+          "expect": "a_hits_b",
+          "moving": true,
+          "failures": [
+            "Moving server damage had no nearby rendered blade/body-box contact on own view"
+          ],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [
+              {
+                "at": 1792108560.563428,
+                "action": "SwordR1_1",
+                "target": -2,
+                "attacker": -1,
+                "views": [
+                  {
+                    "view": "own",
+                    "contacts": 0,
+                    "userId": -1,
+                    "frames": 15
+                  },
+                  {
+                    "view": "peer",
+                    "nearestDelta": 0.0030431747436523438,
+                    "contacts": 9,
+                    "frames": 15,
+                    "userId": -2
+                  }
+                ]
+              }
+            ],
+            "actualPlayerDamage": true,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 77,
+                "clientPath": 3.980709522149482,
+                "maxRootRise": 0.003475189208984375,
+                "serverFrames": 72,
+                "anchoredFrames": 0,
+                "serverPath": 4.111851855079749
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 77,
+                "clientFrames": 78,
+                "clientPath": 5.907466364892116,
+                "maxRootRise": 0,
+                "serverFrames": 72,
+                "anchoredFrames": 0,
+                "serverPath": 5.79513801006442
+              }
+            },
+            "fullAnimationFrameEvidence": true,
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "observerAnimationFrames": 563,
+            "ownerAnimationFrames": 563,
+            "ownerDuplicateTrackSamples": 0
+          }
+        },
+        {
+          "id": "moving_close_crossing",
+          "status": "PASS",
+          "expect": "observe",
+          "moving": true,
+          "failures": [],
+          "inconclusive": [],
+          "checks": {
+            "maximumOwnerWeightedTracksPerId": 1,
+            "damageOncePerAction": true,
+            "ownerNativeTracks": true,
+            "observerAnimationDuplicateFrames": 0,
+            "actualHitVisuals": [],
+            "ownerAnimationFrames": 564,
+            "maximumObserverWeightedTracksPerId": 1,
+            "maximumObserverWeightedPerIdAllAnimationFrames": 1,
+            "movingActors": {
+              "-1": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 79,
+                "clientFrames": 79,
+                "clientPath": 7.637327230300798,
+                "maxRootRise": 0.17954635620117188,
+                "serverFrames": 72,
+                "anchoredFrames": 0,
+                "serverPath": 7.987581074726222
+              },
+              "-2": {
+                "wrongOwnerFrames": 0,
+                "lockFrames": 78,
+                "clientFrames": 78,
+                "clientPath": 9.731316319312327,
+                "maxRootRise": 0.4513206481933594,
+                "serverFrames": 72,
+                "anchoredFrames": 0,
+                "serverPath": 9.698638549121824
+              }
+            },
+            "ownerAnimationDuplicateFrames": 0,
+            "maximumOwnerWeightedPerIdAllAnimationFrames": 1,
+            "observerDuplicateTrackSamples": 0,
+            "actualEchoReplies": 2,
+            "duplicateTrackExamples": [],
+            "observerNativeTracks": true,
+            "fullAnimationFrameEvidence": true,
+            "observerAnimationFrames": 564,
+            "ownerDuplicateTrackSamples": 0
+          }
+        }
+      ]
+    }
+  ],
+  "rawArchive": {
+    "file": "moving_pvp_raw_2026_10_16.zip",
+    "bytes": 2639032,
+    "sha256": "bd4ace53faa084191e8d8f53f3f01a57ac60b2169bbd26825d7d7ad20399222b",
+    "members": [
+      {
+        "file": "moving0_probe_20261016.json",
+        "bytes": 710713,
+        "sha256": "b5d1b8b84accc9983efa708249789329c9caa77860cbdcbdc7834b5609553e9d",
+        "category": "before_fix_and_fixture_calibration"
+      },
+      {
+        "file": "moving150_rolls_probe_20261016.json",
+        "bytes": 771742,
+        "sha256": "3bbcbec2d161f4fb0deb451ff2784771f500dabb8f7816db1ea185e4fcd50ac9",
+        "category": "before_fix_and_fixture_calibration"
+      },
+      {
+        "file": "moving300_windup_before_20261016.json",
+        "bytes": 803500,
+        "sha256": "2e3919695810caeb4b2d4a4758031f954d4fe6fb731d5bb8161a1a14da7abe56",
+        "category": "before_fix_and_fixture_calibration"
+      },
+      {
+        "file": "moving300_prediction_after_20261016.json",
+        "bytes": 792579,
+        "sha256": "ad7844921eeecf7735d9935f498d0d9381de647204c84d00b36dfd22fb5ccd8f",
+        "category": "final_movement_code_earlier_contact_gate"
+      },
+      {
+        "file": "moving300_hits_after_20261016.json",
+        "bytes": 898709,
+        "sha256": "b2e115a7f9d56cc60e54ebdd653d88ceca3bd4abc748548b53dea63253a57b77",
+        "category": "final_movement_code_earlier_contact_gate"
+      },
+      {
+        "file": "moving300_sides_reject_20261016.json",
+        "bytes": 833518,
+        "sha256": "daf116540176cb967d68306fdf8f235a7b71a97870bb7af048459726cb2b632d",
+        "category": "final_movement_code_earlier_contact_gate"
+      },
+      {
+        "file": "moving300_entry_cross_20261016.json",
+        "bytes": 886298,
+        "sha256": "e92cb37a99776b4d8964858adeff699000581698924b7726ebd8b6be72d5296a",
+        "category": "final_movement_code_strict_contact_gate"
+      },
+      {
+        "file": "moving300_visual_after_20261016.json",
+        "bytes": 910833,
+        "sha256": "db9a0773f7995dea657afda4bfafe5be2c8aa21124b0b45dea96d5ac24831561",
+        "category": "rejected_experiment_NOT_SHIPPED"
+      },
+      {
+        "file": "moving0_final_20261016.json",
+        "bytes": 3154666,
+        "sha256": "c89217f35979b93d17be93f355822b03a6d1848d79b34997115f9adf999d4b92",
+        "category": "final_movement_code_strict_contact_gate"
+      },
+      {
+        "file": "moving0_backward_retry_20261016.json",
+        "bytes": 276359,
+        "sha256": "e0e59abde74b734286df86ee20293c85eb8bccd8a65e4ad9aed1a3ee37c84c93",
+        "category": "final_movement_code_strict_contact_gate"
+      },
+      {
+        "file": "moving150_final_20261016.json",
+        "bytes": 3130611,
+        "sha256": "ab4eeeda86c10eefbfde2573faf809bd2e10688b1ac7b30662156b9a8d1c7433",
+        "category": "final_movement_code_strict_contact_gate"
+      },
+      {
+        "file": "moving50_entry_cross_20261016.json",
+        "bytes": 566251,
+        "sha256": "f4d2007833f0a3ad1f1f2c6472541d32d9d63913dfcd0bc36dfac89b6510f2cc",
+        "category": "final_movement_code_strict_contact_gate"
+      }
+    ]
+  },
+  "limits": [
+    "Earlier contact gates establish server damage and weighted clips, not necessarily blade/body overlap on both clients. Strict-gate reports retain their actual failures.",
+    "Client visual contact is sampled blade centreline versus inflated body oriented boxes, not mesh contact or a human animation review. The strict gate requires contact within 150ms of the server damage timestamp on both clients.",
+    "Fast incoming/crossing targets at measured echo RTT around 133-650ms can receive valid server contact without visible contact on the attacker's delayed view. Network rewind and synchronized movement simulation are not implemented.",
+    "The rejected root-joint visual offset experiment is archived for diagnosis; its production files were restored before the final runs.",
+    "Passing controlled inputs do not certify all avatars, Internet connections, obstacles, slopes, devices or published AnimationId permissions."
+  ]
+}

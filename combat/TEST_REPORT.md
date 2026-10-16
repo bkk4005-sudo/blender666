@@ -1,5 +1,49 @@
 # Test report — latest verification 2026-10-16
 
+## Moving two-player PvP — 2026-10-16, later pass
+
+**Release verdict: NOT READY.** This pass fixes the owner's movement restriction before server acknowledgement and adds genuine moving-player coverage. It also exposes an unresolved moving-target presentation defect under latency. The earlier stationary/contact results below do not supersede this finding.
+
+Two actual Players (-1/-2) ran native held W/A/S/D, Q lock-on, mouse attacks and Space rolls in separate Studio client processes. Both roots remained unanchored and network-owned by their actual players during the moving schedules. Server and owner-client paths each had to exceed one stud; wrong ownership, anchoring or missing position samples failed the gate. The harness resets positions/HP/stamina only before each future input schedule. It does not send hit claims, substitute players or force the camera/facing each frame in moving cases.
+
+### Results on the retained production code
+
+| Inbound / outbound added delay | Actual QA echo RTT | Recorded strict-gate attempts | Result |
+| --- | --- | --- | --- |
+| 0 / 0 ms | 32.647–50.315 ms | 10 PASS, 1 FAIL | R1/R2, two-way strafe exchange, retreat/overshoot misses, forward/side rolls, incoming target and close crossing pass. Backward-roll fixture began its server i-frames too late; see diagnosis below. |
+| 0 / 0 ms, backward-roll retry | 30.022–30.226 ms | 1 PASS | Earlier native input, zero damage; continuous owner/peer roll despite actual LMB/RMB delivery. |
+| 50 / 50 ms, focused moving target | 132.583–133.587 ms | 1 PASS, 1 FAIL | Close crossing passes; fast incoming target fails the two-client visible-contact gate. |
+| 150 / 150 ms | 332.424–351.429 ms | 10 PASS, 1 FAIL | Startup restriction, R1/R2, strafe exchange, retreat miss, four rolls and crossing pass; incoming target fails visible contact on the attacker's view. |
+| 300 / 300 ms, focused strict gate | 632.241–650.233 ms | 1 PASS, 2 FAIL | Backward roll passes; incoming target and close crossing fail the visual-contact gate. |
+
+Strict-gate total: **28 attempts, 23 PASS, 5 FAIL**. One failure is a diagnosed late-input fixture, with a passing retry; four remain recorded visual consistency failures. No failed status was rewritten. Nine additional high-delay attempts on this same movement code passed the earlier server/animation gates: startup restriction/resumption, R1/R2 hits, strafe trades, forward/side rolls, retreat miss and recovery after actual server rejection. Those nine PASS labels do not by themselves prove both-client visual contact.
+
+Across these 37 retained-code attempts there were **42,016 own/peer PreSimulation animation observations and zero exact-ID duplicate frames**. Roll input checks observed both native CAS Begin events, no approved attack during the roll, and no sampled missing/competing/backward roll time. Continuity samples remain 20 Hz, not a claim about every rendered pose. All reports completed without harness errors. Jitter/loss and legacy IncomingReplicationLag were zero. The baseline child server and both child clients were also read directly and reported zero added delay/legacy lag.
+
+### Confirmed production fix
+
+Before the fix at 300/300 ms, all 11 sampled pre-acknowledgement R1 wind-up frames retained walking input and the idle lock-on turn limit. The owner could keep walking through anticipation while the server was still receiving the request. `CombatClient` now immediately sets its action WalkSpeed to zero, clears Humanoid movement intent and applies the configured sword turn limit from the local predicted action. The PlayerModule remains enabled; authored action displacement remains the server's plane velocity. This does not move the root by CFrame or grant client damage/i-frames.
+
+After the fix, the matching high-delay scenario had nine pre-ACK samples with zero walking/fast-facing violations and 20 resumed movement samples after recovery. The 150/150 ms run had five pre-ACK samples with zero violations. A genuine block/attack race produced a sequence-matched server rejection and 41 resumed movement samples. Character cleanup releases the local override; existing server state restrictions remain authoritative.
+
+### Failed-attempt diagnosis and open defect
+
+- The baseline backward roll took 22 damage at **0.182452 s** after its accepted start. Its configured i-frames begin at **0.200 s**. Both clients had actual blade/body-box contact, so this was a valid early hit. Directional test input requires a direction key and a simulation step before Space; moving its schedule from 0.98 to 0.90 s produced the passing zero-damage retry. Production invulnerability was not widened.
+- Initial long-held approach/heavy fixtures sometimes passed behind the opponent before the active window, so an expected hit was a real miss. These calibration failures remain archived. Final hit fixtures approach, release walking and then attack. The separate overshoot and retreat scenarios explicitly verify misses.
+- **Open: fast incoming/crossing target under latency.** The server and defender can have valid blade contact while the attacker's replicated target position still lies outside the sword. In the incoming-target attempts at 50/150/300 ms per direction, the attacker's entire sampled active interval had zero blade/body contacts, while the defender had contacts. At 300/300 ms, a crossing hit also exhibited this disagreement. This is visible phantom-range behavior and blocks competitive release, even though server geometry, one-hit limits and i-frames still validate. Passing stationary cases cannot certify this behavior.
+- A bounded remote root-joint visual extrapolation was tried and rejected: it did not resolve contact disagreement and one close crossing lifted a root 4.267 studs without jump input. Its source/module/import changes were removed. The retained code's corresponding high-delay crossing stayed within 0.429 studs of setup root height. The failed experiment remains in the evidence archive, explicitly marked NOT SHIPPED. No remote body offset or extra presentation module is present in the delivered package.
+
+The strict contact gate uses the actual weapon MeshPart blade centreline against direct R15 body oriented boxes expanded by 0.18 studs, with obstruction rays. Every positive health loss requires observed contact within 150 ms on both clients. This is an authored QA criterion, not a measured DS3 rule or exact mesh collision. Full active-interval traces are also retained. Fixing the remaining temporal disagreement requires further movement/presentation and authoritative history work; this pass does not add rewind, client hit authority or larger hitboxes to mask it.
+
+### Reproduction and delivery evidence
+
+- `tools/qa_pvp_moving_cases.json` contains the native movement schedules; `tools/QA_PVP_MATRIX.md` documents the moving protocol and gate limits.
+- `tests/moving_pvp_2026_10_16.json` indexes **all 49 attempts**, including calibration failures and the rejected experiment. The complete raw JSON traces are in `tests/moving_pvp_raw_2026_10_16.zip` (about 2.64 MB), with archive/member SHA256 hashes. Extract into `review/` and run `tools/archive_moving_pvp_evidence.py` to reproduce the index. `tools/analyse_pvp.py` can additionally derive detailed animation phase summaries from each raw member.
+- `tests/installed_moving_sources_2026_10_16.json` compares all 18 installed production sources with disk, preserving the three trailing-newline differences as metadata. Unrelated ArenaCamera/AshenMannequinPreview are excluded from the combat source comparison.
+- `tests/package_moving_2026_10_16.json`: rebuilt XML embeds all 18 matching production sources; all 12 standalone KFS files are byte-for-byte unchanged from the preceding commit. Asset, marker, pacing, seam and package validators pass. Independent Studio XML reimport remains NOT TESTED in this pass.
+
+This is a network QA/fix pass, not new animation authoring or certification of arbitrary avatar cosmetics, terrain, devices, published asset access or Internet conditions. Existing map work is excluded from the combat commit.
+
 ## Two real clients, delayed PvP and regression — 2026-10-16
 
 Executed in the user's open `blender666_Studio.rbxl` with `StudioTestService:ExecuteMultiplayerTestAsync(2, args)`: two actual Players (-1/-2), separate client DataModels, native VirtualInput through the production bindings, actual server acceptance and health changes. The QA RemoteEvent carries schedules/observations only. Contact cases anchor the real roots 3.2 studs apart; free-roll cases use normal client network ownership. These are controlled network contact tests, not free-moving duel certification.

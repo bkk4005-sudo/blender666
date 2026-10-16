@@ -306,7 +306,7 @@ def compact_case(case, real_players, timing):
     no_loss = [r for r in damages if r.get("returned") is True and r not in positive]
     keep = ("id", "label", "status", "expect", "checks", "failures", "inconclusive", "instrumentationErrors",
             "setup", "t0", "duration", "inputs", "received", "started", "pings", "finalHealth", "healthEvents",
-            "deaths", "lethalFrames", "lifecycle", "cleanup", "respawn", "restored")
+            "deaths", "lethalFrames", "lifecycle", "cleanup", "respawn", "restored", "moving")
     result = {key: case[key] for key in keep if key in case}
     result.update(positiveDamage=positive, rejectedContacts=aggregate_contacts(rejected),
         acceptedNoHealthLoss=aggregate_contacts(no_loss), acceptedActionAnalysis=analysis,

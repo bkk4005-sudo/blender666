@@ -1665,6 +1665,7 @@ local confirmedAction = nil
 local lastAcceptedSerial = 0
 local learnedAckRTT = .25
 local destroyed = false
+local movementSuppressed = false
 local lifetimeConnections = {}
 local function connectLifetime(signal, callback)
     local connection = signal:Connect(function(...)
@@ -1689,7 +1690,42 @@ local function canStart()
         and (not localAction or os.clock() &gt;= localAction.ends)
 end
 
+local function releasePredictedMovement()
+    if movementSuppressed and humanoid and humanoid.Parent and humanoid.Health &gt; 0 then
+        local state = character and character:GetAttribute("CombatState")
+        if state == "Idle" or state == "Moving" or state == "Sprinting" or state == "Blocking" then
+            humanoid.WalkSpeed = state == "Blocking" and Config.BlockWalkSpeed
+                or state == "Sprinting" and Config.SprintSpeed or Config.WalkSpeed
+            humanoid.AutoRotate = target == nil
+        end
+    end
+    movementSuppressed = false
+    if script.Parent then script:SetAttribute("MovementPredictionSuppressed", false) end
+end
+
+local function predictMovementRestriction()
+    if not humanoid or humanoid.Health &lt;= 0 then return end
+    local localBusy = localAction and os.clock() &lt; localAction.ends
+    local state = character and character:GetAttribute("CombatState")
+    local serverFree = state == "Idle" or state == "Moving" or state == "Sprinting" or state == "Blocking"
+    if localBusy or (movementSuppressed and not serverFree) then
+        if not movementSuppressed then
+            movementSuppressed = true
+            script:SetAttribute("MovementPredictionSuppressed", true)
+        end
+        -- Match the server's action restriction on the first input frame.
+        -- PlayerModule remains active; its walking intent cannot propel a
+        -- predicted wind-up/roll while the server response is in transit.
+        humanoid.WalkSpeed = 0
+        humanoid.AutoRotate = false
+        humanoid:Move(Vector3.zero, false)
+    elseif movementSuppressed then
+        releasePredictedMovement()
+    end
+end
+
 local function disconnectTracks()
+    releasePredictedMovement()
     for _, connection in trackConnections do connection:Disconnect() end
     table.clear(trackConnections)
     for _, track in tracks do track:Stop(0); track:Destroy() end
@@ -1855,6 +1891,7 @@ local function send(kind, direction, predictedName, moveDirection)
         predicted = {name = predictedName, sequence = inputSequence, sent = now, sentServer = sentServer,
             deadline = now + math.max((action and action.duration or 0) + .5, learnedAckRTT * 2 + .5)}
         localAction = {name = predictedName, ends = os.clock() + (action and action.duration or .38)}
+        predictMovementRestriction()
         predicted.localAction = localAction
         comboSubmitted = false
         comboBuffer, comboRequest = nil, nil
@@ -2139,6 +2176,7 @@ connectLifetime(remote.OnClientEvent, function(kind, owner, semantic, started, m
         comboSubmitted = false
         firstR1Input, comboBuffer, comboRequest = nil, nil, nil
         script:SetAttribute("PredictionStatus", "Rejected")
+        predictMovementRestriction()
         return
     end
     if kind ~= "Started" then return end
@@ -2228,6 +2266,7 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
     end
     if confirmedAction then alignConfirmed(confirmedAction) end
     dispatchCombo()
+    predictMovementRestriction()
     local state = character:GetAttribute("CombatState")
     if rolling() and actionTrack then
         -- Suppress emotes/foreign action tracks while this complete roll is playing.
@@ -2260,7 +2299,9 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
             local flat = Vector3.new(delta.X, 0, delta.Z)
             if flat.Magnitude &gt; 0.2 then
                 local state = character:GetAttribute("CombatState")
-                local action = state == "AttackStartup" or state == "AttackActive" or state == "AttackRecovery"
+                local localBusy = localAction and os.clock() &lt; localAction.ends
+                local action = localBusy and localAction.name:sub(1, 5) == "Sword"
+                    or (not localBusy and (state == "AttackStartup" or state == "AttackActive" or state == "AttackRecovery"))
                 facingAlign.Enabled = not rolling()
                 local facingAction = localAction and Config.Actions[localAction.name]
                 facingAlign.MaxAngularVelocity = math.rad(action and (facingAction and facingAction.turnRate or Config.Actions.SwordR1_1.turnRate) or 180)
@@ -2281,7 +2322,7 @@ RunService:BindToRenderStep("CombatFoundationController", Enum.RenderPriority.Ch
         if desired.Magnitude &gt; 1 then desired = desired.Unit end
         moveVector = moveVector:Lerp(desired, 1 - math.exp(-dt * (desired.Magnitude &gt; 0 and 8 or 12)))
         if moveVector.Magnitude &lt; 0.01 then moveVector = Vector3.zero end
-        if character:GetAttribute("CombatState") == "Rolling" then moveVector = Vector3.zero end
+        if movementSuppressed or rolling() then moveVector = Vector3.zero end
         humanoid:Move(moveVector, true)
     end
     local idle = tracks.CombatIdle

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "moving_windup_stop", "distance": 20, "duration": 4.6, "expect": "miss", "requirePredictedStop":true, "requireResume":true,
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":3.3},{"action":"R1","at":0.65}],
+    "second": [{"action":"Lock","at":0},{"action":"S","at":0.15,"hold":2.0}]
+  },
+  {
+    "id": "moving_overshoot_miss", "distance": 8, "duration": 4.6, "expect": "miss",
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":1.8},{"action":"R1","at":0.75}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":1.4}]
+  },
+  {
+    "id": "moving_close_r1", "distance": 8, "duration": 4.6, "expect": "a_hits_b",
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.35},{"action":"R1","at":0.58}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.25}]
+  },
+  {
+    "id": "moving_retreat_miss", "distance": 3.6, "duration": 4.6, "expect": "miss",
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":2.4},{"action":"R1","at":0.8}],
+    "second": [{"action":"Lock","at":0},{"action":"S","at":0.15,"hold":2.4}]
+  },
+  {
+    "id": "moving_forward_roll", "distance": 8, "duration": 4.6, "expect": "iframe", "requireRoll":true, "checkRollInputs":true,
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":1.0},{"action":"R1","at":0.75}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.40},{"action":"Roll","at":0.98},{"action":"R1","at":1.25},{"action":"R2","at":1.48}]
+  },
+  {
+    "id": "moving_backward_roll", "distance": 8, "duration": 4.6, "expect": "dodge", "requireRoll":true, "checkRollInputs":true,
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":1.0},{"action":"R1","at":0.75}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.40},{"action":"RollBackward","at":0.90},{"action":"R1","at":1.25},{"action":"R2","at":1.48}]
+  },
+  {
+    "id": "moving_strafe_exchange", "distance": 9.5, "duration": 4.6, "expect": "both_hit",
+    "first": [{"action":"Lock","at":0},{"action":"D","at":0.15,"hold":0.25},{"action":"W","at":0.45,"hold":0.30},{"action":"R1","at":1.05}],
+    "second": [{"action":"Lock","at":0},{"action":"A","at":0.15,"hold":0.25},{"action":"W","at":0.45,"hold":0.30},{"action":"R1","at":1.10}]
+  },
+  {
+    "id": "moving_heavy_approach", "distance": 8, "duration": 5.0, "expect": "a_hits_b",
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.35},{"action":"R2","at":0.58}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.25}]
+  },
+  {
+    "id": "moving_left_roll", "distance": 8, "duration": 4.6, "expect": "dodge", "requireRoll":true, "checkRollInputs":true,
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":1.0},{"action":"R1","at":0.75}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.40},{"action":"RollLeft","at":0.98},{"action":"R1","at":1.25},{"action":"R2","at":1.48}]
+  },
+  {
+    "id": "moving_right_roll", "distance": 8, "duration": 4.6, "expect": "dodge", "requireRoll":true, "checkRollInputs":true,
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":1.0},{"action":"R1","at":0.75}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.40},{"action":"RollRight","at":0.98},{"action":"R1","at":1.25},{"action":"R2","at":1.48}]
+  },
+  {
+    "id": "moving_rejected_attack", "distance": 20, "duration": 4.6, "expect": "reject",
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":3.3},{"action":"Block","at":0.65,"hold":0.7},{"action":"R1","at":0.75}],
+    "second": [{"action":"Lock","at":0},{"action":"S","at":0.15,"hold":2.0}]
+  },
+  {
+    "id": "moving_target_entry", "distance": 10, "duration": 4.6, "expect": "a_hits_b",
+    "first": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.30},{"action":"R1","at":0.65}],
+    "second": [{"action":"Lock","at":0},{"action":"W","at":0.15,"hold":0.12},{"action":"W","at":0.80,"hold":0.45}]
+  },
+  {
+    "id": "moving_close_crossing", "distance": 7, "duration": 4.6, "expect": "observe", "requireGrounded":true,
+    "first": [{"action":"Lock","at":0},{"action":"D","at":0.15,"hold":0.25},{"action":"W","at":0.45,"hold":1.5},{"action":"R1","at":0.95}],
+    "second": [{"action":"Lock","at":0},{"action":"A","at":0.15,"hold":0.25},{"action":"W","at":0.45,"hold":1.5},{"action":"R1","at":1.10}]
+  }
+]

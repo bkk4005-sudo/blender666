@@ -38,12 +38,12 @@ if not inputOK then return end
 
 local function now() return workspace:GetServerTimeNow() end
 local function vector(v) return {v.X,v.Y,v.Z} end
-local function press(action,report)
+local function press(action,report,hold)
     local viewport=workspace.CurrentCamera.ViewportSize
     local position=Vector2.new(viewport.X*.55,viewport.Y*.65)
     local buttons={R1=Enum.UserInputType.MouseButton1,R2=Enum.UserInputType.MouseButton2}
     local keys={Roll=Enum.KeyCode.Space,Parry=Enum.KeyCode.E,Block=Enum.KeyCode.F,Sprint=Enum.KeyCode.LeftShift,
-        W=Enum.KeyCode.W,A=Enum.KeyCode.A,S=Enum.KeyCode.S,D=Enum.KeyCode.D}
+        W=Enum.KeyCode.W,A=Enum.KeyCode.A,S=Enum.KeyCode.S,D=Enum.KeyCode.D,Lock=Enum.KeyCode.Q}
     local time=now()
     local ok,err=pcall(function()
         if buttons[action] then
@@ -52,7 +52,7 @@ local function press(action,report)
             virtual:SendMouseButton(position,buttons[action],false)
         elseif keys[action] then
             virtual:SendKey(true,keys[action],false)
-            task.wait(.025)
+            task.wait(hold or .025)
             virtual:SendKey(false,keys[action],false)
         elseif action=="RollBackward" or action=="RollLeft" or action=="RollRight" then
             local key=action=="RollBackward" and Enum.KeyCode.S or (action=="RollLeft" and Enum.KeyCode.A or Enum.KeyCode.D)
@@ -64,7 +64,44 @@ local function press(action,report)
             virtual:SendKey(false,key,false)
         else error("Unknown QA input "..tostring(action)) end
     end)
-    table.insert(report.inputs,{action=action,at=time,ok=ok,error=not ok and tostring(err) or nil})
+    table.insert(report.inputs,{action=action,at=time,released=now(),hold=hold,ok=ok,error=not ok and tostring(err) or nil})
+end
+local Visual=require(foundation.Shared.WeaponVisualConfig)
+local Config=require(foundation.Shared.CombatConfig)
+local function segmentBox(a,b,part)
+    a,b=part.CFrame:PointToObjectSpace(a),part.CFrame:PointToObjectSpace(b)
+    local d,lo,hi=b-a,0,1
+    for _,axis in {"X","Y","Z"} do
+        local edge=part.Size[axis]/2+.18
+        if math.abs(d[axis])<1e-8 then if math.abs(a[axis])>edge then return nil end
+        else
+            local x,y=(-edge-a[axis])/d[axis],(edge-a[axis])/d[axis]
+            if x>y then x,y=y,x end
+            lo,hi=math.max(lo,x),math.min(hi,y)
+            if lo>hi then return nil end
+        end
+    end
+    return part.CFrame:PointToWorldSpace(a+d*lo)
+end
+local function bladeView(attacker,target)
+    local weapon=attacker and attacker:FindFirstChild("CombatTestSword")
+    local blade=weapon and weapon:FindFirstChildWhichIsA("MeshPart",true)
+    local root=attacker and attacker:FindFirstChild("HumanoidRootPart")
+    if not blade or not root or not target then return nil end
+    local a=blade.CFrame:PointToWorldSpace(Vector3.new(0,-.635*Visual.MeshScale.Y,0))
+    local b=blade.CFrame:PointToWorldSpace(Vector3.new(0,2.355*Visual.MeshScale.Y,0))
+    local ray=RaycastParams.new()
+    ray.FilterType,ray.FilterDescendantsInstances,ray.RespectCanCollide=Enum.RaycastFilterType.Exclude,{attacker,target},true
+    local result={a=vector(a),b=vector(b),parts={},visible=false}
+    for _,part in target:GetChildren() do
+        if not part:IsA("BasePart") or part.Name=="HumanoidRootPart" then continue end
+        local contact=segmentBox(a,b,part)
+        if contact then
+            table.insert(result.parts,part.Name)
+            if not workspace:Raycast(root.Position,a-root.Position,ray) and not workspace:Raycast(a,contact-a,ray) then result.visible=true end
+        end
+    end
+    return result
 end
 local function tracks(character)
     local h=character and character:FindFirstChildOfClass("Humanoid")
@@ -84,7 +121,7 @@ qa.OnClientEvent:Connect(function(kind,case)
     if kind=="Ping" then qa:FireServer("Pong",case,now()); return end
     if kind~="Case" then return end
     task.spawn(function()
-        local report={player=player.Name,userId=player.UserId,received=now(),t0=case.t0,inputs={},events={},samples={},healthEvents={},playEvents={},logs={},bindingEvents={},
+        local report={player=player.Name,userId=player.UserId,received=now(),t0=case.t0,inputs={},events={},samples={},healthEvents={},playEvents={},logs={},bindingEvents={},visualFrames={},
             animationFrames={scope="Every PreSimulation after animation evaluation; Action priority and above",own={frames=0,duplicateFrames=0,maxPerId=0},peer={frames=0,duplicateFrames=0,maxPerId=0},examples={}}}
         local character=player.Character
         local h=character and character:FindFirstChildOfClass("Humanoid")
@@ -112,6 +149,21 @@ qa.OnClientEvent:Connect(function(kind,case)
                             if counts[track.id]>1 then duplicate=true end
                         end
                     end
+                    if case.moving and #report.visualFrames<1200 then
+                        local attacker=side=="own" and player.Character or other and other.Character
+                        local target=side=="own" and other and other.Character or player.Character
+                        for _,track in list do
+                            local action=Config.Actions[track.name]
+                            if action and action.active and track.weight>.05
+                                and track.time>=action.active[1]-1/60 and track.time<=action.active[2]+1/60 then
+                                local actorRoot=attacker and attacker:FindFirstChild("HumanoidRootPart")
+                                local targetRoot=target and target:FindFirstChild("HumanoidRootPart")
+                                table.insert(report.visualFrames,{at=now(),view=side,action=track.name,time=track.time,
+                                    actorPosition=actorRoot and vector(actorRoot.Position),targetPosition=targetRoot and vector(targetRoot.Position),
+                                    blade=bladeView(attacker,target)})
+                            end
+                        end
+                    end
                     if duplicate then
                         stats.duplicateFrames+=1
                         if #report.animationFrames.examples<8 then table.insert(report.animationFrames.examples,{at=now(),side=side,tracks=list}) end
@@ -129,12 +181,20 @@ qa.OnClientEvent:Connect(function(kind,case)
             end))
             report.startPosition=vector(root.Position)
             local forward=Vector3.new(root.CFrame.LookVector.X,0,root.CFrame.LookVector.Z).Unit
-            Run:BindToRenderStep(binding,Enum.RenderPriority.Last.Value+2,function()
-                if character.Parent then
-                    h.AutoRotate=false
-                    camera.CFrame=CFrame.lookAt(root.Position-forward*9+Vector3.new(0,4,0),root.Position+Vector3.new(0,1,0))
-                end
-            end)
+            if case.moving then
+                -- Native PlayerModule/lock-on owns the camera and facing.
+                -- Only initialize the view before the future input schedule.
+                camera.CameraType=Enum.CameraType.Custom
+                camera.CameraSubject=h
+                camera.CFrame=CFrame.lookAt(root.Position-forward*9+Vector3.new(0,4,0),root.Position+Vector3.new(0,1,0))
+            else
+                Run:BindToRenderStep(binding,Enum.RenderPriority.Last.Value+2,function()
+                    if character.Parent then
+                        h.AutoRotate=false
+                        camera.CFrame=CFrame.lookAt(root.Position-forward*9+Vector3.new(0,4,0),root.Position+Vector3.new(0,1,0))
+                    end
+                end)
+            end
             table.insert(connections,remote.OnClientEvent:Connect(function(event,owner,name,started,metadata)
                 table.insert(report.events,{event=event,owner=typeof(owner)=="Instance" and owner.Name or owner,name=name,started=started,at=now(),
                     serial=type(metadata)=="table" and metadata.serial,sequence=type(metadata)=="table" and metadata.sequence,
@@ -150,7 +210,7 @@ qa.OnClientEvent:Connect(function(kind,case)
             for _,command in commands do
                 task.spawn(function()
                     while alive and now()<case.t0+command.at do Run.Heartbeat:Wait() end
-                    if alive then press(command.action,report) end
+                    if alive then press(command.action,report,command.hold) end
                 end)
             end
             local nextSample=case.t0-.1
@@ -162,11 +222,25 @@ qa.OnClientEvent:Connect(function(kind,case)
                     local ownRoot=own and own:FindFirstChild("HumanoidRootPart")
                     local other=Players:FindFirstChild(case.other)
                     local peer=other and other.Character
+                    local peerRoot=peer and peer:FindFirstChild("HumanoidRootPart")
                     table.insert(report.samples,{at=now(),own=tracks(own),peer=tracks(peer),state=own and own:GetAttribute("CombatState"),
                         health=own and own:FindFirstChildOfClass("Humanoid") and own.Humanoid.Health,
                         peerState=peer and peer:GetAttribute("CombatState"),position=ownRoot and vector(ownRoot.Position),
                         phaseError=controller:GetAttribute("AnimationPhaseError"),phaseCorrection=controller:GetAttribute("AnimationPhaseCorrection"),
-                        prediction=controller:GetAttribute("PredictionStatus"),ackRTT=controller:GetAttribute("PredictionAckRTT")})
+                        prediction=controller:GetAttribute("PredictionStatus"),ackRTT=controller:GetAttribute("PredictionAckRTT"),
+                        peerPosition=case.moving and peerRoot and vector(peerRoot.Position),
+                        velocity=case.moving and ownRoot and vector(ownRoot.AssemblyLinearVelocity),
+                        peerVelocity=case.moving and peerRoot and vector(peerRoot.AssemblyLinearVelocity),
+                        facing=case.moving and ownRoot and vector(ownRoot.CFrame.LookVector),
+                        peerFacing=case.moving and peerRoot and vector(peerRoot.CFrame.LookVector),
+                        anchored=case.moving and ownRoot and ownRoot.Anchored,
+                        peerAnchored=case.moving and peerRoot and peerRoot.Anchored,
+                        walkSpeed=case.moving and h.WalkSpeed,moveDirection=case.moving and vector(h.MoveDirection),
+                        autoRotate=case.moving and h.AutoRotate,
+                        facingMaxAngular=case.moving and root:FindFirstChildWhichIsA("AlignOrientation") and root:FindFirstChildWhichIsA("AlignOrientation").MaxAngularVelocity,
+                        movementSuppressed=case.moving and controller:GetAttribute("MovementPredictionSuppressed"),
+                        lockActive=case.moving and ownRoot and ownRoot:FindFirstChild("CombatLockFacing")~=nil,
+                        ownBlade=case.moving and bladeView(own,peer),peerBlade=case.moving and bladeView(peer,own)})
                 end
             end
             report.endPosition=vector(root.Position)
@@ -175,6 +249,7 @@ qa.OnClientEvent:Connect(function(kind,case)
         alive=false
         for _,c in connections do c:Disconnect() end
         Run:UnbindFromRenderStep(binding)
+        if case.moving and root and root:FindFirstChild("CombatLockFacing") then pcall(function() press("Lock",report) end) end
         camera.CameraType,camera.CFrame=savedType,savedFrame
         if h and h.Parent then h.AutoRotate=savedRotate end
         for _,key in {Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Space,Enum.KeyCode.E,Enum.KeyCode.F,Enum.KeyCode.LeftShift} do pcall(function() virtual:SendKey(false,key,false) end) end

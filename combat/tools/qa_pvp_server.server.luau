@@ -23,6 +23,7 @@ local Service, Config, Timeline, Trajectory, instance, active, selected
 local ready, clientReports = {}, {}
 local pendingPings, casesById = {}, {}
 local frameNumber, currentFrame = 0, nil
+local movingCenter
 local closed = false
 local originalUpdate, originalStart, originalDamage
 local wrappedUpdate, wrappedStart, wrappedDamage
@@ -104,12 +105,14 @@ local function resetCase(case)
     local center
     if type(args.center) == "table" then center = Vector3.new(args.center[1], args.center[2], args.center[3])
     else center = selected[1].Character.HumanoidRootPart.Position end
+    if case.moving then movingCenter=movingCenter or center; center=movingCenter end
     local params = RaycastParams.new()
     params.FilterType, params.RespectCanCollide = Enum.RaycastFilterType.Exclude, true
     params.FilterDescendantsInstances = {selected[1].Character, selected[2].Character}
     local floor = workspace:Raycast(center + Vector3.new(0, 12, 0), Vector3.new(0, -50, 0), params)
     assert(floor and floor.Normal.Y > .85, "Multiplayer fixture needs actual flat arena ground")
-    case.setup = {anchored = case.anchored ~= false, rootDistance = 3.2, health = case.hp or 100,
+    local distance=case.distance or 3.2
+    case.setup = {anchored = case.anchored ~= false, rootDistance = distance, moving=case.moving, health = case.hp or 100,
         floor = vector(floor.Position), resets = "Real profile finish + stamina100/lastSpend; HP/pose test fixture reset, no action or damage override",
         lethalHealthFixture = case.expect == "lethal" and "HP1 rather than HP22: ordinary Humanoid regeneration remains enabled; actual pre-frame HP must still be <= the opposing hit damage" or nil}
     for slot, p in selected do
@@ -128,8 +131,8 @@ local function resetCase(case)
         local side = slot == 1 and -1 or 1
         if case.roleFlip then side = -side end
         local y = floor.Position.Y + h.HipHeight + root.Size.Y / 2 + .03
-        local position = Vector3.new(center.X + side * 1.6, y, center.Z)
-        local wanted = CFrame.lookAt(position, Vector3.new(center.X - side * 1.6, y, center.Z))
+        local position = Vector3.new(center.X + side * distance/2, y, center.Z)
+        local wanted = CFrame.lookAt(position, Vector3.new(center.X - side * distance/2, y, center.Z))
         root.Anchored = case.setup.anchored
         c:PivotTo(wanted * root.CFrame:Inverse() * c:GetPivot())
         root.AssemblyLinearVelocity, root.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
@@ -151,6 +154,11 @@ local function preFrameSnapshot(self)
             alive = profile and profile.alive == true and h ~= nil and root ~= nil and h.Health > 0 or false,
             action = action, elapsed = profile and action and snapshot.at - profile.started or nil,
             started = profile and profile.started, rootPosition = root and vector(root.Position), visibleContact = false}
+        if active.moving and root then
+            local ok,owner=pcall(root.GetNetworkOwner,root)
+            row.velocity,row.facing=vector(root.AssemblyLinearVelocity),vector(root.CFrame.LookVector)
+            row.anchored,row.networkOwner=root.Anchored,ok and owner and owner.UserId or 0
+        end
         snapshot.players[tostring(p.UserId)] = row
     end
     if active.expect ~= "lethal" and not args.capturePreFrameContacts then return snapshot end
@@ -349,6 +357,123 @@ local function inspectLethalLifecycle(case, characters)
         end
     end
 end
+local function checkMoving(case,checks,failures,inconclusive)
+    if not case.moving then return end
+    checks.movingActors={}
+    for _,p in selected do
+        local stats={serverPath=0,clientPath=0,serverFrames=0,clientFrames=0,
+            anchoredFrames=0,wrongOwnerFrames=0,lockFrames=0,maxRootRise=0}
+        local previous
+        for _,frame in case.motionSamples or {} do
+            local row=frame.players[tostring(p.UserId)]
+            if row and row.rootPosition then
+                local position=Vector3.new(table.unpack(row.rootPosition))
+                if previous then local delta=position-previous;stats.serverPath+=Vector3.new(delta.X,0,delta.Z).Magnitude end
+                previous=position
+                stats.maxRootRise=math.max(stats.maxRootRise,position.Y-case.setup[tostring(p.UserId)].rootPosition[2])
+                stats.serverFrames+=1
+                if row.anchored then stats.anchoredFrames+=1 end
+                if row.networkOwner~=p.UserId then stats.wrongOwnerFrames+=1 end
+            end
+        end
+        previous=nil
+        local payload=case.clients[tostring(p.UserId)]
+        for _,row in payload and payload.samples or {} do
+            if row.at>=case.t0 and row.position then
+                local position=Vector3.new(table.unpack(row.position))
+                if previous then local delta=position-previous;stats.clientPath+=Vector3.new(delta.X,0,delta.Z).Magnitude end
+                previous=position
+                stats.clientFrames+=1
+                if row.anchored then stats.anchoredFrames+=1 end
+                if row.lockActive then stats.lockFrames+=1 end
+            end
+        end
+        checks.movingActors[tostring(p.UserId)]=stats
+        if stats.serverFrames<10 or stats.clientFrames<10 then table.insert(inconclusive,"Insufficient actual moving-player position telemetry: "..p.Name)
+        elseif stats.anchoredFrames>0 or stats.wrongOwnerFrames>0 then table.insert(failures,"Moving player was anchored or did not retain client network ownership: "..p.Name)
+        elseif stats.serverPath<1 or stats.clientPath<1 then table.insert(failures,"Both real players must actually move over one stud: "..p.Name) end
+        if case.requireGrounded and stats.maxRootRise>2 then table.insert(failures,"Grounded close exchange lifted a root over two studs without jump input: "..p.Name) end
+    end
+    if case.expect=="miss" or case.expect=="dodge" or case.expect=="reject" then
+        local damage=0
+        for _,row in case.damageAttempts do if row.after<row.before then damage+=row.before-row.after end end
+        checks.totalActualDamage=damage
+        if damage>0 then table.insert(failures,"The scheduled moving miss/dodge took actual damage; inspect geometry and timing") end
+    end
+    if case.requireRoll then
+        checks.realMovingRoll=false
+        for _,row in case.started do
+            if row.userId==selected[2].UserId and row.action:sub(1,4)=="Roll" then checks.realMovingRoll=true end
+        end
+        if not checks.realMovingRoll then table.insert(failures,"Moving defender's native roll was not server-approved") end
+    end
+    if case.expect=="reject" then
+        local owner=case.clients[tostring(selected[1].UserId)]
+        local sequence,rejected,resumed
+        for _,row in case.received do if row.userId==selected[1].UserId and row.kind=="R1" then sequence=row.sequence end end
+        for _,row in owner.events do if row.event=="Rejected" and row.owner==sequence then rejected=row.at end end
+        checks.actualAttackRejected=sequence~=nil and rejected~=nil
+        if not checks.actualAttackRejected then table.insert(inconclusive,"Native block/attack schedule did not establish an actual sequenced rejection") end
+        for _,row in owner.samples do
+            if rejected and row.at>rejected+.05 and row.walkSpeed and row.walkSpeed>0 and row.movementSuppressed==false
+                and row.moveDirection and Vector3.new(table.unpack(row.moveDirection)).Magnitude>.1 then resumed=(resumed or 0)+1 end
+        end
+        checks.movementResumedAfterRejection=resumed or 0
+        if checks.actualAttackRejected and (resumed or 0)<2 then table.insert(failures,"Server rejection left locomotion suppressed") end
+    end
+    checks.actualHitVisuals={}
+    for _,hit in case.damageAttempts do
+        if hit.after>=hit.before or not hit.targetUserId then continue end
+        local proof={action=hit.action,at=hit.at,attacker=hit.attackerUserId,target=hit.targetUserId,views={}}
+        for _,view in {{hit.attackerUserId,"own"},{hit.targetUserId,"peer"}} do
+            local payload=case.clients[tostring(view[1])]
+            local row={userId=view[1],view=view[2],frames=0,contacts=0}
+            for _,frame in payload and payload.visualFrames or {} do
+                if frame.action==hit.action and frame.view==view[2] and math.abs(frame.at-hit.at)<=.15 then
+                    row.frames+=1
+                    if frame.blade and frame.blade.visible then
+                        row.contacts+=1
+                        local delta=frame.at-hit.at
+                        if not row.nearestDelta or math.abs(delta)<math.abs(row.nearestDelta) then row.nearestDelta=delta end
+                    end
+                end
+            end
+            table.insert(proof.views,row)
+            if row.frames<2 then table.insert(inconclusive,"Insufficient actual blade/body-box frames around moving hit")
+            elseif row.contacts==0 then table.insert(failures,"Moving server damage had no nearby rendered blade/body-box contact on "..row.view.." view") end
+        end
+        table.insert(checks.actualHitVisuals,proof)
+    end
+    if case.requirePredictedStop then
+        local owner=case.clients[tostring(selected[1].UserId)]
+        local input,ack
+        for _,row in owner.inputs do if row.action=="R1" then input=row.at;break end end
+        for _,row in owner.events do if row.event=="Started" and row.owner==selected[1].Name and row.name=="SwordR1_1" then ack=row.at;break end end
+        local stats={samples=0,walkingSamples=0,fastFacingSamples=0}
+        for _,row in owner.samples do
+            if input and ack and row.at>=input+.06 and row.at<ack-.02 then
+                local active=false
+                for _,track in row.own do if track.name=="SwordR1_1" and track.weight>.05 then active=true end end
+                if not active then continue end
+                stats.samples+=1
+                if (row.walkSpeed or 0)>.01 or (row.moveDirection and Vector3.new(table.unpack(row.moveDirection)).Magnitude>.01) then stats.walkingSamples+=1 end
+                if row.facingMaxAngular and row.facingMaxAngular>math.rad(Config.Actions.SwordR1_1.turnRate)+.01 then stats.fastFacingSamples+=1 end
+            end
+        end
+        checks.predictedStartupMovement=stats
+        if stats.samples==0 then table.insert(inconclusive,"No sampled pre-acknowledgement startup interval")
+        elseif stats.walkingSamples>0 or stats.fastFacingSamples>0 then table.insert(failures,"Predicted startup retained locomotion or the idle lock-on turn limit before acknowledgement") end
+        if case.requireResume then
+            local resumed=0
+            for _,row in owner.samples do
+                if input and row.at>input+Config.Actions.SwordR1_1.duration+.8 and row.walkSpeed and row.walkSpeed>0
+                    and row.movementSuppressed==false and row.moveDirection and Vector3.new(table.unpack(row.moveDirection)).Magnitude>.1 then resumed+=1 end
+            end
+            checks.resumedLocomotionSamples=resumed
+            if resumed<2 then table.insert(failures,"Held movement did not resume after the completed action") end
+        end
+    end
+end
 local function assess(case)
     local checks, failures, inconclusive = {}, {}, {}
     checks.actualEchoReplies = #case.pings
@@ -369,7 +494,7 @@ local function assess(case)
         elseif payload.error then table.insert(failures, "Client harness: " .. p.Name .. " " .. tostring(payload.error))
         else
             for _, input in payload.inputs or {} do if not input.ok then table.insert(failures, "Native input failed: " .. p.Name .. " " .. tostring(input.error)) end end
-            if commanded(case, p.UserId) and not startsById[p.UserId] then table.insert(failures, "Native commands produced no server-approved action: " .. p.Name) end
+            if case.expect~="reject" and commanded(case, p.UserId) and not startsById[p.UserId] then table.insert(failures, "Native commands produced no server-approved action: " .. p.Name) end
         end
     end
     local perAction = {}
@@ -538,6 +663,7 @@ local function assess(case)
         table.insert(failures, "Duplicate weighted animation IDs occurred in actual owner/observer PreSimulation frames")
     end
     checkRollInputs(case, checks, failures, inconclusive)
+    checkMoving(case, checks, failures, inconclusive)
     if case.expect == "lethal" then
         checks.deathRespawnCleanup = case.lifecycle and #case.lifecycle > 0 or false
         for _, entry in case.lifecycle or {} do
@@ -571,6 +697,7 @@ local ok, failure = xpcall(function()
                 snapshot = value
                 currentFrame = snapshot
                 if case.expect == "lethal" or args.capturePreFrameAll then add(case.preFrames, snapshot) end
+                if case.moving and frameNumber%2==0 then add(case.motionSamples,snapshot) end
             else
                 currentFrame = nil
                 add(case.instrumentationErrors, {at = now(), frameNumber = frameNumber, error = tostring(value)})
@@ -583,7 +710,8 @@ local ok, failure = xpcall(function()
     wrappedStart = function(self, profile, action, started, ...)
         instance = self
         local result = table.pack(originalStart(self, profile, action, started, ...))
-        if active and result[1] then add(active.started, {at = now(), userId = profile.player.UserId, action = action, started = started}) end
+        if active and result[1] then add(active.started, {at = now(), userId = profile.player.UserId, action = action, started = started,
+            rootPosition=active.moving and vector(profile.character.HumanoidRootPart.Position)}) end
         return table.unpack(result, 1, result.n)
     end
     wrappedDamage = function(self, attackerProfile, humanoid, action, time, ...)
@@ -597,6 +725,8 @@ local ok, failure = xpcall(function()
             targetKey = target and tostring(target.UserId) or humanoid.Parent:GetFullName(),
             defenderAction = defenderAction, defenderElapsed = elapsed, returned = result[1] == true,
             frameNumber = currentFrame and currentFrame.number or frameNumber,
+            attackerPosition=active.moving and vector(attackerProfile.character.HumanoidRootPart.Position),
+            targetPosition=active.moving and vector(humanoid.Parent.HumanoidRootPart.Position),
             preFrame = currentFrame and currentFrame.players or nil}) end
         return table.unpack(result, 1, result.n)
     end
@@ -664,6 +794,17 @@ local ok, failure = xpcall(function()
         {id = "lethal_r1_ab", hp = 1, inputs = commands({{action = "R1", at = 0}}, {{action = "R1", at = 0}}), expect = "lethal"},
         {id = "lethal_r1_ba", hp = 1, roleFlip = true, inputs = commands({{action = "R1", at = 0}}, {{action = "R1", at = 0}}), expect = "lethal"},
     }
+    if type(args.movingCases)=="table" then
+        cases={}
+        report.scope="Two actual moving Players, native held movement/combat inputs, native camera/lock-on, unanchored client-owned roots. Setup positions reset only before the future input schedule."
+        for _,definition in args.movingCases do
+            local case=table.clone(definition)
+            case.moving,case.anchored=true,false
+            case.inputs=commands(case.first,case.second)
+            case.first,case.second=nil,nil
+            table.insert(cases,case)
+        end
+    end
     local chosen = {}
     for _, id in type(args.cases) == "table" and args.cases or {} do chosen[id] = true end
     for _, case in cases do
@@ -675,9 +816,9 @@ local ok, failure = xpcall(function()
                 for _, connection in instance.profiles[p].characterConnections do table.insert(fixture.connections, connection) end
                 testCharacters[p.UserId] = fixture
             end
-            case.label, case.t0, case.duration = case.id, now() + 2, case.id == "simultaneous_r2" and 3.6 or 3.2
+            case.label, case.t0, case.duration = case.id, now() + 2, case.duration or (case.id == "simultaneous_r2" and 3.6 or 3.2)
             case.started, case.received, case.damageAttempts, case.healthEvents, case.deaths = {}, {}, {}, {}, {}
-            case.clients, case.preFrames, case.lethalFrames, case.pings, case.instrumentationErrors = {}, {}, {}, {}, {}
+            case.clients, case.preFrames, case.lethalFrames, case.pings, case.instrumentationErrors,case.motionSamples = {}, {}, {}, {}, {},{}
             casesById[case.id] = case
             active = case
             for slot, p in selected do
@@ -689,7 +830,7 @@ local ok, failure = xpcall(function()
                 pendingPings[p.UserId][pingTime] = case.id
                 qa:FireClient(p, "Ping", pingTime)
                 qa:FireClient(p, "Case", {id = case.id, label = case.label, t0 = case.t0, duration = case.duration,
-                    inputs = case.inputs[tostring(p.UserId)], other = selected[3 - slot].Name, setup = case.setup})
+                    inputs = case.inputs[tostring(p.UserId)], other = selected[3 - slot].Name, setup = case.setup,moving=case.moving})
             end
             await(function()
                 local rows = clientReports[case.id]
